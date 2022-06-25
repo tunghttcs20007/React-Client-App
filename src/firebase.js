@@ -2,9 +2,11 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import { initializeApp } from 'firebase/app';
 
+const API_KEY = process.env.REACT_APP_FIREBASE_API_KEY;
+
 // Firebase configuration for web app
 const firebaseConfig = {
-	apiKey: 'AIzaSyBMFVbMiAFT-2gGJYycq3hONxTPXmg8txA',
+	apiKey: API_KEY,
 	authDomain: 'itshop-login.firebaseapp.com',
 	projectId: 'itshop-login',
 	storageBucket: 'itshop-login.appspot.com',
