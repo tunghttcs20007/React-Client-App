@@ -5,6 +5,7 @@ import { LoginButton } from '../../components/login/LoginButton';
 import { GoogleLoginButton } from '../../components/login/GoogleLoginButton';
 import { useDispatch } from 'react-redux';
 import { LoadingOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 
 const Login = ({ history }) => {
 	const [email, setEmail] = useState('');
@@ -16,10 +17,8 @@ const Login = ({ history }) => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		setIsLoading(true);
-		// console.log(email, password);
 		try {
 			const result = await auth.signInWithEmailAndPassword(email, password);
-			// console.log(result);
 			const { user } = result;
 			const idTokenResult = await user.getIdTokenResult();
 
@@ -92,6 +91,9 @@ const Login = ({ history }) => {
 			</div>
 			<LoginButton email={email} password={password} handleSubmit={handleSubmit} />
 			<GoogleLoginButton loginWithGoogle={googleLogin} />
+			<Link to='/forgot/password' className='float-right text-danger'>
+				Forgot Password?
+			</Link>
 		</form>
 	);
 
