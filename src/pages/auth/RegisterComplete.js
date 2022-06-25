@@ -12,7 +12,7 @@ const RegisterComplete = ({ history }) => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		// validation
+		/** Validate Email and Password */
 		if (!email || !password) {
 			toast.error('Email and password is required');
 			return;
@@ -26,9 +26,9 @@ const RegisterComplete = ({ history }) => {
 		try {
 			const result = await auth.signInWithEmailLink(email, window.location.href);
 			if (result.user.emailVerified) {
-				// remove user email fom local storage
+				/** Remove email from localstorage */
 				window.localStorage.removeItem('emailForRegistration');
-				// get user id token
+				/** Update User Password and Get User IDToken */
 				let user = auth.currentUser;
 				await user.updatePassword(password);
 				const idTokenResult = await user.getIdTokenResult();

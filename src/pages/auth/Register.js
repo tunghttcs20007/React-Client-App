@@ -18,14 +18,14 @@ const Register = ({ history }) => {
 			url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
 			handleCodeInApp: true,
 		};
-
+		/** Send confirmation email once the user submit registration form */
 		await auth.sendSignInLinkToEmail(email, config);
 		toast.success(
 			`Email is sent to ${email}. Click the link to complete your registration.`
 		);
-		// save user email in local storage
+		/** Store user email in local storage */
 		window.localStorage.setItem('emailForRegistration', email);
-		// clear state
+		/** Reset Email Input Field */
 		setEmail('');
 	};
 

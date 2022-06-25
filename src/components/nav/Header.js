@@ -17,6 +17,7 @@ const Header = () => {
 	const [current, setCurrent] = useState('home');
 
 	let dispatch = useDispatch();
+	/** Get user state from Redux Store */
 	let { user } = useSelector((state) => ({ ...state }));
 
 	let history = useHistory();

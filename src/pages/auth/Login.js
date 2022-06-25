@@ -22,6 +22,7 @@ const Login = ({ history }) => {
 			const { user } = result;
 			const idTokenResult = await user.getIdTokenResult();
 
+			/** TODO: Update login state to DB then dispatch from DB */
 			dispatch({
 				type: 'LOGGED_IN_USER',
 				payload: {
