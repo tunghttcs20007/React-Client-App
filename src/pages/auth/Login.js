@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { auth, googleAuthProvider } from '../../firebase';
 import { toast } from 'react-toastify';
 import { LoginButton } from '../../components/login/LoginButton';
@@ -13,6 +14,11 @@ const Login = ({ history }) => {
 	const [isLoading, setIsLoading] = useState(false);
 
 	const dispatch = useDispatch();
+	const { user } = useSelector((state) => ({ ...state }));
+
+	useEffect(() => {
+		if (user && user.token) history.push('/');
+	}, [user]);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -90,9 +96,15 @@ const Login = ({ history }) => {
 					placeholder='Please enter your password'
 				/>
 			</div>
-			<LoginButton email={email} password={password} handleSubmit={handleSubmit} />
+			<LoginButton
+				email={email}
+				password={password}
+				handleSubmit={handleSubmit}
+			/>
 			<GoogleLoginButton loginWithGoogle={googleLogin} />
-			<Link to='/forgot/password' className='float-right text-danger'>
+			<Link
+				to='/forgot/password'
+				className='float-right text-danger'>
 				Forgot Password?
 			</Link>
 		</form>
