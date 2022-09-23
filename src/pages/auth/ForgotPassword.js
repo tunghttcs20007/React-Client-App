@@ -4,6 +4,18 @@ import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { LoadingOutlined } from '@ant-design/icons';
 
+const promptErrMsg = (error) => {
+	let errMsg = error.message;
+	if (errMsg.includes('(auth/user-not-found)')) {
+		toast.error('Your email was not found');
+		console.log('ERROR MSG IN FORGOT PASSWORD', error.message);
+	}
+	if (errMsg.includes('(auth/invalid-email)')) {
+		toast.error('Your email is not valid');
+		console.log('ERROR MSG IN FORGOT PASSWORD', error.message);
+	}
+};
+
 const ForgotPassword = ({ history }) => {
 	const [email, setEmail] = useState('');
 	const [loading, setLoading] = useState(false);
@@ -32,8 +44,7 @@ const ForgotPassword = ({ history }) => {
 			})
 			.catch((error) => {
 				setLoading(false);
-				toast.error(error.message);
-				console.log('ERROR MSG IN FORGOT PASSWORD', error);
+				promptErrMsg(error);
 			});
 	};
 
@@ -58,7 +69,9 @@ const ForgotPassword = ({ history }) => {
 					autoFocus
 				/>
 				<br />
-				<button className='btn btn-raised' disabled={!email}>
+				<button
+					className='btn btn-raised'
+					disabled={!email}>
 					Submit
 				</button>
 			</form>
