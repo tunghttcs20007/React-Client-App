@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { auth, googleAuthProvider } from '../../firebase';
 import { toast } from 'react-toastify';
 import { LoginButton } from '../../components/login/LoginButton';
 import { GoogleLoginButton } from '../../components/login/GoogleLoginButton';
-import { useDispatch } from 'react-redux';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
