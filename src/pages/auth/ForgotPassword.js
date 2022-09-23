@@ -40,7 +40,7 @@ const ForgotPassword = ({ history }) => {
 			.then(() => {
 				setEmail('');
 				setLoading(false);
-				toast.success('Check your email for password reset link');
+				toast.success('Please check your email to reset password');
 			})
 			.catch((error) => {
 				setLoading(false);
