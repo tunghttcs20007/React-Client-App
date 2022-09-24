@@ -36,19 +36,30 @@ const Header = () => {
 	};
 
 	return (
-		<Menu onClick={handleClick} selectedKeys={[current]} mode='horizontal'>
-			<Item key='home' icon={<HomeFilled />}>
+		<Menu
+			onClick={handleClick}
+			selectedKeys={[current]}
+			mode='horizontal'>
+			<Item
+				key='home'
+				icon={<HomeFilled />}>
 				<Link to='/'>Home</Link>
 			</Item>
 
 			{!user && (
-				<Item key='register' icon={<UserAddOutlined />} className='float-right'>
+				<Item
+					key='register'
+					icon={<UserAddOutlined />}
+					className='float-right'>
 					<Link to='/register'>Register</Link>
 				</Item>
 			)}
 
 			{!user && (
-				<Item key='login' icon={<UserOutlined />} className='float-right'>
+				<Item
+					key='login'
+					icon={<UserOutlined />}
+					className='float-right'>
 					<Link to='/login'>Login</Link>
 				</Item>
 			)}
@@ -56,11 +67,13 @@ const Header = () => {
 			{user && (
 				<SubMenu
 					icon={<SettingOutlined />}
-					title={user.email && user.email.split('@')[0]}
+					title={user.name}
 					className='float-right'>
 					<Item key='setting:1'>Option 1</Item>
 					<Item key='setting:2'>Option 2</Item>
-					<Item icon={<LogoutOutlined />} onClick={logout}>
+					<Item
+						icon={<LogoutOutlined />}
+						onClick={logout}>
 						Logout
 					</Item>
 				</SubMenu>

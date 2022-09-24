@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { auth } from '../../firebase';
 import { toast } from 'react-toastify';
+import { useSelector, useDispatch } from 'react-redux';
+import { createOrUpdateUser } from '../../functions/auth';
 
 const RegisterComplete = ({ history }) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+
+	const { user } = useSelector((state) => ({ ...state }));
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		setEmail(window.localStorage.getItem('emailForRegistration'));
@@ -24,7 +29,10 @@ const RegisterComplete = ({ history }) => {
 		}
 
 		try {
-			const result = await auth.signInWithEmailLink(email, window.location.href);
+			const result = await auth.signInWithEmailLink(
+				email,
+				window.location.href
+			);
 			if (result.user.emailVerified) {
 				/** Remove email from localstorage */
 				window.localStorage.removeItem('emailForRegistration');
@@ -34,6 +42,22 @@ const RegisterComplete = ({ history }) => {
 				const idTokenResult = await user.getIdTokenResult();
 				/** TODO: Work with redux store */
 				console.log(`User: ${user} | ID Token: ${idTokenResult}`);
+				/** Send Request To BE To Create New User */
+				createOrUpdateUser(idTokenResult.token)
+					.then((res) => {
+						dispatch({
+							type: 'LOGGED_IN_USER',
+							payload: {
+								name: res.data.name,
+								email: res.data.email,
+								token: idTokenResult.token,
+								role: res.data.role,
+								_id: res.data._id,
+							},
+						});
+						toast.success('Login Successfully!');
+					})
+					.catch((error) => console.error(error.message));
 				/** Redirect User To Home Page */
 				history.push('/');
 				toast.success('Your registration is completed. Thank you!');
@@ -46,7 +70,12 @@ const RegisterComplete = ({ history }) => {
 
 	const completeRegistrationForm = () => (
 		<form onSubmit={handleSubmit}>
-			<input type='email' className='form-control' value={email} disabled />
+			<input
+				type='email'
+				className='form-control'
+				value={email}
+				disabled
+			/>
 			<input
 				type='password'
 				className='form-control'
@@ -56,7 +85,9 @@ const RegisterComplete = ({ history }) => {
 				autoFocus
 			/>
 			<br />
-			<button type='submit' className='btn btn-raised'>
+			<button
+				type='submit'
+				className='btn btn-raised'>
 				Complete Registration
 			</button>
 		</form>

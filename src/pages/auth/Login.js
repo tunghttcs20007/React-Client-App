@@ -6,6 +6,7 @@ import { LoginButton } from '../../components/login/LoginButton';
 import { GoogleLoginButton } from '../../components/login/GoogleLoginButton';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import { createOrUpdateUser } from '../../functions/auth';
 
 const Login = ({ history }) => {
 	const [email, setEmail] = useState('');
@@ -27,16 +28,23 @@ const Login = ({ history }) => {
 			const { user } = result;
 			const idTokenResult = await user.getIdTokenResult();
 
-			/** TODO: Update login state to DB then dispatch from DB */
-			dispatch({
-				type: 'LOGGED_IN_USER',
-				payload: {
-					email: user.email,
-					token: idTokenResult.token,
-				},
-			});
+			/** Update login state to DB then dispatch from DB */
+			createOrUpdateUser(idTokenResult.token)
+				.then((res) => {
+					dispatch({
+						type: 'LOGGED_IN_USER',
+						payload: {
+							name: res.data.name,
+							email: res.data.email,
+							token: idTokenResult.token,
+							role: res.data.role,
+							_id: res.data._id,
+						},
+					});
+					toast.success('Login Successfully!');
+				})
+				.catch((error) => console.error(error.message));
 			history.push('/');
-			toast.success('Login Successfully!');
 		} catch (error) {
 			console.log(error);
 			let errorCode = error.code;
@@ -59,13 +67,21 @@ const Login = ({ history }) => {
 			.then(async (result) => {
 				const { user } = result;
 				const idTokenResult = await user.getIdTokenResult();
-				dispatch({
-					type: 'LOGGED_IN_USER',
-					payload: {
-						email: user.email,
-						token: idTokenResult.token,
-					},
-				});
+				createOrUpdateUser(idTokenResult.token)
+					.then((res) => {
+						dispatch({
+							type: 'LOGGED_IN_USER',
+							payload: {
+								name: res.data.name,
+								email: res.data.email,
+								token: idTokenResult.token,
+								role: res.data.role,
+								_id: res.data._id,
+							},
+						});
+						toast.success('Login Successfully!');
+					})
+					.catch((error) => console.error(error.message));
 				history.push('/');
 			})
 			.catch((error) => {
