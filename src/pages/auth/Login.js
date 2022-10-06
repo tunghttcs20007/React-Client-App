@@ -8,6 +8,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { createOrUpdateUser } from '../../functions/auth';
 
+
 const Login = ({ history }) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -18,7 +19,27 @@ const Login = ({ history }) => {
 
 	useEffect(() => {
 		if (user && user.token) history.push('/');
-	}, [user]);
+	}, [user, history]);
+
+	const roleBasedRedirect = (res) => {
+		if (res.data.role === 'admin') {
+			history.push('/admin/dashboard');
+		} else {
+			history.push('/user/history');
+		}
+	};
+
+	const promptErrorMsg = (errorCode) => {
+		if (errorCode === 'auth/invalid-email') {
+			toast.error('Your email format is not right!');
+		}
+		if (errorCode === 'auth/wrong-password') {
+			toast.error('Your credential is incorrect!');
+		}
+		if (errorCode === 'auth/user-not-found') {
+			toast.error('You have not registered yet!');
+		}
+	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -41,22 +62,12 @@ const Login = ({ history }) => {
 							_id: res.data._id,
 						},
 					});
+					roleBasedRedirect(res);
 					toast.success('Login Successfully!');
 				})
 				.catch((error) => console.error(error.message));
-			history.push('/');
 		} catch (error) {
-			console.log(error);
-			let errorCode = error.code;
-			if (errorCode === 'auth/invalid-email') {
-				toast.error('Your email format is not right!');
-			}
-			if (errorCode === 'auth/wrong-password') {
-				toast.error('Your credential is incorrect!');
-			}
-			if (errorCode === 'auth/user-not-found') {
-				toast.error('You have not registered yet!');
-			}
+			promptErrorMsg(error.code);
 			setIsLoading(false);
 		}
 	};
@@ -79,10 +90,10 @@ const Login = ({ history }) => {
 								_id: res.data._id,
 							},
 						});
+						roleBasedRedirect(res);
 						toast.success('Login Successfully!');
 					})
 					.catch((error) => console.error(error.message));
-				history.push('/');
 			})
 			.catch((error) => {
 				console.log(error);

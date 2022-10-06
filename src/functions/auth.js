@@ -24,3 +24,15 @@ export const getCurrentUser = async (accessToken) => {
 		}
 	);
 };
+
+export const getCurrentAdmin = async (accessToken) => {
+	return axios.post(
+		getBaseUrl('/current-admin'),
+		{},
+		{
+			headers: {
+				accessToken,
+			},
+		}
+	);
+};

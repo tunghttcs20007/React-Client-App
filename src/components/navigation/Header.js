@@ -19,8 +19,9 @@ const Header = () => {
 	let dispatch = useDispatch();
 	/** Get user state from Redux Store */
 	let { user } = useSelector((state) => ({ ...state }));
-
 	let history = useHistory();
+	const isRoleAdmin = user && user.role === 'admin' ? true : false;
+	const isRoleUser = user && user.role === 'subscriber' ? true : false;
 
 	const handleClick = (e) => {
 		setCurrent(e.key);
@@ -33,6 +34,23 @@ const Header = () => {
 			payload: null,
 		});
 		history.push('/login');
+	};
+
+	const dashboardLink = () => {
+		if (isRoleAdmin) {
+			return (
+				<Item>
+					<Link to='/admin/dashboard'></Link>Dashboard
+				</Item>
+			);
+		}
+		if (isRoleUser) {
+			return (
+				<Item>
+					<Link to='/user/history'></Link>Dashboard
+				</Item>
+			);
+		}
 	};
 
 	return (
@@ -69,8 +87,7 @@ const Header = () => {
 					icon={<SettingOutlined />}
 					title={user.name}
 					className='float-right'>
-					<Item key='setting:1'>Option 1</Item>
-					<Item key='setting:2'>Option 2</Item>
+					{dashboardLink()}
 					<Item
 						icon={<LogoutOutlined />}
 						onClick={logout}>

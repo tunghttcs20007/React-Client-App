@@ -6,12 +6,23 @@ import "react-toastify/dist/ReactToastify.css";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Home from "./pages/Home";
-import Header from "./components/nav/Header";
-import RegisterComplete from "./pages/auth/RegisterComplete";
-import ForgotPassword from "./pages/auth/ForgotPassword";
+import Header from './components/navigation/Header';
+import RegisterComplete from './pages/auth/RegisterComplete';
+import ForgotPassword from './pages/auth/ForgotPassword';
+import History from './pages/user/History';
+import Password from './pages/user/Password';
+import Wishlist from './pages/user/Wishlist';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import CategoryCreate from './pages/admin/category/CategoryCreate';
+import CategoryUpdate from './pages/admin/category/CategoryUpdate';
+import SubCategoryCreate from './pages/admin/sub/SubCategoryCreate';
+import SubCategoryUpdate from './pages/admin/sub/SubCategoryUpdate';
 
-import { auth } from "./firebase";
-import { useDispatch } from "react-redux";
+import UserRoute from './components/routes/UserRoute';
+import AdminRoute from './components/routes/AdminRoute';
+
+import { auth } from './firebase';
+import { useDispatch } from 'react-redux';
 import { getCurrentUser } from './functions/auth';
 
 const App = () => {
@@ -40,7 +51,7 @@ const App = () => {
 		});
 		// cleanup
 		return () => unsubscribe();
-	}, []);
+	}, [dispatch]);
 
 	return (
 		<>
@@ -71,6 +82,48 @@ const App = () => {
 					exact
 					path='/forgot/password'
 					component={ForgotPassword}
+				/>
+				(/** Protect User Route */)
+				<UserRoute
+					exact
+					path='/user/history'
+					component={History}
+				/>
+				<UserRoute
+					exact
+					path='/user/password'
+					component={Password}
+				/>
+				<UserRoute
+					exact
+					path='/user/wishlist'
+					component={Wishlist}
+				/>
+				(/** Protect Admin Route */)
+				<AdminRoute
+					exact
+					path='/admin/dashboard'
+					component={AdminDashboard}
+				/>
+				<AdminRoute
+					exact
+					path='/admin/category'
+					component={CategoryCreate}
+				/>
+				<AdminRoute
+					exact
+					path='/admin/category-update/:slug'
+					component={CategoryUpdate}
+				/>
+				<AdminRoute
+					exact
+					path='/admin/sub-category'
+					component={SubCategoryCreate}
+				/>
+				<AdminRoute
+					exact
+					path='/admin/sub-category-update/:slug'
+					component={SubCategoryUpdate}
 				/>
 			</Switch>
 		</>
