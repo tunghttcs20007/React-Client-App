@@ -89,15 +89,7 @@ const CategoryCreate = () => {
 				toast.success(`"${res.data.name}" is created!`);
 				fetchAllCategories();
 			})
-			.catch((error) => {
-				const status = error.response.status;
-				const message = error.response.data;
-				if (status === 400) {
-					toast.error(`${message}: ${categoryName}`);
-				} else if (status === 409) {
-					toast.error(message);
-				}
-			});
+			.catch((error) => toast.error(error.response.data));
 		setLoading(false);
 	};
 
@@ -111,8 +103,8 @@ const CategoryCreate = () => {
 					<h3 className='pt-2'>Create Category</h3>
 					<CategoryForm
 						handleSubmit={handleSubmit}
-						categoryName={categoryName}
-						setCategoryName={setCategoryName}
+						value={categoryName}
+						setValue={setCategoryName}
 						isLoading={loading}
 						type='Create'
 						label='Category Name'

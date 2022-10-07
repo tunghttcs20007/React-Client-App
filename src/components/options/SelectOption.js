@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const SelectOption = ({ items, itemId, setValue, label, name }) => {
+const SelectOption = ({ items, itemId, setValue, label, name, defaultOption }) => {
 	const onChangeHandler = (e) => {
 		e.preventDefault();
 		setValue(e.target.value);
@@ -12,11 +12,12 @@ const SelectOption = ({ items, itemId, setValue, label, name }) => {
 			<select
 				className='form-control'
 				name={name}
-				onChange={onChangeHandler}>
+				onChange={onChangeHandler}
+				defaultValue='default'>
 				<option
 					disabled
-					selected='selected'>
-					please select root category
+					value='default'>
+					{defaultOption}
 				</option>
 				{items.length > 0 &&
 					items.map((item) => (

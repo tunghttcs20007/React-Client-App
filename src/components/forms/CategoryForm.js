@@ -2,8 +2,8 @@ import React from 'react';
 
 const CategoryForm = ({
 	handleSubmit,
-	categoryName,
-	setCategoryName,
+	value,
+	setValue,
 	isLoading,
 	type,
 	label,
@@ -17,8 +17,8 @@ const CategoryForm = ({
 			<input
 				type='text'
 				className='form-control pt-2'
-				value={categoryName}
-				onChange={(e) => setCategoryName(e.target.value)}
+				value={value}
+				onChange={(e) => setValue(e.target.value)}
 				placeholder={placeHolder}
 				autoFocus
 				required

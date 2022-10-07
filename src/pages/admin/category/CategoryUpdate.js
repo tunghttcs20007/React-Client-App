@@ -54,8 +54,8 @@ const CategoryUpdate = ({ history, match }) => {
 					<h3 className='pt-2'>Update Category Name</h3>
 					<CategoryForm
 						handleSubmit={handleSubmit}
-						categoryName={categoryName}
-						setCategoryName={setCategoryName}
+						value={categoryName}
+						setValue={setCategoryName}
 						isLoading={loading}
 						type='Update'
 						placeHolder='Enter new category name'

@@ -73,8 +73,8 @@ const SubCategoryUpdate = ({ history, match }) => {
 					/>
 					<CategoryForm
 						handleSubmit={handleSubmit}
-						categoryName={subCategoryName}
-						setCategoryName={setSubCategoryName}
+						value={subCategoryName}
+						setValue={setSubCategoryName}
 						isLoading={loading}
 						type='Update'
 						label='Sub Category Name'

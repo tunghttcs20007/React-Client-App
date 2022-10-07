@@ -95,16 +95,7 @@ const SubCategoryCreate = () => {
 				toast.success(`"${res.data.name}" is created!`);
 				fetchAllSubCategories();
 			})
-			.catch((error) => {
-				const status = error.response.status;
-				const message = error.response.data;
-				if (status === 400) {
-					toast.error(message);
-				}
-				if (status === 409) {
-					toast.error(message);
-				}
-			});
+			.catch((error) => toast.error(error.response.data));
 		setLoading(false);
 	};
 
@@ -121,11 +112,12 @@ const SubCategoryCreate = () => {
 						setValue={setCategoryId}
 						label='Select Category'
 						name='category'
+						defaultOption='Please Select root category'
 					/>
 					<CategoryForm
 						handleSubmit={handleSubmit}
-						subCategoryName={subCategoryName}
-						setCategoryName={setSubCategoryName}
+						value={subCategoryName}
+						setValue={setSubCategoryName}
 						isLoading={loading}
 						type='Create'
 						label='Sub Category Name'
