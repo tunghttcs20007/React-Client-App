@@ -29,7 +29,6 @@ const SubCategoryUpdate = ({ history, match }) => {
 		getSubCategory(slug).then((res) => {
 			setSubCategoryName(res.data.name);
 			setParentCategory(res.data.parentCategory);
-			console.log(res);
 		});
 
 	/** Handle form submit to create category */

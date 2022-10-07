@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const DropdownSelect = ({
 	items,
@@ -14,6 +14,8 @@ const DropdownSelect = ({
 		e.preventDefault();
 		setValue(e.target.value);
 	};
+
+	const onChange = onChangeHandler ?? handleChange;
 
 	const showDropdown = () => {
 		if (items.some((item) => (item._id ? true : false))) {
@@ -42,7 +44,7 @@ const DropdownSelect = ({
 			<select
 				className='form-control'
 				name={name}
-				onChange={onChangeHandler ? onChangeHandler : handleChange}
+				onChange={onChange}
 				defaultValue='default'>
 				<option
 					disabled

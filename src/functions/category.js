@@ -35,3 +35,9 @@ export const createCategory = async (categoryName, accessToken) =>
 			},
 		}
 	);
+
+export const getSubsByParent = async (id, setData) => {
+	axios
+		.get(getBaseUrl(`/category/sub-catogories/${id}`))
+		.then((res) => setData(res.data));
+};
