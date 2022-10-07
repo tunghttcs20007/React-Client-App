@@ -41,7 +41,6 @@ const ProductCreate = () => {
 		e.preventDefault();
 		createProduct({ ...product }, Admin.token)
 			.then((res) => {
-				console.log(res);
 				toast.success(`"${res.data.title}" is created!`, { position: 'top-center' });
 				resetElemsValue('input');
 				resetElemsValue('select', 'default');

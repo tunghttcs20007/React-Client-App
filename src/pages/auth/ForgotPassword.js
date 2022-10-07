@@ -8,11 +8,9 @@ const promptErrMsg = (error) => {
 	let errMsg = error.message;
 	if (errMsg.includes('(auth/user-not-found)')) {
 		toast.error('Your email was not found');
-		console.log('ERROR MSG IN FORGOT PASSWORD', error.message);
 	}
 	if (errMsg.includes('(auth/invalid-email)')) {
 		toast.error('Your email is not valid');
-		console.log('ERROR MSG IN FORGOT PASSWORD', error.message);
 	}
 };
 

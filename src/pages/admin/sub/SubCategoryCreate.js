@@ -88,7 +88,6 @@ const SubCategoryCreate = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setLoading(true);
-		console.log(subCategoryName);
 		createSubCategory(subCategoryName, categoryId, admin.token)
 			.then((res) => {
 				setSubCategoryName('');

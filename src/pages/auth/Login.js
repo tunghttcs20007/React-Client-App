@@ -96,7 +96,6 @@ const Login = ({ history }) => {
 					.catch((error) => console.error(error.message));
 			})
 			.catch((error) => {
-				console.log(error);
 				toast.error(error.code);
 			});
 	};

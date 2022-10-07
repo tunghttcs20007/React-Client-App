@@ -34,7 +34,6 @@ const CategoryCreate = () => {
 		if (isDeleteConfirm) {
 			deleteCategory(slug, admin.token)
 				.then((res) => {
-					console.log(res);
 					fetchAllCategories();
 					toast.warning(`${slug.toUpperCase()} is deleted!`);
 				})

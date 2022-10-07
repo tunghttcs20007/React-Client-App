@@ -29,10 +29,7 @@ const RegisterComplete = ({ history }) => {
 		}
 
 		try {
-			const result = await auth.signInWithEmailLink(
-				email,
-				window.location.href
-			);
+			const result = await auth.signInWithEmailLink(email, window.location.href);
 			if (result.user.emailVerified) {
 				/** Remove email from localstorage */
 				window.localStorage.removeItem('emailForRegistration');
@@ -40,8 +37,6 @@ const RegisterComplete = ({ history }) => {
 				let user = auth.currentUser;
 				await user.updatePassword(password);
 				const idTokenResult = await user.getIdTokenResult();
-				/** TODO: Work with redux store */
-				console.log(`User: ${user} | ID Token: ${idTokenResult}`);
 				/** Send Request To BE To Create New User */
 				createOrUpdateUser(idTokenResult.token)
 					.then((res) => {
@@ -63,7 +58,6 @@ const RegisterComplete = ({ history }) => {
 				toast.success('Your registration is completed. Thank you!');
 			}
 		} catch (error) {
-			console.log(error);
 			toast.error(error.message);
 		}
 	};
