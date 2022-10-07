@@ -1,4 +1,4 @@
-import { getBaseUrl } from '../utils/getBaseUrl';
+import { getBaseUrl } from './getBaseUrl';
 import axios from 'axios';
 
 export const createOrUpdateUser = async (accessToken) => {

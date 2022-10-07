@@ -1,12 +1,14 @@
-import { getBaseUrl } from '../utils/getBaseUrl';
+import { getBaseUrl } from './getBaseUrl';
 import axios from 'axios';
 
-export const getAllCategories = async () => axios.get(getBaseUrl('/get-categories'));
+const baseUrl = getBaseUrl('/category');
 
-export const getCategory = async (slug) => axios.get(getBaseUrl(`/get-category/${slug}`));
+export const getAllCategories = async () => axios.get(getBaseUrl('/categories'));
+
+export const getCategory = async (slug) => axios.get(`${baseUrl}/${slug}`);
 
 export const deleteCategory = async (slug, accessToken) =>
-	axios.delete(getBaseUrl(`/remove-category/${slug}`), {
+	axios.delete(`${baseUrl}/${slug}`, {
 		headers: {
 			accessToken,
 		},
@@ -14,7 +16,7 @@ export const deleteCategory = async (slug, accessToken) =>
 
 export const updateCategory = async (slug, categoryName, accessToken) =>
 	axios.put(
-		getBaseUrl(`/update-category/${slug}`),
+		`${baseUrl}/${slug}`,
 		{ name: categoryName },
 		{
 			headers: {
@@ -25,7 +27,7 @@ export const updateCategory = async (slug, categoryName, accessToken) =>
 
 export const createCategory = async (categoryName, accessToken) =>
 	axios.post(
-		getBaseUrl('/create-category'),
+		baseUrl,
 		{ name: categoryName },
 		{
 			headers: {
