@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux';
 import AdminNav from '../../../components/navigation/AdminNav';
 import { getSubCategory, updateSubCategory } from '../../../functions/sub';
 import { getAllCategories } from '../../../functions/category';
-import CategoryForm from '../../../components/forms/CategoryForm';
-import SelectOption from '../../../components/options/SelectOption';
+import InputForm from '../../../components/forms/InputForm';
+import DropdownSelect from '../../../components/select/DropdownSelect';
 
 const SubCategoryUpdate = ({ history, match }) => {
 	const slug = match.params.slug;
@@ -64,19 +64,20 @@ const SubCategoryUpdate = ({ history, match }) => {
 				</div>
 				<div className='col'>
 					<h3 className='pt-2'>Update Sub Category</h3>
-					<SelectOption
+					<DropdownSelect
+						clazzName='text-info font-weight-bold'
 						items={categories}
-						itemId={parentCategory}
+						selectedItemId={parentCategory}
 						setValue={setParentCategory}
 						label='Select Category'
 						name='category'
 					/>
-					<CategoryForm
+					<InputForm
 						handleSubmit={handleSubmit}
 						value={subCategoryName}
 						setValue={setSubCategoryName}
 						isLoading={loading}
-						type='Update'
+						btnName='Update'
 						label='Sub Category Name'
 						placeHolder='Enter new subcategory name'
 					/>

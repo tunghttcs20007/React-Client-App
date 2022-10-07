@@ -10,9 +10,9 @@ import {
 import { getAllCategories } from '../../../functions/category';
 import { Link } from 'react-router-dom';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import CategoryForm from '../../../components/forms/CategoryForm';
+import InputForm from '../../../components/forms/InputForm';
 import SearchForm from '../../../components/forms/SearchForm';
-import SelectOption from '../../../components/options/SelectOption';
+import DropdownSelect from '../../../components/select/DropdownSelect';
 
 const SubCategoryCreate = () => {
 	const [subCategoryName, setSubCategoryName] = useState('');
@@ -107,19 +107,20 @@ const SubCategoryCreate = () => {
 				</div>
 				<div className='col'>
 					<h3 className='pt-2'>Create Sub Category</h3>
-					<SelectOption
+					<DropdownSelect
+						clazzName='text-info font-weight-bold'
 						items={categories}
 						setValue={setCategoryId}
 						label='Select Category'
 						name='category'
 						defaultOption='Please Select root category'
 					/>
-					<CategoryForm
+					<InputForm
 						handleSubmit={handleSubmit}
 						value={subCategoryName}
 						setValue={setSubCategoryName}
 						isLoading={loading}
-						type='Create'
+						btnName='Create'
 						label='Sub Category Name'
 						placeHolder='Enter sub category name'
 					/>

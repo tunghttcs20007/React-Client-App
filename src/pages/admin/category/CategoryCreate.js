@@ -9,7 +9,7 @@ import {
 } from '../../../functions/category';
 import { Link } from 'react-router-dom';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import CategoryForm from '../../../components/forms/CategoryForm';
+import InputForm from '../../../components/forms/InputForm';
 import SearchForm from '../../../components/forms/SearchForm';
 
 const CategoryCreate = () => {
@@ -101,12 +101,12 @@ const CategoryCreate = () => {
 				</div>
 				<div className='col'>
 					<h3 className='pt-2'>Create Category</h3>
-					<CategoryForm
+					<InputForm
 						handleSubmit={handleSubmit}
 						value={categoryName}
 						setValue={setCategoryName}
 						isLoading={loading}
-						type='Create'
+						btnName='Create'
 						label='Category Name'
 						placeHolder='Enter category name'
 					/>

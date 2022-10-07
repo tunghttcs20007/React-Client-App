@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import AdminNav from '../../../components/navigation/AdminNav';
 import { getCategory, updateCategory } from '../../../functions/category';
-import CategoryForm from '../../../components/forms/CategoryForm';
+import InputForm from '../../../components/forms/InputForm';
 
 const CategoryUpdate = ({ history, match }) => {
 	const slug = match.params.slug;
@@ -52,12 +52,12 @@ const CategoryUpdate = ({ history, match }) => {
 				</div>
 				<div className='col'>
 					<h3 className='pt-2'>Update Category Name</h3>
-					<CategoryForm
+					<InputForm
 						handleSubmit={handleSubmit}
 						value={categoryName}
 						setValue={setCategoryName}
 						isLoading={loading}
-						type='Update'
+						btnName='Update'
 						placeHolder='Enter new category name'
 					/>
 				</div>
