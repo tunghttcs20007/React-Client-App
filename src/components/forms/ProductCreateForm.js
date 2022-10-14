@@ -18,18 +18,7 @@ const ProductCreateForm = ({
 	subCategories,
 	onCategoryChange,
 }) => {
-	const {
-		title,
-		description,
-		price,
-		category,
-		subCategory,
-		shipping,
-		quantity,
-		images,
-		color,
-		brand,
-	} = values;
+	const { title, description, price, subCategory, quantity } = values;
 
 	return (
 		<Fragment>
@@ -84,7 +73,6 @@ const ProductCreateForm = ({
 					defaultOption='Please Select'
 				/>
 				<DropdownSelect
-					clazzName='text-info font-weight-bold'
 					items={categories}
 					onChangeHandler={onCategoryChange}
 					label='Select Category'
@@ -112,6 +100,7 @@ const ProductCreateForm = ({
 						</Select>
 					</Fragment>
 				)}
+				<br />
 				<button className='btn btn-outline-info mt-2'>Save</button>
 			</form>
 		</Fragment>

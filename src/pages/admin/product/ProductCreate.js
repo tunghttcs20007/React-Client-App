@@ -3,12 +3,13 @@ import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import AdminNav from '../../../components/navigation/AdminNav';
 import ProductCreateForm from '../../../components/forms/ProductCreateForm';
+import FileUpload from '../../../components/forms/FileUpload';
 import { createProduct } from '../../../functions/product';
 import { getAllCategories, getSubsByParent } from '../../../functions/category';
 
 const initialValue = {
 	title: 'Laptop',
-	description: 'This is the best product...',
+	description: 'This is the best product',
 	price: '100',
 	category: '',
 	subCategory: [],
@@ -30,8 +31,9 @@ const ProductCreate = () => {
 	const [categories, setCategories] = useState([]);
 	const [subCategories, setSubCategories] = useState([]);
 	const [showSubsOption, setShowSubsOption] = useState(false);
+	const [isSubmitted, setIsSubmitted] = useState(false);
 
-	const { user: Admin } = useSelector((state) => ({ ...state }));
+	const { user: admin } = useSelector((state) => ({ ...state }));
 
 	useEffect(() => {
 		getAllCategories().then((res) => setCategories(res.data));
@@ -39,18 +41,20 @@ const ProductCreate = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		createProduct({ ...product }, Admin.token)
+		createProduct({ ...product }, admin.token)
 			.then((res) => {
 				toast.success(`"${res.data.title}" is created!`, { position: 'top-center' });
 				resetElemsValue('input');
 				resetElemsValue('select', 'default');
-				setProduct(initialValue);
+				setProduct(({ ...prev }) => ({ ...initialValue }));
+				setIsSubmitted(true);
 			})
 			.catch((error) => toast.error(error.response.data, { position: 'bottom-left' }));
 	};
 
 	const handleChange = (e) => {
 		setProduct({ ...product, [e.target.name]: e.target.value });
+		setIsSubmitted(false);
 	};
 
 	const getSubsOnCategoryChange = (e) => {
@@ -58,6 +62,7 @@ const ProductCreate = () => {
 		setProduct({ ...product, subCategory: [], category: e.target.value });
 		getSubsByParent(e.target.value, setSubCategories);
 		setShowSubsOption(true);
+		setIsSubmitted(false);
 	};
 
 	return (
@@ -69,6 +74,11 @@ const ProductCreate = () => {
 				<div className='col-md-10'>
 					<h4>Create Product</h4>
 					<hr />
+					<FileUpload
+						value={product}
+						setValue={setProduct}
+						isSubmitted={isSubmitted}
+					/>
 					<ProductCreateForm
 						submitHandler={handleSubmit}
 						onChangeHandler={handleChange}
