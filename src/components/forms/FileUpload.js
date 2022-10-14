@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 import { useSelector } from 'react-redux';
 import Resizer from 'react-image-file-resizer';
 import { getBaseUrl } from '../../functions/getBaseUrl';
@@ -7,19 +7,13 @@ import { Image, Badge } from 'antd';
 import { DeleteFilled, LoadingOutlined } from '@ant-design/icons';
 const PreviewGroup = Image.PreviewGroup;
 
-const FileUpload = ({ value, setValue, isSubmitted }) => {
+const FileUpload = ({ value, setValue }) => {
 	const [loading, setLoading] = useState(false);
 
 	const { user: admin } = useSelector((state) => ({ ...state }));
 	const accessToken = admin.token;
 
 	let { images } = { ...value };
-
-	useEffect(() => {
-		if (isSubmitted) {
-			images = [];
-		}
-	}, [isSubmitted]);
 
 	const fileUploadAndResize = (e) => {
 		e.preventDefault();
@@ -74,38 +68,42 @@ const FileUpload = ({ value, setValue, isSubmitted }) => {
 	};
 
 	const showUploadedImages = () => {
-		return images.map((image) => (
-			<div
-				key={image.public_id}
-				className='m-2 pb-2'>
-				<Badge
-					style={{ cursor: 'pointer' }}
-					count={
-						<DeleteFilled
-							style={{ color: '#596275', fontSize: '15px' }}
-							onClick={() => {
-								handleRemoveImage(image.public_id);
-							}}
+		if (images.length > 0) {
+			return images.map((image) => (
+				<div
+					key={image.public_id}
+					className='m-3 pb-3'>
+					<Badge
+						style={{ cursor: 'pointer' }}
+						count={
+							<DeleteFilled
+								style={{ color: '#596275', fontSize: '16px' }}
+								onClick={() => {
+									handleRemoveImage(image.public_id);
+								}}
+							/>
+						}>
+						<Image
+							width={150}
+							height={110}
+							shape='square'
+							style={{ borderRadius: '25%' }}
+							src={image.url}
 						/>
-					}>
-					<Image
-						width={110}
-						height={110}
-						shape='square'
-						style={{ borderRadius: '50%' }}
-						src={image.url}
-					/>
-				</Badge>
-			</div>
-		));
+					</Badge>
+				</div>
+			));
+		} else {
+			return null;
+		}
 	};
 
 	return (
 		<Fragment>
 			<div className='row'>
 				<label
-					className='btn'
-					style={{ color: '#0abde3' }}>
+					className='btn btn-info btn-raised m-3'
+					style={{ color: '#dff9fb' }}>
 					Upload Image {loading ? <LoadingOutlined /> : null}
 					<input
 						type='file'
@@ -117,7 +115,7 @@ const FileUpload = ({ value, setValue, isSubmitted }) => {
 				</label>
 			</div>
 			<div className='row'>
-				<PreviewGroup>{images && showUploadedImages()}</PreviewGroup>
+				<PreviewGroup>{images.length > 0 && showUploadedImages()}</PreviewGroup>
 			</div>
 		</Fragment>
 	);

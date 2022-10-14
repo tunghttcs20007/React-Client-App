@@ -8,7 +8,7 @@ import InputForm from '../../../components/forms/InputForm';
 import DropdownSelect from '../../../components/select/DropdownSelect';
 
 const SubCategoryUpdate = ({ history, match }) => {
-	const slug = match.params.slug;
+	const { slug } = match.params;
 
 	const [subCategoryName, setSubCategoryName] = useState('');
 	const [parentCategory, setParentCategory] = useState('');
@@ -66,7 +66,7 @@ const SubCategoryUpdate = ({ history, match }) => {
 					<DropdownSelect
 						clazzName='text-info font-weight-bold'
 						items={categories}
-						selectedItemId={parentCategory}
+						selectedItem={parentCategory}
 						setValue={setParentCategory}
 						label='Select Category'
 						name='category'

@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 const DropdownSelect = ({
 	items,
-	selectedItemId,
+	selectedItem,
 	setValue,
 	label,
 	name,
@@ -23,7 +23,7 @@ const DropdownSelect = ({
 				<option
 					value={item._id}
 					key={item._id}
-					selected={selectedItemId === item._id}>
+					selected={selectedItem === item._id}>
 					{item.name}
 				</option>
 			));
@@ -31,7 +31,8 @@ const DropdownSelect = ({
 			return items.map((item) => (
 				<option
 					key={item}
-					value={item}>
+					value={item}
+					selected={selectedItem === item}>
 					{item}
 				</option>
 			));

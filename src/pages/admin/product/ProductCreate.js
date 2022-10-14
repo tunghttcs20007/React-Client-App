@@ -20,18 +20,11 @@ const initialValue = {
 	brand: '',
 };
 
-const resetElemsValue = (locator, value) => {
-	Array.from(document.querySelectorAll(locator)).forEach(
-		(elem) => (elem.value = value ? value : '')
-	);
-};
-
-const ProductCreate = () => {
+const ProductCreate = ({ location }) => {
 	const [product, setProduct] = useState(initialValue);
 	const [categories, setCategories] = useState([]);
 	const [subCategories, setSubCategories] = useState([]);
 	const [showSubsOption, setShowSubsOption] = useState(false);
-	const [isSubmitted, setIsSubmitted] = useState(false);
 
 	const { user: admin } = useSelector((state) => ({ ...state }));
 
@@ -43,18 +36,17 @@ const ProductCreate = () => {
 		e.preventDefault();
 		createProduct({ ...product }, admin.token)
 			.then((res) => {
-				toast.success(`"${res.data.title}" is created!`, { position: 'top-center' });
-				resetElemsValue('input');
-				resetElemsValue('select', 'default');
 				setProduct(({ ...prev }) => ({ ...initialValue }));
-				setIsSubmitted(true);
+				toast.success(`"${res.data.title}" is created!`, { position: 'top-center' });
+				window.setTimeout(() => {
+					window.location.reload();
+				}, 3000);
 			})
 			.catch((error) => toast.error(error.response.data, { position: 'bottom-left' }));
 	};
 
 	const handleChange = (e) => {
 		setProduct({ ...product, [e.target.name]: e.target.value });
-		setIsSubmitted(false);
 	};
 
 	const getSubsOnCategoryChange = (e) => {
@@ -62,7 +54,6 @@ const ProductCreate = () => {
 		setProduct({ ...product, subCategory: [], category: e.target.value });
 		getSubsByParent(e.target.value, setSubCategories);
 		setShowSubsOption(true);
-		setIsSubmitted(false);
 	};
 
 	return (
@@ -77,7 +68,6 @@ const ProductCreate = () => {
 					<FileUpload
 						value={product}
 						setValue={setProduct}
-						isSubmitted={isSubmitted}
 					/>
 					<ProductCreateForm
 						submitHandler={handleSubmit}
