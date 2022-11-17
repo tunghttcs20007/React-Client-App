@@ -1,0 +1,5 @@
+.slider img, 
+.slider .default-img {
+  height: 528px;
+  object-fit: cover;
+}

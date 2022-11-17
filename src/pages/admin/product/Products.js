@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import AdminNav from '../../../components/navigation/AdminNav';
-import ProductCard from '../../../components/cards/ProductCard';
+import HomeProductCards from '../../../components/cards/AdminProductCard';
 import { listAllProducts, removeProduct } from '../../../functions/product';
 import { LoadingOutlined } from '@ant-design/icons';
 import { toast } from 'react-toastify';
@@ -48,7 +48,7 @@ const Products = () => {
 			<div
 				key={product._id}
 				className='col-md-4 pb-2'>
-				<ProductCard
+				<HomeProductCards
 					product={product}
 					handleRemoveProduct={handleRemoveProduct}
 				/>

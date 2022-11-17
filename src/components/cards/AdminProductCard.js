@@ -6,7 +6,7 @@ import { EditTwoTone, DeleteOutlined } from '@ant-design/icons';
 
 const { Meta } = Card;
 
-const ProductCard = ({ product, handleRemoveProduct }) => {
+const AdminProductCard = ({ product, handleRemoveProduct }) => {
 	const { title, description, images, slug } = product;
 
 	return (
@@ -42,4 +42,4 @@ const ProductCard = ({ product, handleRemoveProduct }) => {
 	);
 };
 
-export default ProductCard;
+export default AdminProductCard;

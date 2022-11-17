@@ -3,9 +3,9 @@ import { Switch, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import Login from "./pages/auth/Login";
-import Register from "./pages/auth/Register";
-import Home from "./pages/Home";
+import Login from './pages/auth/Login';
+import Register from './pages/auth/Register';
+import Home from './pages/Home';
 import Header from './components/navigation/Header';
 import RegisterComplete from './pages/auth/RegisterComplete';
 import ForgotPassword from './pages/auth/ForgotPassword';
@@ -20,6 +20,7 @@ import SubCategoryUpdate from './pages/admin/sub/SubCategoryUpdate';
 import ProductCreate from './pages/admin/product/ProductCreate';
 import Products from './pages/admin/product/Products';
 import ProductDetails from './pages/admin/product/ProductDetails';
+import SingleProduct from './pages/SingleProduct';
 
 import UserRoute from './components/routes/UserRoute';
 import AdminRoute from './components/routes/AdminRoute';
@@ -85,6 +86,11 @@ const App = () => {
 					exact
 					path='/forgot/password'
 					component={ForgotPassword}
+				/>
+				<Route
+					exact
+					path='/product/:slug'
+					component={SingleProduct}
 				/>
 				(/** Protect User Route */)
 				<UserRoute

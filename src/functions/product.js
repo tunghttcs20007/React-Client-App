@@ -13,7 +13,7 @@ export const createProduct = async (product, accessToken) =>
 export const listAllProducts = async (count) =>
 	axios.get(getBaseUrl(`/products/${count}`));
 
-export const getProduct = async (slug) => axios.get(`${baseUrl}/${slug}`);
+export const getProductInfo = async (slug) => axios.get(`${baseUrl}/${slug}`);
 
 export const updateProduct = async (slug, product, accessToken) =>
 	axios.put(`${baseUrl}/${slug}`, product, {
@@ -28,3 +28,19 @@ export const removeProduct = async (slug, accessToken) =>
 			accessToken,
 		},
 	});
+
+export const getLatestSortedProducts = async (sort, order, page, limit) =>
+	axios.post(getBaseUrl('/products'), { sort, order, page, limit });
+
+export const getTotalProductsCount = async () => axios.get(getBaseUrl(`/products/total`));
+
+export const updateProductRating = async (productId, rating, accessToken) =>
+	axios.put(
+		`${baseUrl}/rating/${productId}`,
+		{ star: rating },
+		{
+			headers: {
+				accessToken,
+			},
+		}
+	);

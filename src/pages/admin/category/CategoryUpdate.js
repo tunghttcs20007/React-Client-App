@@ -6,12 +6,12 @@ import { getCategory, updateCategory } from '../../../functions/category';
 import InputForm from '../../../components/forms/InputForm';
 
 const CategoryUpdate = ({ history, match }) => {
-	const { slug } = match.params;
-	
 	const [categoryName, setCategoryName] = useState('');
 	const [loading, setLoading] = useState(false);
 
 	const { user: admin } = useSelector((state) => ({ ...state }));
+
+	const { slug } = match.params;
 
 	useEffect(() => {
 		fetchCategory();

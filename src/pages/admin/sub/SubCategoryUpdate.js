@@ -8,8 +8,6 @@ import InputForm from '../../../components/forms/InputForm';
 import DropdownSelect from '../../../components/select/DropdownSelect';
 
 const SubCategoryUpdate = ({ history, match }) => {
-	const { slug } = match.params;
-
 	const [subCategoryName, setSubCategoryName] = useState('');
 	const [parentCategory, setParentCategory] = useState('');
 	const [loading, setLoading] = useState(false);
@@ -17,13 +15,14 @@ const SubCategoryUpdate = ({ history, match }) => {
 
 	const { user: admin } = useSelector((state) => ({ ...state }));
 
+	const { slug } = match.params;
+
 	useEffect(() => {
 		fetchAllCategories();
 		fetchSubCategory();
 	}, []);
 
-	const fetchAllCategories = () =>
-		getAllCategories().then((res) => setCategories(res.data));
+	const fetchAllCategories = () => getAllCategories().then((res) => setCategories(res.data));
 
 	const fetchSubCategory = () =>
 		getSubCategory(slug).then((res) => {

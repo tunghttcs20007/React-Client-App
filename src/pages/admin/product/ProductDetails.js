@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import AdminNav from '../../../components/navigation/AdminNav';
 import FileUpload from '../../../components/forms/FileUpload';
 import ProductUpdateForm from '../../../components/forms/ProductUpdateForm';
-import { getProduct, updateProduct } from '../../../functions/product';
+import { getProductInfo, updateProduct } from '../../../functions/product';
 import { getAllCategories, getSubsByParent } from '../../../functions/category';
 
 const initialValue = {
@@ -21,8 +21,6 @@ const initialValue = {
 };
 
 const ProductDetails = ({ match, history }) => {
-	const { slug } = match.params;
-
 	const [product, setProduct] = useState(initialValue);
 	const [originalCategory, setOriginalCategory] = useState('');
 	const [categories, setCategories] = useState([]);
@@ -32,13 +30,15 @@ const ProductDetails = ({ match, history }) => {
 
 	const { user: admin } = useSelector((state) => ({ ...state }));
 
+	const { slug } = match.params;
+
 	useEffect(() => {
 		getAllCategories().then((res) => setCategories(res.data));
 		fetchProduct();
 	}, []);
 
 	const fetchProduct = () => {
-		getProduct(slug)
+		getProductInfo(slug)
 			.then((res) => {
 				setProduct({ ...product, ...res.data });
 				/** Get Sub-Categories By CategoryId */
