@@ -1,9 +1,10 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { getLatestSortedProducts } from '../../functions/product';
-import HomeProductCards from '../cards/HomeProductCards';
+import ProductCard from '../cards/ProductCard';
 import CardLoading from '../cards/CardLoading';
 import { Pagination } from 'antd';
 import Ratings from '../../components/ratings/Ratings';
+import TextBanner from '../banner/TextBanner';
 
 const pageSizeOptions = ['6', '12', '24'];
 
@@ -31,24 +32,13 @@ const BestSellersComp = ({ totaProducts }) => {
 				key={product._id}
 				className='col-md-4'>
 				<Ratings product={product} />
-				<HomeProductCards product={product} />
+				<ProductCard product={product} />
 			</div>
 		));
 
 	return (
 		<Fragment>
-			<div>
-				<h4
-					id='new-arrivals'
-					className='text-center p-4 mt-3 mb-4 display-3 jumbotron font-weight-bold'
-					style={{
-						color: '#e77f67',
-						textShadow: '4px 4px #b2bec3',
-						background: '#dff9fb',
-					}}>
-					Best Sellers
-				</h4>
-			</div>
+			<TextBanner text='Best Sellers' />
 			<div className='container'>
 				{loading ? (
 					<CardLoading count={products.length} />

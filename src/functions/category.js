@@ -41,3 +41,5 @@ export const getSubsByParent = async (id, setData) => {
 		.get(getBaseUrl(`/category/sub-catogories/${id}`))
 		.then((res) => setData(res.data));
 };
+
+export const getProductByCategory = async (id) => axios.get(`${baseUrl}/products/${id}`);

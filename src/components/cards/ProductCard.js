@@ -6,7 +6,7 @@ import laptop from '../../images/laptop.png';
 
 const { Meta } = Card;
 
-const HomeProductCards = ({ product }) => {
+const ProductCard = ({ product }) => {
 	const { title, description, images, slug } = product;
 
 	return (
@@ -39,4 +39,4 @@ const HomeProductCards = ({ product }) => {
 	);
 };
 
-export default HomeProductCards;
+export default ProductCard;

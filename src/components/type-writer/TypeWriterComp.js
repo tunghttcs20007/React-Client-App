@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import Typewriter from 'typewriter-effect';
 
 const TypeWriterComp = ({ text }) => (

@@ -1,8 +1,10 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import TypeWriterComp from '../components/TypeWriterComp';
+import { getTotalProductsCount } from '../functions/product';
+import TypeWriterComp from '../components/type-writer/TypeWriterComp';
 import NewArrivalsComp from '../components/home/NewArrivalsComp';
 import BestSellersComp from '../components/home/BestSellersComp';
-import { getTotalProductsCount } from '../functions/product';
+import CategoryList from '../components/home/CategoryList';
+import SubCategoryList from '../components/home/SubCategoryList';
 
 const HeadingText = ['New Arrivals !!!', 'Latest Products', 'Best Products'];
 
@@ -18,7 +20,7 @@ const Home = () => {
 	return (
 		<Fragment>
 			<div
-				className='jumbotron text-center font-weight-bold display-1 mt-2'
+				className='jumbotron text-center font-weight-bold display-1 mt-2 '
 				id='head-writer'
 				style={{
 					color: '#f5f6fa',
@@ -29,6 +31,8 @@ const Home = () => {
 			</div>
 			<NewArrivalsComp totaProducts={totalProducts} />
 			<BestSellersComp totaProducts={totalProducts} />
+			<CategoryList />
+			<SubCategoryList />
 			<br />
 			<br />
 		</Fragment>

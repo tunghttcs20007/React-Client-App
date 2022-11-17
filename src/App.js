@@ -21,6 +21,8 @@ import ProductCreate from './pages/admin/product/ProductCreate';
 import Products from './pages/admin/product/Products';
 import ProductDetails from './pages/admin/product/ProductDetails';
 import SingleProduct from './pages/SingleProduct';
+import CategoryPage from './pages/category/CategoryPage';
+import SubCategoryPage from './pages/sub-category/SubCategoryPage';
 
 import UserRoute from './components/routes/UserRoute';
 import AdminRoute from './components/routes/AdminRoute';
@@ -91,6 +93,16 @@ const App = () => {
 					exact
 					path='/product/:slug'
 					component={SingleProduct}
+				/>
+				<Route
+					exact
+					path='/category/:slug'
+					component={CategoryPage}
+				/>
+				<Route
+					exact
+					path='/sub-category/:slug'
+					component={SubCategoryPage}
 				/>
 				(/** Protect User Route */)
 				<UserRoute

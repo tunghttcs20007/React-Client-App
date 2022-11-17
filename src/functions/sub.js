@@ -35,3 +35,5 @@ export const createSubCategory = async (subName, categoryId, accessToken) =>
 			},
 		}
 	);
+
+	export const getProductsBySub = async (id) => axios.get(`${baseUrl}/products/${id}`);

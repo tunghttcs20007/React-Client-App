@@ -44,3 +44,6 @@ export const updateProductRating = async (productId, rating, accessToken) =>
 			},
 		}
 	);
+
+export const getAllRelated = async (productId, limit) =>
+	axios.get(`${baseUrl}/related/${productId}/${limit}`);
