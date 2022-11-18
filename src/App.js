@@ -23,6 +23,7 @@ import ProductDetails from './pages/admin/product/ProductDetails';
 import SingleProduct from './pages/SingleProduct';
 import CategoryPage from './pages/category/CategoryPage';
 import SubCategoryPage from './pages/sub-category/SubCategoryPage';
+import ShopSearch from './pages/ShopSearch';
 
 import UserRoute from './components/routes/UserRoute';
 import AdminRoute from './components/routes/AdminRoute';
@@ -103,6 +104,11 @@ const App = () => {
 					exact
 					path='/sub-category/:slug'
 					component={SubCategoryPage}
+				/>
+				<Route
+					exact
+					path={['/search', '/shop']}
+					component={ShopSearch}
 				/>
 				(/** Protect User Route */)
 				<UserRoute
