@@ -26,7 +26,7 @@ const SubCategoryList = () => {
 
 	return (
 		<div>
-			<TextBanner text='Categories' />
+			<TextBanner text='Sub Categories' />
 			<div className='container'>
 				<div className='row'>
 					{loading ? <h4 className='text-center'>Loading...</h4> : <RenderSubCategories />}
