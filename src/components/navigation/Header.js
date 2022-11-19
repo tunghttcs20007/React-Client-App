@@ -67,7 +67,7 @@ const Header = () => {
 				<Link to='/'>Home</Link>
 			</Item>
 			<Item
-				key='home'
+				key='shop'
 				icon={<ShopTwoTone />}>
 				<Link to='/shop'>Shop</Link>
 			</Item>

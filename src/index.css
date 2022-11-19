@@ -3,3 +3,10 @@
   height: 528px;
   object-fit: cover;
 }
+
+.sub-category-item {
+  font-size: 0.85em !important;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: 500;
+}

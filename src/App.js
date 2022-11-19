@@ -107,7 +107,7 @@ const App = () => {
 				/>
 				<Route
 					exact
-					path={['/search', '/shop']}
+					path={['/shop', '/shop/search']}
 					component={ShopSearch}
 				/>
 				(/** Protect User Route */)

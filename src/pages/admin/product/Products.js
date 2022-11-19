@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import AdminNav from '../../../components/navigation/AdminNav';
 import HomeProductCards from '../../../components/cards/AdminProductCard';
-import { listAllProducts, removeProduct } from '../../../functions/product';
+import { getAllProducts, removeProduct } from '../../../functions/product';
 import { LoadingOutlined } from '@ant-design/icons';
 import { toast } from 'react-toastify';
 
@@ -13,15 +13,15 @@ const Products = () => {
 	const { user: admin } = useSelector((state) => ({ ...state }));
 
 	useEffect(() => {
-		fetchProducts(10);
+		setLoading(true);
+		fetchProducts();
 	}, []);
 
-	const fetchProducts = (count) => {
-		setLoading(true);
-		listAllProducts(count)
+	const fetchProducts = () => {
+		getAllProducts()
 			.then((res) => {
-				setLoading(false);
 				setProducts(res.data);
+				setLoading(false);
 			})
 			.catch((error) => {
 				console.log(error);
@@ -34,7 +34,7 @@ const Products = () => {
 			removeProduct(slug, admin.token)
 				.then((res) => {
 					console.log(res);
-					fetchProducts(10);
+					fetchProducts();
 					toast.success(`"${res.data.title}" is deleted!`, {
 						position: 'top-center',
 					});

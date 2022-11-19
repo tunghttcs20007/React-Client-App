@@ -10,8 +10,10 @@ export const createProduct = async (product, accessToken) =>
 		},
 	});
 
-export const listAllProducts = async (count) =>
-	axios.get(getBaseUrl(`/products/${count}`));
+export const getAllProducts = async (setData) => {
+	return axios.get(getBaseUrl('/products'));
+	// return axios.get(getBaseUrl('/products')).then((res) => setData(res.data));
+};
 
 export const getProductInfo = async (slug) => axios.get(`${baseUrl}/${slug}`);
 
@@ -47,3 +49,6 @@ export const updateProductRating = async (productId, rating, accessToken) =>
 
 export const getAllRelated = async (productId, limit) =>
 	axios.get(`${baseUrl}/related/${productId}/${limit}`);
+
+export const searchProductByFilter = async (filters) =>
+	axios.post(getBaseUrl('/search/filters'), filters);

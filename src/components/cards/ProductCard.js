@@ -7,7 +7,7 @@ import laptop from '../../images/laptop.png';
 const { Meta } = Card;
 
 const ProductCard = ({ product }) => {
-	const { title, description, images, slug } = product;
+	const { title, description, images, slug, price } = product;
 
 	return (
 		<Card
@@ -32,7 +32,7 @@ const ProductCard = ({ product }) => {
 				</Fragment>,
 			]}>
 			<Meta
-				title={title}
+				title={`${title} - $${price}`}
 				description={`${description && description.substring(0, 24)}...`}
 			/>
 		</Card>

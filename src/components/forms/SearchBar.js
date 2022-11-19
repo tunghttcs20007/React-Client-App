@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { SearchOutlined } from '@ant-design/icons';
@@ -20,7 +20,7 @@ const SearchBar = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		history.push(`/search?${text}`);
+		history.push(`/shop/search?${text}`);
 	};
 
 	return (
