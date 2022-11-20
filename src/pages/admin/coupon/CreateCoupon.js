@@ -6,20 +6,21 @@ import { getAllCoupons, removeCoupon, createCoupon } from '../../../functions/co
 import 'react-datepicker/dist/react-datepicker.css';
 import { DeleteOutlined } from '@ant-design/icons';
 import AdminNav from '../../../components/navigation/AdminNav';
+import NotificationModal from '../../../components/modal/NotificationModal';
 
 const initialState = {
 	name: '',
 	discount: '',
-	expiry: '',
+	expiry: new Date(),
 };
 
 const CreateCoupon = () => {
 	const [counponState, setCouponState] = useState(initialState);
 	const [loading, setLoading] = useState('');
 	const [coupons, setCoupons] = useState([]);
-
-	// redux
+	const [removeCouponId, setRemoveCouponId] = useState('');
 	const { user } = useSelector((state) => ({ ...state }));
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		loadAllCoupons();
@@ -30,24 +31,31 @@ const CreateCoupon = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setLoading(true);
-		createCoupon({ ...counponState }, user.token)
-			.then((res) => {
-				setLoading(false);
-				loadAllCoupons(); // load all coupons
-				setCouponState(initialState);
-				toast.success(`"${res.data.name}" is created`);
-			})
-			.catch((error) => console.log('create coupon error', error));
+		createCoupon({ ...counponState }, user.token).then((res) => {
+			if (res.data.errors) {
+				toast.error(res.data.message);
+				return;
+			}
+			setLoading(false);
+			loadAllCoupons(); // load all coupons
+			setCouponState(initialState);
+			toast.success(`COUPON (${res.data.coupon.name}) is created`);
+		});
+	};
+
+	const handleOpenModalOnDeleteCoupon = (id) => {
+		setRemoveCouponId(id);
+		dispatch({ type: 'SET_MODAL_VISIBILITY', payload: true });
 	};
 
 	const handleRemove = (couponId) => {
-		if (window.confirm('Delete?')) {
+		if (removeCoupon) {
 			setLoading(true);
-			removeCoupon(couponId, user.token)
+			removeCoupon(user.token, couponId)
 				.then((res) => {
 					loadAllCoupons(); // load all coupons
 					setLoading(false);
-					toast.error(`Coupon "${res.data.name}" deleted`);
+					toast.info(`Coupon is deleted`);
 				})
 				.catch((error) => console.log(error));
 		}
@@ -62,7 +70,7 @@ const CreateCoupon = () => {
 					<td>{coupon.discount}%</td>
 					<td>
 						<DeleteOutlined
-							onClick={() => handleRemove(coupon._id)}
+							onClick={() => handleOpenModalOnDeleteCoupon(coupon._id)}
 							className='text-danger pointer'
 						/>
 					</td>
@@ -106,7 +114,7 @@ const CreateCoupon = () => {
 							<br />
 							<DatePicker
 								className='form-control'
-								selected={new Date()}
+								selected={counponState.expiry}
 								value={counponState.expiry}
 								onChange={(date) => setCouponState({ ...counponState, expiry: date })}
 								required
@@ -129,6 +137,14 @@ const CreateCoupon = () => {
 					</table>
 				</div>
 			</div>
+			<NotificationModal
+				title={'Remove Coupon'}
+				message={'Are you sure to delete this coupon?'}
+				handleClickYes={() => {
+					handleRemove(removeCouponId);
+					dispatch({ type: 'SET_MODAL_VISIBILITY', payload: false });
+				}}
+			/>
 		</div>
 	);
 };
