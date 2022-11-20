@@ -91,10 +91,9 @@ const ProductCheckoutItem = ({ product }) => {
 	const handleQuantityChange = (e) => {
 		let cart = [];
 		let currentQuantity = e.target.value < 1 ? 1 : e.target.value;
-		let available = quantity - sold;
 
-		if (currentQuantity > available) {
-			toast.warning(`Only in-stock ${available} ${title.toUpperCase()} product(s)`, {
+		if (currentQuantity > quantity) {
+			toast.warning(`Only in-stock ${quantity} ${title.toUpperCase()} product(s)`, {
 				pauseOnFocusLoss: false,
 				position: 'top-center',
 				style: {},
@@ -156,7 +155,6 @@ const ProductCheckoutItem = ({ product }) => {
 				<td className='product-quantity'>
 					<input
 						className='quantity'
-						min='1'
 						name='quantity'
 						value={count}
 						type='number'

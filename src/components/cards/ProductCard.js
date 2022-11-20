@@ -41,6 +41,8 @@ const ProductCard = ({ product }) => {
 		}
 	};
 
+	const isProductNotAvailable = product.quantity < 1;
+
 	return (
 		<Card
 			hoverable
@@ -61,9 +63,13 @@ const ProductCard = ({ product }) => {
 				<Tooltip
 					title={tooltip}
 					color='cyan'>
-					<a onClick={handleClickAddToCard}>
-						<ShoppingCartOutlined className='text-success' />
-						<br /> Add To Cart
+					<a
+						onClick={handleClickAddToCard}
+						disabled={isProductNotAvailable}>
+						<ShoppingCartOutlined
+							className={isProductNotAvailable ? 'text-secondary' : 'text-success'}
+						/>
+						<br /> {isProductNotAvailable ? 'Out of stock' : 'Add To Cart'}
 					</a>
 				</Tooltip>,
 			]}>

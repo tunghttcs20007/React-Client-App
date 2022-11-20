@@ -19,7 +19,7 @@ const CheckOut = ({ history }) => {
 	const [isUserAddSave, setIsUserAddSave] = useState(false);
 	const [couponName, setCouponName] = useState('');
 
-	const { user, coupon } = useSelector((state) => ({ ...state }));
+	const { user } = useSelector((state) => ({ ...state }));
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -163,7 +163,7 @@ const CheckOut = ({ history }) => {
 				{cartInfo.totalAfterDiscount > 0 && (
 					<p className='text-light text-center bg-success pt-2 pb-2'>
 						Discount Total: ${cartInfo.totalAfterDiscount} <br />
-						Coupon ${cartInfo.discount}% discount is applied
+						Coupon {cartInfo.discount}% discount is applied
 					</p>
 				)}
 				<div className='col'>
