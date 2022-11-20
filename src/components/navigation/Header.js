@@ -8,6 +8,7 @@ import {
 	LogoutOutlined,
 	ShoppingTwoTone,
 	ShopTwoTone,
+	ProfileTwoTone,
 } from '@ant-design/icons';
 import { Link, useHistory } from 'react-router-dom';
 import firebase from 'firebase/compat/app';
@@ -71,18 +72,29 @@ const Header = () => {
 				icon={<ShopTwoTone />}>
 				<Link to='/shop'>Shop</Link>
 			</Item>
-			<Item
-				key='cart'
-				icon={<ShoppingTwoTone />}>
-				<Link to='/cart'>
-					Cart
-					<Badge
-						count={cart.length}
-						size='medium'
-						offset={[2, -15]}
-					/>
-				</Link>
-			</Item>
+
+			{user && user.role === 'subscriber' && (
+				<Item
+					key='cart'
+					icon={<ShoppingTwoTone />}>
+					<Link to='/cart'>
+						Cart
+						<Badge
+							count={cart.length}
+							size='medium'
+							offset={[2, -15]}
+						/>
+					</Link>
+				</Item>
+			)}
+
+			{user && user.role === 'subscriber' && (
+				<Item
+					key='wishlist'
+					icon={<ProfileTwoTone />}>
+					<Link to='/user/wishlist'>Wishlist</Link>
+				</Item>
+			)}
 
 			{!user && (
 				<Item

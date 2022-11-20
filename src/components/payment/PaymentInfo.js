@@ -1,24 +1,26 @@
 import React from 'react';
 
 const PaymentInfo = ({ order, showStatus = true }) => {
-	let statusClassName = '';
+	let orderStatusClazzName = '';
 
 	switch (order.orderStatus) {
 		case 'NOT PROCESSED':
-			statusClassName = 'bg-secondary';
+			orderStatusClazzName = 'bg-secondary text-light';
 			break;
 		case 'PROCESSING':
-			statusClassName = 'bg-info';
+			orderStatusClazzName = 'bg-info text-light';
 			break;
 		case 'DISPATCHED':
-			statusClassName = 'bg-primary';
+			orderStatusClazzName = 'bg-primary text-light';
 			break;
 		case 'CANCELED':
-			statusClassName = 'bg-danger';
-			break;
+			orderStatusClazzName = 'bg-danger text-light';
 			break;
 		case 'COMPLETED':
-			statusClassName = 'bg-success';
+			orderStatusClazzName = 'bg-success text-light';
+			break;
+		case 'CASH ON DELIVERY':
+			orderStatusClazzName = 'bg-success text-dark';
 			break;
 	}
 
@@ -49,7 +51,7 @@ const PaymentInfo = ({ order, showStatus = true }) => {
 				<b>Payment Method: </b>
 				{`${order.paymentData.paymentIntent.payment_method_types[0].toUpperCase()} `}
 			</span>
-			<span className='badge bg-success text-light'>
+			<span className='badge bg-info text-light'>
 				<b>{order.paymentData.paymentIntent.status.toUpperCase()}</b>
 			</span>
 			<br />
@@ -57,9 +59,7 @@ const PaymentInfo = ({ order, showStatus = true }) => {
 				<b>Order Date: </b>
 				{`${new Date(order.paymentData.paymentIntent.created * 1000).toLocaleString()} `}
 			</span>
-			{showStatus && (
-				<span className={`badge ${statusClassName} text-light`}>{order.orderStatus}</span>
-			)}
+			{showStatus && <span className={`badge ${orderStatusClazzName}`}>{order.orderStatus}</span>}
 		</div>
 	);
 };

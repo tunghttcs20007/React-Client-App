@@ -1,7 +1,13 @@
 import React, { Fragment, useEffect, useState, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import { getUserCart, emptyUserCart, updateUserAddress, applyCoupon } from '../../functions/user';
+import {
+	getUserCart,
+	emptyUserCart,
+	updateUserAddress,
+	applyCoupon,
+	createOrderWithCOD,
+} from '../../functions/user';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
@@ -19,7 +25,7 @@ const CheckOut = ({ history }) => {
 	const [isUserAddSave, setIsUserAddSave] = useState(false);
 	const [couponName, setCouponName] = useState('');
 
-	const { user } = useSelector((state) => ({ ...state }));
+	const { user, payCOD, coupon } = useSelector((state) => ({ ...state }));
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -100,7 +106,34 @@ const CheckOut = ({ history }) => {
 	};
 
 	const handClickPlaceOrder = () => {
-		history.push('/user/payment');
+		if (payCOD) {
+			createOrderWithCOD(user.token, payCOD, coupon).then((res) => {
+				if (res.data.orderCreated) {
+					//Clear local storage/redux state (cart, coupon, payCod). Send request to clear cart in DB
+					if (typeof window !== 'undefined') localStorage.removeItem('cart');
+					dispatch({
+						type: 'ADD_TO_CART',
+						payload: [],
+					});
+					dispatch({
+						type: 'COUPON_APPLIED',
+						payload: false,
+					});
+					dispatch({
+						type: 'PAY_COD',
+						payload: false,
+					});
+					emptyUserCart(user.token).then((res) => {
+						setCartInfo(initialState);
+					});
+					setTimeout(() => {
+						history.push('/user/history');
+					}, 1000);
+				}
+			});
+		} else {
+			history.push('/user/payment');
+		}
 	};
 
 	const ShowTextArea = useMemo(() => {

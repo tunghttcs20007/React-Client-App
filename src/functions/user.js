@@ -19,8 +19,24 @@ export const updateUserAddress = (address, accessToken) =>
 export const applyCoupon = async (coupon, accessToken) =>
 	await axios.post(`${USER_BASE_URL}/coupon`, { coupon }, { headers: { accessToken } });
 
-export const createOrder = async (paymentData, accessToken) =>
+export const createOnlinePaymentOrder = async (paymentData, accessToken) =>
 	axios.post(`${ORDER_BASE_URL}/create`, { paymentData }, { headers: { accessToken } });
+
+export const createOrderWithCOD = async (accessToken, isCashOnDelivery, coupon) =>
+	axios.post(
+		`${ORDER_BASE_URL}/create/cash-order`,
+		{ cod: isCashOnDelivery, coupon },
+		{ headers: { accessToken } }
+	);
 
 export const getUserOrders = (accessToken) =>
 	axios.get(`${ORDER_BASE_URL}/listAll`, { headers: { accessToken } });
+
+export const getUserWishlist = (accessToken) =>
+	axios.get(`${USER_BASE_URL}/wishlist`, { headers: { accessToken } });
+
+export const addProductToWishList = (accessToken, productId) =>
+	axios.post(`${USER_BASE_URL}/wishlist`, { productId }, { headers: { accessToken } });
+
+export const removeProductToWishList = (accessToken, productId) =>
+	axios.put(`${USER_BASE_URL}/wishlist/${productId}`, {}, { headers: { accessToken } });

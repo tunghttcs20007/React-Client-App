@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ProductCheckoutItem from '../../components/cards/ProductCheckoutItem';
 import { userCheckout } from '../../functions/user';
@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 
 const CartPage = ({ history }) => {
 	const { cart, user } = useSelector((state) => ({ ...state }));
+	const dispatch = useDispatch();
 
 	const renderProductTable = () => (
 		<table className='table table-bordered'>
@@ -21,7 +22,6 @@ const CartPage = ({ history }) => {
 					<th scope='col'></th>
 				</tr>
 			</thead>
-
 			{cart.map((product) => (
 				<ProductCheckoutItem
 					product={product}
@@ -49,11 +49,31 @@ const CartPage = ({ history }) => {
 		}, 0);
 	};
 
-	const clickProceedPayment = () => {
-		//TODO: handle user checkout
+	const handleClickOnlinePayment = () => {
 		userCheckout(cart, user.token)
 			.then((res) => {
 				if (res.data.success) {
+					history.push('/user/checkout');
+				}
+			})
+			.catch((error) => {
+				const response = error.response;
+				if (response.status === 401) {
+					toast.error('Your session is expired. Please re-login to proceed to checkout!', {
+						position: 'top-center',
+					});
+				}
+			});
+	};
+
+	const handleClickCOD = () => {
+		userCheckout(cart, user.token)
+			.then((res) => {
+				if (res.data.success) {
+					dispatch({
+						type: 'PAY_COD',
+						payload: true,
+					});
 					history.push('/user/checkout');
 				}
 			})
@@ -82,12 +102,21 @@ const CartPage = ({ history }) => {
 					<b>${getTotalPrice()}</b>
 					<hr />
 					{user ? (
-						<button
-							onClick={clickProceedPayment}
-							className='btn btn-sm btn-outline-success'
-							disabled={!cart.length}>
-							Proceed payment
-						</button>
+						<Fragment>
+							<button
+								onClick={handleClickOnlinePayment}
+								className='btn btn-sm btn-outline-success'
+								disabled={!cart.length}>
+								Checkout with Online Payment
+							</button>
+							<br />
+							<button
+								onClick={handleClickCOD}
+								className='btn btn-sm btn-outline-info'
+								disabled={!cart.length}>
+								Checkout with Cash on delivery
+							</button>
+						</Fragment>
 					) : (
 						<button className='btn btn-sm btn-outline-info'>
 							<Link to={{ pathname: '/login', state: { from: 'cart' } }}>Login to checkout</Link>

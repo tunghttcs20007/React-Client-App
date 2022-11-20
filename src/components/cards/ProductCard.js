@@ -13,7 +13,6 @@ const ProductCard = ({ product }) => {
 
 	const { title, description, images, slug, price } = product;
 
-	const { user, cart } = useSelector((state) => ({ ...state }));
 	const dispatch = useDispatch();
 
 	const handleClickAddToCard = () => {

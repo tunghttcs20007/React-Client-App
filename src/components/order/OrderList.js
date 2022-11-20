@@ -19,9 +19,11 @@ const OrderList = ({ orders, onStatusChange }) => {
 			case 'CANCELED':
 				clazzName = 'bg-danger';
 				break;
-				break;
 			case 'COMPLETED':
 				clazzName = 'bg-success';
+				break;
+			case 'CASH ON DELIVERY':
+				clazzName = 'bg-secondary';
 				break;
 		}
 		return clazzName;

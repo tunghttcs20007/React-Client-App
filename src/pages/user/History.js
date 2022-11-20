@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
 import { getUserOrders } from '../../functions/user';
 import UserNav from '../../components/navigation/UserNav';
 import PaymentItemTable from '../../components/payment/PaymentItemTable';
