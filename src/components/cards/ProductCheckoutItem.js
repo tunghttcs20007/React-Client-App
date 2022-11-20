@@ -4,7 +4,7 @@ import { CheckCircleFilled, CloseCircleFilled, DeleteOutlined } from '@ant-desig
 import { Image } from 'antd';
 import { toast } from 'react-toastify';
 import Laptop from '../../images/laptop.png';
-import { colorOptions } from '../../static/Data';
+import { COLOR as OPTIONS } from '../../static/Data';
 
 const ProductCheckoutItem = ({ product }) => {
 	const [visible, setVisible] = useState(false);
@@ -144,7 +144,7 @@ const ProductCheckoutItem = ({ product }) => {
 				<td>{showImage(url, title)}</td>
 				<td>{title}</td>
 				<td>${price}</td>
-				<td>{renderSelectOptions(colorOptions, color, handleColorChange)}</td>
+				<td>{renderSelectOptions(OPTIONS, color, handleColorChange)}</td>
 				<td className='shipping-status'>
 					{shipping === 'Yes' ? (
 						<CheckCircleFilled className='text-success' />

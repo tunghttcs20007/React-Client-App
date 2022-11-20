@@ -1,8 +1,6 @@
 import React from 'react';
 
-const STATUS = ['NOT PROCESSED', 'PROCESSING', 'DISPATCHED', 'CANCELED', 'COMPLETED'];
-
-const PaymentInfo = ({ order }) => {
+const PaymentInfo = ({ order, showStatus = true }) => {
 	let statusClassName = '';
 
 	switch (order.orderStatus) {
@@ -59,7 +57,9 @@ const PaymentInfo = ({ order }) => {
 				<b>Order Date: </b>
 				{`${new Date(order.paymentData.paymentIntent.created * 1000).toLocaleString()} `}
 			</span>
-			<span className={`badge ${statusClassName} text-light`}>{order.orderStatus}</span>
+			{showStatus && (
+				<span className={`badge ${statusClassName} text-light`}>{order.orderStatus}</span>
+			)}
 		</div>
 	);
 };

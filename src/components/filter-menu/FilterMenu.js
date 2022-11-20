@@ -10,7 +10,7 @@ import {
 	CarOutlined,
 } from '@ant-design/icons';
 import RatingOptions from '../ratings/RatingOptions';
-import { colorOptions, brandOptions, shippingOptions } from '../../static/Data';
+import { COLOR, BRAND, SHIPPING } from '../../static/Data';
 
 const { SubMenu, ItemGroup } = Menu;
 
@@ -77,7 +77,7 @@ const FilterMenu = ({
 	}, [subCategory]);
 
 	const BrandOptions = () =>
-		brandOptions.map((brand, index) => (
+		BRAND.map((brand, index) => (
 			<Radio
 				className='pb-1 pr-5'
 				key={index}
@@ -90,7 +90,7 @@ const FilterMenu = ({
 		));
 
 	const ColorOptions = () =>
-		colorOptions.map((color, index) => (
+		COLOR.map((color, index) => (
 			<Radio
 				className='pb-1 pr-5'
 				key={index}
@@ -103,7 +103,7 @@ const FilterMenu = ({
 		));
 
 	const ShippingOptions = () =>
-		shippingOptions.map((shipping, index) => (
+		SHIPPING.map((shipping, index) => (
 			<Checkbox
 				className='pb-1 pr-5'
 				key={index}

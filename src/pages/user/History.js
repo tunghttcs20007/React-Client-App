@@ -27,8 +27,10 @@ const History = () => {
 			return (
 				<div className='col'>
 					<h4 className='text-center'>Your purchased orders</h4>
-					{orders.map((order) => (
-						<PaymentItemTable order={order}>
+					{orders.map((order, index) => (
+						<PaymentItemTable
+							key={index}
+							order={order}>
 							<PaymentInfo order={order} />
 						</PaymentItemTable>
 					))}

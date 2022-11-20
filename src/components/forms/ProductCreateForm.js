@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import Input from '../input/Input';
 import DropdownSelect from '../select/DropdownSelect';
 import { Select } from 'antd';
-import { colorOptions, brandOptions, shippingOptions } from '../../static/Data';
+import { COLOR, BRAND, SHIPPING } from '../../static/Data';
 
 const { Option } = Select;
 
@@ -43,7 +43,7 @@ const ProductCreateForm = ({
 					onChangeHandler={onChangeHandler}
 				/>
 				<DropdownSelect
-					items={shippingOptions}
+					items={SHIPPING}
 					label='Shipping'
 					name='shipping'
 					onChangeHandler={onChangeHandler}
@@ -57,14 +57,14 @@ const ProductCreateForm = ({
 					onChangeHandler={onChangeHandler}
 				/>
 				<DropdownSelect
-					items={colorOptions}
+					items={COLOR}
 					label='Color'
 					name='color'
 					onChangeHandler={onChangeHandler}
 					defaultOption='Please Select'
 				/>
 				<DropdownSelect
-					items={brandOptions}
+					items={BRAND}
 					label='Brand'
 					name='brand'
 					onChangeHandler={onChangeHandler}
