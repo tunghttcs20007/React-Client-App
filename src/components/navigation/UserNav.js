@@ -8,7 +8,7 @@ const UserNav = () => (
 				<Link
 					to='/user/history'
 					className='nav-link'>
-					History
+					Order History
 				</Link>
 			</li>
 			<li className='nav-item'>

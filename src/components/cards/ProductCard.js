@@ -10,9 +10,7 @@ const { Meta } = Card;
 
 const ProductCard = ({ product }) => {
 	const [tooltip, setTooltip] = useState('Click to add');
-
 	const { title, description, images, slug, price } = product;
-
 	const dispatch = useDispatch();
 
 	const handleClickAddToCard = () => {

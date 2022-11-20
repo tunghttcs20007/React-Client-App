@@ -18,9 +18,7 @@ const { TabPane } = Tabs;
 
 const ProductDetails = ({ product, userInfo, handleUserRating, star }) => {
 	const [tooltip, setTooltip] = useState('Click to add');
-
 	const { title, images, description, _id } = product;
-
 	const { user } = useSelector((state) => ({ ...state }));
 	const dispatch = useDispatch();
 	const history = useHistory();
@@ -84,6 +82,8 @@ const ProductDetails = ({ product, userInfo, handleUserRating, star }) => {
 		});
 	};
 
+	const isProductNotAvailable = product.quantity < 1;
+
 	return (
 		<Fragment>
 			<div className='col-md-7'>
@@ -124,9 +124,13 @@ const ProductDetails = ({ product, userInfo, handleUserRating, star }) => {
 						<Tooltip
 							title={tooltip}
 							color='cyan'>
-							<a onClick={handleClickAddToCard}>
-								<ShoppingCartOutlined className='text-success' />
-								<br /> Add To Cart
+							<a
+								onClick={handleClickAddToCard}
+								disabled={isProductNotAvailable}>
+								<ShoppingCartOutlined
+									className={isProductNotAvailable ? 'text-secondary' : 'text-success'}
+								/>
+								<br /> {isProductNotAvailable ? 'Out of stock' : 'Add To Cart'}
 							</a>
 						</Tooltip>,
 						<a onClick={handleClickAddToWishList}>

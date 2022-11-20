@@ -59,7 +59,9 @@ const Wishlist = () => {
 					<UserNav />
 				</div>
 				<div className='col'>
-					<h4>Wishlist</h4>
+					<h4 className='text-center'>
+						{wishlist.length ? 'Your Wishlist' : 'No Product Added To Wishlist'}
+					</h4>
 					<WishListItem />
 				</div>
 			</div>
