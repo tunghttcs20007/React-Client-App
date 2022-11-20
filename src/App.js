@@ -1,7 +1,11 @@
-import React, { useEffect } from "react";
-import { Switch, Route } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React, { useEffect, Fragment } from 'react';
+import { Switch, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import UserRoute from './components/routes/UserRoute';
+import AdminRoute from './components/routes/AdminRoute';
+import SideDrawer from './components/drawer/SideDrawer';
 
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
@@ -24,9 +28,10 @@ import SingleProduct from './pages/SingleProduct';
 import CategoryPage from './pages/category/CategoryPage';
 import SubCategoryPage from './pages/sub-category/SubCategoryPage';
 import ShopSearch from './pages/ShopSearch';
-
-import UserRoute from './components/routes/UserRoute';
-import AdminRoute from './components/routes/AdminRoute';
+import CartPage from './pages/cart/CartPage';
+import CheckOut from './pages/payment/CheckOut';
+import CreateCoupon from './pages/admin/coupon/CreateCoupon';
+import Payment from './pages/payment/Payment';
 
 import { auth } from './firebase';
 import { useDispatch } from 'react-redux';
@@ -61,8 +66,9 @@ const App = () => {
 	}, [dispatch]);
 
 	return (
-		<>
+		<Fragment>
 			<Header />
+			<SideDrawer />
 			<ToastContainer />
 			<Switch>
 				<Route
@@ -110,6 +116,11 @@ const App = () => {
 					path={['/shop', '/shop/search']}
 					component={ShopSearch}
 				/>
+				<Route
+					exact
+					path='/cart'
+					component={CartPage}
+				/>
 				(/** Protect User Route */)
 				<UserRoute
 					exact
@@ -125,6 +136,16 @@ const App = () => {
 					exact
 					path='/user/wishlist'
 					component={Wishlist}
+				/>
+				<UserRoute
+					exact
+					path='/user/checkout'
+					component={CheckOut}
+				/>
+				<UserRoute
+					exact
+					path='/user/payment'
+					component={Payment}
 				/>
 				(/** Protect Admin Route */)
 				<AdminRoute
@@ -167,8 +188,18 @@ const App = () => {
 					path='/admin/product/:slug'
 					component={ProductDetails}
 				/>
+				<AdminRoute
+					exact
+					path='/admin/coupon'
+					component={CreateCoupon}
+				/>
+				<AdminRoute
+					exact
+					path='/user/payment'
+					component={Payment}
+				/>
 			</Switch>
-		</>
+		</Fragment>
 	);
 };
 

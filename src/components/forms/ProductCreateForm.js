@@ -2,11 +2,9 @@ import React, { Fragment } from 'react';
 import Input from '../input/Input';
 import DropdownSelect from '../select/DropdownSelect';
 import { Select } from 'antd';
-const { Option } = Select;
+import { colorOptions, brandOptions, shippingOptions } from '../../static/Data';
 
-const colors = ['Black', 'Brown', 'Silver', 'White', 'Blue'];
-const brands = ['Apple', 'Samsung', 'Microsoft', 'Lenovo', 'Asus'];
-const shippingOptions = ['Yes', 'No'];
+const { Option } = Select;
 
 const ProductCreateForm = ({
 	submitHandler,
@@ -59,14 +57,14 @@ const ProductCreateForm = ({
 					onChangeHandler={onChangeHandler}
 				/>
 				<DropdownSelect
-					items={colors}
+					items={colorOptions}
 					label='Color'
 					name='color'
 					onChangeHandler={onChangeHandler}
 					defaultOption='Please Select'
 				/>
 				<DropdownSelect
-					items={brands}
+					items={brandOptions}
 					label='Brand'
 					name='brand'
 					onChangeHandler={onChangeHandler}

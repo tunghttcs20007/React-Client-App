@@ -105,7 +105,7 @@ const SubCategoryCreate = () => {
 					<AdminNav />
 				</div>
 				<div className='col'>
-					<h3 className='pt-2'>Create Sub Category</h3>
+					<h4>Create Sub Category</h4>
 					<DropdownSelect
 						clazzName='text-info font-weight-bold'
 						items={categories}

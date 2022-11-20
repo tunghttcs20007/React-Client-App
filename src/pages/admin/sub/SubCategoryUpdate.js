@@ -61,7 +61,7 @@ const SubCategoryUpdate = ({ history, match }) => {
 					<AdminNav />
 				</div>
 				<div className='col'>
-					<h3 className='pt-2'>Update Sub Category</h3>
+					<h4>Update Sub Category</h4>
 					<DropdownSelect
 						clazzName='text-info font-weight-bold'
 						items={categories}

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Menu } from 'antd';
+import { Menu, Badge } from 'antd';
 import {
 	HomeFilled,
 	SettingOutlined,
 	UserOutlined,
 	UserAddOutlined,
 	LogoutOutlined,
-	ShoppingCartOutlined,
+	ShoppingTwoTone,
 	ShopTwoTone,
 } from '@ant-design/icons';
 import { Link, useHistory } from 'react-router-dom';
@@ -21,7 +21,7 @@ const Header = () => {
 
 	let dispatch = useDispatch();
 	/** Get user state from Redux Store */
-	let { user } = useSelector((state) => ({ ...state }));
+	let { user, cart } = useSelector((state) => ({ ...state }));
 	let history = useHistory();
 	const isRoleAdmin = user && user.role === 'admin' ? true : false;
 	const isRoleUser = user && user.role === 'subscriber' ? true : false;
@@ -70,6 +70,18 @@ const Header = () => {
 				key='shop'
 				icon={<ShopTwoTone />}>
 				<Link to='/shop'>Shop</Link>
+			</Item>
+			<Item
+				key='cart'
+				icon={<ShoppingTwoTone />}>
+				<Link to='/cart'>
+					Cart
+					<Badge
+						count={cart.length}
+						size='medium'
+						offset={[2, -15]}
+					/>
+				</Link>
 			</Item>
 
 			{!user && (

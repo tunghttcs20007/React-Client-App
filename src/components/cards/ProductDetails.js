@@ -1,5 +1,6 @@
-import React, { Fragment } from 'react';
-import { Card, Tabs } from 'antd';
+import React, { Fragment, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Card, Tabs, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
 import { HeartOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { Carousel } from 'react-responsive-carousel';
@@ -9,11 +10,17 @@ import StarRatings from 'react-star-ratings';
 import ProductDetailsList from './ProductDetailsList';
 import RatingModal from '../modal/RatingModal';
 import Ratings from '../../components/ratings/Ratings';
+import _ from 'lodash';
 
 const { TabPane } = Tabs;
 
 const ProductDetails = ({ product, userInfo, handleUserRating, star }) => {
+	const [tooltip, setTooltip] = useState('Click to add');
+
 	const { title, images, description, _id } = product;
+
+	const { user, cart } = useSelector((state) => ({ ...state }));
+	const dispatch = useDispatch();
 
 	const ImagesCarousel = () => (
 		<Carousel
@@ -38,6 +45,31 @@ const ProductDetails = ({ product, userInfo, handleUserRating, star }) => {
 			)}
 		</Carousel>
 	);
+
+	const handleClickAddToCard = () => {
+		let cartToUpdate = [];
+		if (typeof window !== 'undefined') {
+			if (localStorage.getItem('cart')) cartToUpdate = JSON.parse(localStorage.getItem('cart'));
+			cartToUpdate.push({ ...product, count: 1 });
+		}
+		let unique = _.uniqWith(cartToUpdate, _.isEqual);
+		localStorage.setItem('cart', JSON.stringify(unique));
+		//Add new item to cart state in redux
+		dispatch({
+			type: 'ADD_TO_CART',
+			payload: unique,
+		});
+		//Update drawer state in redux to open side drawer
+		if (tooltip === 'Added') {
+			return;
+		} else {
+			dispatch({
+				type: 'SET_VISIBILITY',
+				payload: true,
+			});
+			setTooltip('Added');
+		}
+	};
 
 	return (
 		<Fragment>
@@ -76,11 +108,14 @@ const ProductDetails = ({ product, userInfo, handleUserRating, star }) => {
 				/>
 				<Card
 					actions={[
-						<Fragment>
-							<ShoppingCartOutlined className='text-success' />
-							<br />
-							Add To Cart
-						</Fragment>,
+						<Tooltip
+							title={tooltip}
+							color='cyan'>
+							<a onClick={handleClickAddToCard}>
+								<ShoppingCartOutlined className='text-success' />
+								<br /> Add To Cart
+							</a>
+						</Tooltip>,
 						<Link to='/'>
 							<HeartOutlined className='text-info' />
 							<br />

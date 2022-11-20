@@ -10,11 +10,9 @@ import {
 	CarOutlined,
 } from '@ant-design/icons';
 import RatingOptions from '../ratings/RatingOptions';
+import { colorOptions, brandOptions, shippingOptions } from '../../static/Data';
 
 const { SubMenu, ItemGroup } = Menu;
-const colorOptions = ['Black', 'Brown', 'Silver', 'White', 'Blue'];
-const brandOptions = ['Apple', 'Samsung', 'Microsoft', 'Lenovo', 'Asus'];
-const shippingOptions = ['Yes', 'No'];
 
 const FilterMenu = ({
 	price,
@@ -54,6 +52,7 @@ const FilterMenu = ({
 		for (let i = 5; i >= 0; i--) {
 			options.push(
 				<RatingOptions
+					key={i}
 					starClick={handleClickStarOption}
 					numberOfStars={i}
 				/>

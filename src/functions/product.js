@@ -12,7 +12,6 @@ export const createProduct = async (product, accessToken) =>
 
 export const getAllProducts = async (setData) => {
 	return axios.get(getBaseUrl('/products'));
-	// return axios.get(getBaseUrl('/products')).then((res) => setData(res.data));
 };
 
 export const getProductInfo = async (slug) => axios.get(`${baseUrl}/${slug}`);

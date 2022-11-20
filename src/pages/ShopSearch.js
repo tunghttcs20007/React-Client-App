@@ -48,7 +48,6 @@ const ShopSearch = () => {
 	const fetchProductsWithFilter = (filter) => {
 		searchProductByFilter(filter).then((res) => {
 			setProducts(res.data);
-			console.log(componentState);
 		});
 	};
 
