@@ -79,7 +79,7 @@ const FilterMenu = ({
 	const BrandOptions = () =>
 		BRAND.map((brand, index) => (
 			<Radio
-				className='pb-1 pr-5'
+				className='pb-1'
 				key={index}
 				value={brand}
 				name={brand}
@@ -92,7 +92,7 @@ const FilterMenu = ({
 	const ColorOptions = () =>
 		COLOR.map((color, index) => (
 			<Radio
-				className='pb-1 pr-5'
+				className='pb-1'
 				key={index}
 				value={color}
 				name={color}
@@ -119,7 +119,7 @@ const FilterMenu = ({
 		<Fragment>
 			<h6 className='text-center'>Custom Search / Filters</h6>
 			<Menu
-				defaultOpenKeys={['price-slider', 'category', 'star', 'sub-category']}
+				defaultOpenKeys={['price-slider', 'category', 'star']}
 				mode='inline'>
 				{/* Price Filter */}
 				<SubMenu

@@ -9,65 +9,8 @@ import { COLOR as OPTIONS } from '../../static/Data';
 const ProductCheckoutItem = ({ product }) => {
 	const [visible, setVisible] = useState(false);
 
-	const { title, price, color, count, shipping, images, quantity, sold } = product;
-
+	const { title, price, color, count, shipping, images, quantity } = product;
 	const dispatch = useDispatch();
-
-	const showImage = (url, alt) => (
-		<Fragment>
-			<Image
-				preview={{ visible: false }}
-				width={240}
-				src={url}
-				onClick={() => setVisible(true)}
-			/>
-			<div style={{ display: 'none' }}>
-				<Image.PreviewGroup preview={{ visible, onVisibleChange: (vis) => setVisible(vis) }}>
-					{images.length ? (
-						images.map((img, index) => (
-							<Image
-								key={index}
-								src={img.url}
-							/>
-						))
-					) : (
-						<Image src={Laptop} />
-					)}
-				</Image.PreviewGroup>
-			</div>
-		</Fragment>
-	);
-
-	let url = images.length ? images[0].url : Laptop;
-
-	const renderSelectOptions = (options, data, handleDataChange) => {
-		return (
-			<select
-				className='form-control text-center'
-				name='data'
-				id={`data-${data}`}
-				onChange={handleDataChange}>
-				{data ? (
-					<option
-						value={data}
-						key={data}>
-						{data}
-					</option>
-				) : (
-					<option>Select</option>
-				)}
-				{options
-					.filter((option) => option !== data)
-					.map((data) => (
-						<option
-							key={data}
-							value={data}>
-							{data}
-						</option>
-					))}
-			</select>
-		);
-	};
 
 	const handleColorChange = (e) => {
 		let cart = [];
@@ -138,9 +81,65 @@ const ProductCheckoutItem = ({ product }) => {
 		}
 	};
 
+	const showImage = (url, alt) => (
+		<Fragment>
+			<Image
+				preview={{ visible: false }}
+				width={240}
+				src={url}
+				onClick={() => setVisible(true)}
+			/>
+			<div style={{ display: 'none' }}>
+				<Image.PreviewGroup preview={{ visible, onVisibleChange: (vis) => setVisible(vis) }}>
+					{images.length ? (
+						images.map((img, index) => (
+							<Image
+								key={index}
+								src={img.url}
+							/>
+						))
+					) : (
+						<Image src={Laptop} />
+					)}
+				</Image.PreviewGroup>
+			</div>
+		</Fragment>
+	);
+
+	let url = images.length ? images[0].url : Laptop;
+
+	const renderSelectOptions = (options, data, handleDataChange) => {
+		return (
+			<select
+				className='form-control text-center'
+				name='data'
+				id={`data-${data}`}
+				onChange={handleDataChange}>
+				{data ? (
+					<option
+						value={data}
+						key={data}>
+						{data}
+					</option>
+				) : (
+					<option>Select</option>
+				)}
+				{options
+					.filter((option) => option !== data)
+					.map((data) => (
+						<option
+							key={data}
+							value={data}>
+							{data}
+						</option>
+					))}
+			</select>
+		);
+	};
+
 	return (
 		<tbody>
-			<tr className='text-center cart-items'>
+			<tr className='text-center cart-items border'>
 				<td>{showImage(url, title)}</td>
 				<td>{title}</td>
 				<td>${price}</td>

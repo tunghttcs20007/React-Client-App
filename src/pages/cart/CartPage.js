@@ -9,40 +9,6 @@ const CartPage = ({ history }) => {
 	const { cart, user } = useSelector((state) => ({ ...state }));
 	const dispatch = useDispatch();
 
-	const renderProductTable = () => (
-		<table className='table table-bordered'>
-			<thead className='thead-light'>
-				<tr className='text-center'>
-					<th scope='col'>Image</th>
-					<th scope='col'>Title</th>
-					<th scope='col'>Price</th>
-					<th scope='col'>Color</th>
-					<th scope='col'>Shipping</th>
-					<th scope='col'>Quantity</th>
-					<th scope='col'></th>
-				</tr>
-			</thead>
-			{cart.map((product) => (
-				<ProductCheckoutItem
-					product={product}
-					key={product._id}
-				/>
-			))}
-		</table>
-	);
-
-	const renderCartInfo = () => {
-		if (cart.length < 1) {
-			return (
-				<p>
-					No product added. <Link to='/shop'>Continue shopping</Link>
-				</p>
-			);
-		} else {
-			return <Fragment>{renderProductTable()}</Fragment>;
-		}
-	};
-
 	const getTotalPrice = () => {
 		return cart.reduce((currentVal, nextVal) => {
 			return currentVal + nextVal.count * nextVal.price;
@@ -87,6 +53,40 @@ const CartPage = ({ history }) => {
 			});
 	};
 
+	const renderProductTable = () => (
+		<table className='table table-bordered'>
+			<thead className='thead-light'>
+				<tr className='text-center border'>
+					<th scope='col'>Image</th>
+					<th scope='col'>Title</th>
+					<th scope='col'>Price</th>
+					<th scope='col'>Color</th>
+					<th scope='col'>Shipping</th>
+					<th scope='col'>Quantity</th>
+					<th scope='col'></th>
+				</tr>
+			</thead>
+			{cart.map((product) => (
+				<ProductCheckoutItem
+					product={product}
+					key={product._id}
+				/>
+			))}
+		</table>
+	);
+
+	const renderCartInfo = () => {
+		if (cart.length < 1) {
+			return (
+				<p>
+					No product added. <Link to='/shop'>Continue shopping</Link>
+				</p>
+			);
+		} else {
+			return <Fragment>{renderProductTable()}</Fragment>;
+		}
+	};
+
 	const renderOrderDetails = () => {
 		if (cart.length && cart.length > 0) {
 			return (
@@ -99,7 +99,11 @@ const CartPage = ({ history }) => {
 						</div>
 					))}
 					<hr />
-					<b>${getTotalPrice()}</b>
+					<b
+						className='text-primary'
+						style={{ fontSize: '20px' }}>
+						Total: <span className='text-dark'>${getTotalPrice()}</span>
+					</b>
 					<hr />
 					{user ? (
 						<Fragment>
@@ -130,7 +134,7 @@ const CartPage = ({ history }) => {
 	return (
 		<div className='container-fluid pt-2'>
 			<div className='row'>
-				<div className='col-md-8'>
+				<div className='container-fluid text-center col-md-8'>
 					<h4>{cart.length} item(s) in your cart</h4>
 					{renderCartInfo()}
 				</div>

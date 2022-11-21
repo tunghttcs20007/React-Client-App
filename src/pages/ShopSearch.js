@@ -154,11 +154,11 @@ const ShopSearch = () => {
 	const renderProductsList = useMemo(() => {
 		if (products.length > 0) {
 			return (
-				<div className='row pb-3'>
+				<div className='row'>
 					{products.map((product) => (
 						<div
 							key={product._id}
-							className='col-md-4 mt-2'>
+							className='col-md-4 mt-3'>
 							<Ratings product={product} />
 							<ProductCard product={product} />
 						</div>
@@ -166,14 +166,14 @@ const ShopSearch = () => {
 				</div>
 			);
 		} else {
-			return <h5 className='text-info'>No products found!</h5>;
+			return <h4 className='text-info text-center'>No products found!</h4>;
 		}
 	}, [products]);
 
 	return (
 		<div className='container-fluid'>
 			<div className='row'>
-				<div className='col-md-3 pt-2'>
+				<div className='col-md-2 pt-2'>
 					<FilterMenu
 						price={componentState.price}
 						handleSliderChange={handleSliderChange}
@@ -192,9 +192,11 @@ const ShopSearch = () => {
 						handleSelectShippingOption={handleSelectShippingOption}
 					/>
 				</div>
-				<div className='col-md-9 pt-2'>
-					{loading && <CardLoading count={10} />}
-					{renderProductsList}
+				<div className='container-fluid col-md-8 align-item-center'>
+					<div className='pt-2'>
+						{loading && <CardLoading count={12} />}
+						{renderProductsList}
+					</div>
 				</div>
 			</div>
 		</div>

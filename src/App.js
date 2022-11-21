@@ -56,6 +56,7 @@ const App = () => {
 								email: res.data.email,
 								token: idTokenResult.token,
 								role: res.data.role,
+								address: res.data.address,
 								_id: res.data._id,
 							},
 						});
