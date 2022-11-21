@@ -30,7 +30,6 @@ const OrderList = ({ orders, onStatusChange }) => {
 	};
 
 	const handleChange = (e, orderId) => {
-		console.log(e.target.value, orderId);
 		onStatusChange(orderId, e.target.value);
 	};
 
@@ -72,7 +71,7 @@ const OrderList = ({ orders, onStatusChange }) => {
 									className='form-control text-center'
 									defaultValue={order.orderStatus}
 									onChange={(e) => {
-										handleChange(e, order._id, order);
+										handleChange(e, order._id);
 									}}>
 									{ORDER_STATUS.map((status, index) => (
 										<option
