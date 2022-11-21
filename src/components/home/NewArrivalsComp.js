@@ -40,7 +40,7 @@ const NewArrivalsComp = ({ totaProducts }) => {
 		<Fragment>
 			<TextBanner text='New Arrivals' />
 			<div className='container'>
-				{loading && products.length > 0 ? (
+				{loading && products.length < 1 ? (
 					<CardLoading count={products.length} />
 				) : (
 					<div className='row'>
