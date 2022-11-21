@@ -1,36 +1,21 @@
 import React, { Fragment } from 'react';
 import Input from '../input/Input';
 import DropdownSelect from '../select/DropdownSelect';
+import { COLOR, BRAND, SHIPPING } from '../../static/Data';
 import { Select } from 'antd';
 const { Option } = Select;
-
-const colors = ['Black', 'Brown', 'Silver', 'White', 'Blue'];
-const brands = ['Apple', 'Samsung', 'Microsoft', 'Lenovo', 'Asus'];
-const shippingOptions = ['Yes', 'No'];
 
 const ProductUpdateForm = ({
 	submitHandler,
 	onChangeHandler,
 	values,
-	setValue,
 	categories,
 	subCategories,
 	onCategoryChange,
 	subsIdArray,
 	setSubsIdArray,
-	selectedCate,
 }) => {
-	const {
-		title,
-		description,
-		price,
-		category,
-		subCategory,
-		shipping,
-		quantity,
-		color,
-		brand,
-	} = values;
+	const { title, description, price, category, shipping, quantity, color, brand } = values;
 
 	return (
 		<Fragment>
@@ -57,7 +42,7 @@ const ProductUpdateForm = ({
 					onChangeHandler={onChangeHandler}
 				/>
 				<DropdownSelect
-					items={shippingOptions}
+					items={SHIPPING}
 					label='Shipping'
 					name='shipping'
 					selectedItem={shipping}
@@ -72,7 +57,7 @@ const ProductUpdateForm = ({
 					onChangeHandler={onChangeHandler}
 				/>
 				<DropdownSelect
-					items={colors}
+					items={COLOR}
 					label='Color'
 					name='color'
 					selectedItem={color}
@@ -80,7 +65,7 @@ const ProductUpdateForm = ({
 					defaultOption='Please Select'
 				/>
 				<DropdownSelect
-					items={brands}
+					items={BRAND}
 					label='Brand'
 					name='brand'
 					selectedItem={brand}
