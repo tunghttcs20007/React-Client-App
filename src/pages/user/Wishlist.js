@@ -31,26 +31,41 @@ const Wishlist = () => {
 		});
 	};
 
-	const WishListItem = () =>
-		wishlist.map((product) => (
-			<div
-				key={product._id}
-				className='alert alert-secondary'>
-				<a
-					className='text-info'
-					onClick={() => history.push(`/product/${product.slug}`)}>
-					{product.title}
-				</a>
-				<span>{` (Price: $${product.price})`}</span>
-				<span
-					className='float-right text-danger'
-					style={{ cursor: 'pointer' }}
-					onClick={() => handleRemoveProduct(product._id, product.title)}>
-					<DeleteOutlined />
-					&nbsp; Remove
-				</span>
-			</div>
-		));
+	const WishListItem = () => (
+		<div
+			className='table-bordered container-fluid p-1'
+			style={{ width: '40rem' }}>
+			{wishlist.map((product) => (
+				<div
+					key={product._id}
+					className='alert alert-secondary'>
+					<img
+						src={product.images[0].url}
+						alt={product.title}
+						style={{
+							width: '6.5rem',
+							height: 'auto',
+							paddingRight: '.5rem',
+						}}
+					/>
+					<a
+						className='text-info'
+						onClick={() => history.push(`/product/${product.slug}`)}>
+						{product.title}
+					</a>
+					<span>{` (Price: $${product.price})`}</span>
+					<span
+						className='float-right text-danger'
+						style={{ cursor: 'pointer' }}
+						onClick={() => handleRemoveProduct(product._id, product.title)}>
+						<DeleteOutlined />
+						&nbsp; Remove
+					</span>
+				</div>
+			))}
+		</div>
+	);
+		
 
 	return (
 		<div className='container-fluid'>
