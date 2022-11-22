@@ -16,7 +16,6 @@ const History = () => {
 
 	const fetchUserOrders = () => {
 		getUserOrders(user.token).then((res) => {
-			console.log(JSON.stringify(res.data, null, 2));
 			setOrders(res.data);
 		});
 	};

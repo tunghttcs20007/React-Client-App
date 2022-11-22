@@ -21,7 +21,8 @@ const initialState = {
 
 const CheckOut = ({ history }) => {
 	const [cartInfo, setCartInfo] = useState(initialState);
-	const [userAddress, setUserAddress] = useState('');
+	const [userAddress, setUserAddress] = useState({ textContent: '', htmlText: '' });
+	const [prevSavedAddress, setPrevSavedAddress] = useState();
 	const [isUserAddSave, setIsUserAddSave] = useState(false);
 	const [couponName, setCouponName] = useState('');
 
@@ -34,32 +35,13 @@ const CheckOut = ({ history }) => {
 		});
 	}, []);
 
-	const showOrderedProducts = () => {
-		const { products } = cartInfo;
-		if (products) {
-			return products.map((obj, index) => (
-				<Fragment key={`${index}-${obj._id}`}>
-					<div
-						key={`${index}-${obj._id}`}
-						className='col'>
-						<p className='row'>
-							<span
-								className='text-primary'
-								style={{ fontWeight: 'bold' }}>{`${obj.product.title}: `}</span>
-							{obj.count} item(s)
-						</p>
-						<p className='row'>
-							Color:&nbsp;
-							<span style={{ color: `${obj.color === 'White' ? 'Grey' : obj.color}` }}>
-								{obj.color}&nbsp;
-							</span>
-							|&nbsp;Total: ${obj.product.price * obj.count}
-						</p>
-					</div>
-				</Fragment>
-			));
+	useEffect(() => {
+		if (typeof window !== 'undefined') {
+			let localStorageJson = localStorage.getItem('userInfo');
+			setPrevSavedAddress(JSON.parse(localStorageJson).address.address);
+			setIsUserAddSave(true);
 		}
-	};
+	}, [prevSavedAddress]);
 
 	const handleClickSave = () => {
 		updateUserAddress(userAddress, user.token).then((res) => {
@@ -136,15 +118,49 @@ const CheckOut = ({ history }) => {
 		}
 	};
 
+	const showOrderedProducts = () => {
+		const { products } = cartInfo;
+		if (products) {
+			return products.map((product, index) => (
+				<Fragment key={`${index}-${product._id}`}>
+					<div
+						key={`${index}-${product._id}`}
+						className='col'>
+						<p className='row'>
+							<span
+								className='text-primary'
+								style={{ fontWeight: 'bold' }}>
+								{`${product.product.title}:`}&nbsp;
+							</span>
+							{product.count} item(s)
+						</p>
+						<p className='row'>
+							Color:&nbsp;
+							<span style={{ color: `${product.color === 'White' ? 'Grey' : product.color}` }}>
+								{product.color}&nbsp;
+							</span>
+							|&nbsp;Total: ${product.product.price * product.count}
+						</p>
+					</div>
+				</Fragment>
+			));
+		}
+	};
+
+	const onChange = (content, delta, source, editor) => {
+		const text = editor.getText(content).trim();
+		setUserAddress({ address: text, htmlText: content });
+	};
+
 	const ShowTextArea = useMemo(() => {
 		return (
 			<Fragment>
 				<ReactQuill
 					defaultValue={userAddress}
-					placeholder='Type your address...'
+					placeholder={'Type your address, phone, zipcode...'}
 					theme='snow'
-					onChange={setUserAddress}
-					style={{ height: '120px' }}
+					onChange={onChange}
+					style={{ height: '80px' }}
 				/>
 				<br />
 				<br />
@@ -192,7 +208,11 @@ const CheckOut = ({ history }) => {
 				<hr />
 				{showOrderedProducts()}
 				<hr />
-				<p>Cart Total: ${cartInfo.total}</p>
+				<p>
+					Cart Total: ${cartInfo.total}
+					<br />
+					{prevSavedAddress && <b>Previous Delivery Details: {prevSavedAddress}</b>}
+				</p>
 				{cartInfo.totalAfterDiscount > 0 && (
 					<p className='text-light text-center bg-success pt-2 pb-2'>
 						Discount Total: ${cartInfo.totalAfterDiscount} <br />
@@ -202,7 +222,7 @@ const CheckOut = ({ history }) => {
 				<div className='col'>
 					<div className='row'>
 						<button
-							disabled={!isUserAddSave || !cartInfo.products.length}
+							disabled={!isUserAddSave || !cartInfo.products.length || !prevSavedAddress}
 							className='btn btn-success btn-raised'
 							onClick={handClickPlaceOrder}>
 							Place Order
