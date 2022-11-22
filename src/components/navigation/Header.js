@@ -1,21 +1,14 @@
 import React, { useState } from 'react';
 import { Menu, Badge } from 'antd';
-import {
-	HomeFilled,
-	SettingOutlined,
-	UserOutlined,
-	UserAddOutlined,
-	LogoutOutlined,
-	ShoppingTwoTone,
-	ShopTwoTone,
-	ProfileTwoTone,
-} from '@ant-design/icons';
+import { UserOutlined, UserAddOutlined, MenuOutlined } from '@ant-design/icons';
+import { FaShoppingCart, FaShoppingBag, FaCartPlus, FaHome } from 'react-icons/fa';
 import { Link, useHistory } from 'react-router-dom';
 import firebase from 'firebase/compat/app';
 import { useDispatch, useSelector } from 'react-redux';
 import SearchBar from '../forms/SearchBar';
 
 const { SubMenu, Item } = Menu;
+const iconStyle = { fontSize: '1.1rem', paddingTop: '2px' };
 
 const Header = () => {
 	const [current, setCurrent] = useState('home');
@@ -64,34 +57,32 @@ const Header = () => {
 			mode='horizontal'>
 			<Item
 				key='home'
-				icon={<HomeFilled />}>
+				icon={<FaHome style={iconStyle} />}>
 				<Link to='/'>Home</Link>
 			</Item>
 			<Item
 				key='shop'
-				icon={<ShopTwoTone />}>
+				icon={<FaShoppingBag style={iconStyle} />}>
 				<Link to='/shop'>Shop</Link>
 			</Item>
 
 			{user && user.role === 'subscriber' && (
 				<Item
 					key='cart'
-					icon={<ShoppingTwoTone />}>
-					<Link to='/cart'>
-						Cart
-						<Badge
-							count={cart.length}
-							size='medium'
-							offset={[2, -15]}
-						/>
-					</Link>
+					icon={<FaShoppingCart style={iconStyle} />}>
+					<Link to='/cart'>Cart</Link>
+					<Badge
+						count={cart.length}
+						size='small'
+						offset={[-48, -20]}
+					/>
 				</Item>
 			)}
 
 			{user && user.role === 'subscriber' && (
 				<Item
 					key='wishlist'
-					icon={<ProfileTwoTone />}>
+					icon={<FaCartPlus style={iconStyle} />}>
 					<Link to='/user/wishlist'>Wishlist</Link>
 				</Item>
 			)}
@@ -116,15 +107,11 @@ const Header = () => {
 
 			{user && (
 				<SubMenu
-					icon={<SettingOutlined />}
+					icon={<MenuOutlined />}
 					title={user.name}
 					className='float-right'>
 					{dashboardLink()}
-					<Item
-						icon={<LogoutOutlined />}
-						onClick={logout}>
-						Logout
-					</Item>
+					<Item onClick={logout}>Logout</Item>
 				</SubMenu>
 			)}
 			<span className='float-right p-1'>
