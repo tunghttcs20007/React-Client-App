@@ -22,7 +22,7 @@ const initialState = {
 const CheckOut = ({ history }) => {
 	const [cartInfo, setCartInfo] = useState(initialState);
 	const [userAddress, setUserAddress] = useState({ textContent: '', htmlText: '' });
-	const [prevSavedAddress, setPrevSavedAddress] = useState();
+	const [prevSavedAddress, setPrevSavedAddress] = useState('');
 	const [isUserAddSave, setIsUserAddSave] = useState(false);
 	const [couponName, setCouponName] = useState('');
 
@@ -38,8 +38,10 @@ const CheckOut = ({ history }) => {
 	useEffect(() => {
 		if (typeof window !== 'undefined') {
 			let localStorageJson = localStorage.getItem('userInfo');
-			setPrevSavedAddress(JSON.parse(localStorageJson).address.address);
-			setIsUserAddSave(true);
+			if (localStorageJson['address']) {
+				setPrevSavedAddress(JSON.parse(localStorageJson).address.address);
+				setIsUserAddSave(true);
+			}
 		}
 	}, [prevSavedAddress]);
 
