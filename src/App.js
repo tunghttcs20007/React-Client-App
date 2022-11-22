@@ -7,7 +7,6 @@ import { auth } from './firebase';
 import { useDispatch } from 'react-redux';
 import { getCurrentUser } from './functions/auth';
 import { LoadingOutlined } from '@ant-design/icons';
-import { divide } from 'lodash';
 
 const UserRoute = lazy(() => import('./components/routes/UserRoute'));
 const AdminRoute = lazy(() => import('./components/routes/AdminRoute'));

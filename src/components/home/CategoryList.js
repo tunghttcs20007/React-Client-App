@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getAllCategories } from '../../functions/category';
 import TextBanner from '../banner/TextBanner';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const CategoryList = () => {
 	const [categories, setCategories] = useState([]);
@@ -28,9 +29,13 @@ const CategoryList = () => {
 		<div>
 			<TextBanner text='Categories' />
 			<div className='container'>
-				<div className='row'>
-					{loading ? <h4 className='text-center'>Loading...</h4> : <RenderCategory />}
-				</div>
+				{loading && (
+					<h4 className='text-center text-info'>
+						Loading Categories&nbsp;
+						<LoadingOutlined />
+					</h4>
+				)}
+				<div className='row'>{!loading && <RenderCategory />}</div>
 			</div>
 		</div>
 	);

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getAllSubCategories } from '../../functions/sub';
 import TextBanner from '../banner/TextBanner';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const SubCategoryList = () => {
 	const [subCategories, setSubCategories] = useState([]);
@@ -28,9 +29,13 @@ const SubCategoryList = () => {
 		<div>
 			<TextBanner text='Sub Categories' />
 			<div className='container'>
-				<div className='row'>
-					{loading ? <h4 className='text-center'>Loading...</h4> : <RenderSubCategories />}
-				</div>
+				{loading && (
+					<h4 className='text-center text-info'>
+						Loading Sub Categories&nbsp;
+						<LoadingOutlined />
+					</h4>
+				)}
+				<div className='row text-center'>{!loading && <RenderSubCategories />}</div>
 			</div>
 		</div>
 	);
