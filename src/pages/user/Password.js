@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import UserNav from '../../components/navigation/UserNav';
+import AdminNav from '../../components/navigation/AdminNav';
 import { auth } from '../../firebase';
 import { toast } from 'react-toastify';
 
 const Password = () => {
 	const [password, setPassword] = useState('');
 	const [loading, setLoading] = useState(false);
+
+	const { user } = useSelector((state) => ({ ...state }));
 
 	const promptErrorMsg = (errorCode) => {
 		if (errorCode === 'auth/weak-password') {
@@ -55,9 +59,7 @@ const Password = () => {
 	return (
 		<div className='container-fluid'>
 			<div className='row'>
-				<div className='col-md-2'>
-					<UserNav />
-				</div>
+				<div className='col-md-2'>{user.role === 'admin' ? <AdminNav /> : <UserNav />}</div>
 				<div className='col'>
 					{loading ? (
 						<h3 className='text-info pt-1'>Loading</h3>
