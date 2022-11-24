@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { getAllOrders, updateOrderStatus } from '../../services/admin';
+import { getAllOrders, updateOrderStatus } from '../../services/admin-service';
 import AdminNav from '../../components/navigation/AdminNav';
 import OrderList from '../../components/order/OrderList';
 

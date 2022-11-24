@@ -6,7 +6,7 @@ import { LoginButton } from '../../components/login/LoginButton';
 import { GoogleLoginButton } from '../../components/login/GoogleLoginButton';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
-import { createOrUpdateUser } from '../../services/auth';
+import { createOrUpdateUser } from '../../services/auth-service';
 import { LOGIN_USER } from '../../reducers/actions/types';
 
 const Login = ({ history }) => {

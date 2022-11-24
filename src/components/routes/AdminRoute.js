@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import LoadingForRedirect from './LoadingForRedirect';
-import { getCurrentAdmin } from '../../services/auth';
+import { getCurrentAdmin } from '../../services/auth-service';
 
 /** Private admin route - only display the page when the admin already login and validate */
 const AdminRoute = ({ children, ...rest }) => {

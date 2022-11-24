@@ -6,7 +6,7 @@ import { LOGIN_USER } from './reducers/actions/types';
 
 import { auth } from './services/fire-base/firebase';
 import { useDispatch } from 'react-redux';
-import { getCurrentUser } from './services/auth';
+import { getCurrentUser } from './services/auth-service';
 import { LoadingOutlined } from '@ant-design/icons';
 
 const UserRoute = lazy(() => import('./components/routes/UserRoute'));
