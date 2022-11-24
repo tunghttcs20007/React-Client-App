@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { auth } from './firebase';
 import { useDispatch } from 'react-redux';
-import { getCurrentUser } from './functions/auth';
+import { getCurrentUser } from './services/auth';
 import { LoadingOutlined } from '@ant-design/icons';
 
 const UserRoute = lazy(() => import('./components/routes/UserRoute'));

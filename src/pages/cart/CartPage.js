@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ProductCheckoutItem from '../../components/cards/ProductCheckoutItem';
-import { userCheckout } from '../../functions/user';
+import { userCheckout } from '../../services/user';
 import { toast } from 'react-toastify';
 
 const CartPage = ({ history }) => {

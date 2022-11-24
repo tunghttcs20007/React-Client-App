@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { getProductInfo, updateProductRating, getAllRelated } from '../functions/product';
+import { getProductInfo, updateProductRating, getAllRelated } from '../services/product';
 import ProductDetails from '../components/cards/ProductDetails';
 import ProductCard from '../components/cards/ProductCard';
 

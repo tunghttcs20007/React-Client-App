@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import UserNav from '../../components/navigation/UserNav';
-import { getUserWishlist, removeProductToWishList } from '../../functions/user';
+import { getUserWishlist, removeProductToWishList } from '../../services/user';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';

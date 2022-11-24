@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from 'react';
 import { useSelector } from 'react-redux';
 import Resizer from 'react-image-file-resizer';
-import { getBaseUrl } from '../../functions/getBaseUrl';
+import { uploadFileToCloudinary, removeImage } from '../../services/upload-file';
 import axios from 'axios';
 import { Image, Badge } from 'antd';
 import { DeleteFilled, LoadingOutlined } from '@ant-design/icons';
@@ -11,7 +11,6 @@ const FileUpload = ({ value, setValue }) => {
 	const [loading, setLoading] = useState(false);
 
 	const { user: admin } = useSelector((state) => ({ ...state }));
-	const accessToken = admin.token;
 
 	let { images } = { ...value };
 
@@ -29,8 +28,7 @@ const FileUpload = ({ value, setValue }) => {
 					100,
 					0,
 					(uri) => {
-						axios
-							.post(getBaseUrl('/images'), { image: uri }, { headers: { accessToken } })
+						uploadFileToCloudinary(uri, admin.token)
 							.then((res) => {
 								images.push(res.data);
 								/** Update product state images */
@@ -51,8 +49,7 @@ const FileUpload = ({ value, setValue }) => {
 	const handleRemoveImage = (public_id) => {
 		setLoading(true);
 		console.log('Remove Image: ', public_id);
-		axios
-			.post(getBaseUrl('/images/remove'), { public_id }, { headers: { accessToken } })
+		removeImage(public_id, admin.token)
 			.then((res) => {
 				/** Filter remove image from state */
 				images = images.filter((image) => {

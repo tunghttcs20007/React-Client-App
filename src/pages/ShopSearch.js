@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useMemo, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllProducts, searchProductByFilter } from '../functions/product';
-import { getAllCategories } from '../functions/category';
-import { getAllSubCategories } from '../functions/sub';
+import { getAllProducts, searchProductByFilter } from '../services/product';
+import { getAllCategories } from '../services/category';
+import { getAllSubCategories } from '../services/sub';
 import ProductCard from '../components/cards/ProductCard';
 import CardLoading from '../components/cards/CardLoading';
 import Ratings from '../components/ratings/Ratings';

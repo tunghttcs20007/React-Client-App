@@ -1,9 +1,9 @@
-import { getBaseUrl } from './getBaseUrl';
+import { getIamBaseUrl } from './helper/getBaseUrl';
 import axios from 'axios';
 
 export const createOrUpdateUser = async (accessToken) => {
 	return axios.post(
-		getBaseUrl('/create-or-update-user'),
+		getIamBaseUrl('/user'),
 		{},
 		{
 			headers: {
@@ -15,7 +15,7 @@ export const createOrUpdateUser = async (accessToken) => {
 
 export const getCurrentUser = async (accessToken) => {
 	return axios.post(
-		getBaseUrl('/current-user'),
+		getIamBaseUrl('/check-user'),
 		{},
 		{
 			headers: {
@@ -27,7 +27,7 @@ export const getCurrentUser = async (accessToken) => {
 
 export const getCurrentAdmin = async (accessToken) => {
 	return axios.post(
-		getBaseUrl('/current-admin'),
+		getIamBaseUrl('/check-admin'),
 		{},
 		{
 			headers: {

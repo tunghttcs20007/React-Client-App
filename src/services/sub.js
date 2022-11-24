@@ -1,14 +1,12 @@
-import { getBaseUrl } from './getBaseUrl';
+import { getSubCategoryBaseUrl } from './helper/getBaseUrl';
 import axios from 'axios';
 
-const baseUrl = getBaseUrl('/sub-category');
+export const getAllSubCategories = async () => axios.get(getSubCategoryBaseUrl('/list-all'));
 
-export const getAllSubCategories = async () => axios.get(getBaseUrl('/sub-categories'));
-
-export const getSubCategory = async (slug) => axios.get(`${baseUrl}/${slug}`);
+export const getSubCategory = async (slug) => axios.get(getSubCategoryBaseUrl(`/${slug}`));
 
 export const deleteSubCategory = async (slug, accessToken) =>
-	axios.delete(`${baseUrl}/${slug}`, {
+	axios.delete(getSubCategoryBaseUrl(`/${slug}`), {
 		headers: {
 			accessToken,
 		},
@@ -16,7 +14,7 @@ export const deleteSubCategory = async (slug, accessToken) =>
 
 export const updateSubCategory = async (slug, subName, parent, accessToken) =>
 	axios.put(
-		`${baseUrl}/${slug}`,
+		getSubCategoryBaseUrl(`/${slug}`),
 		{ name: subName, categoryId: parent },
 		{
 			headers: {
@@ -27,7 +25,7 @@ export const updateSubCategory = async (slug, subName, parent, accessToken) =>
 
 export const createSubCategory = async (subName, categoryId, accessToken) =>
 	axios.post(
-		baseUrl,
+		getSubCategoryBaseUrl(''),
 		{ name: subName, categoryId },
 		{
 			headers: {
@@ -36,4 +34,5 @@ export const createSubCategory = async (subName, categoryId, accessToken) =>
 		}
 	);
 
-	export const getProductsBySub = async (id) => axios.get(`${baseUrl}/products/${id}`);
+export const getProductsBySub = async (id) =>
+	axios.get(getSubCategoryBaseUrl(`/list-product/${id}`));

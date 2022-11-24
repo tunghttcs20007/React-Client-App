@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { getLatestSortedProducts } from '../../functions/product';
+import { getLatestSortedProducts } from '../../services/product';
 import ProductCard from '../cards/ProductCard';
 import CardLoading from '../cards/CardLoading';
 import { Pagination } from 'antd';

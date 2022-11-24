@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import AdminNav from '../../../components/navigation/AdminNav';
 import HomeProductCards from '../../../components/cards/AdminProductCard';
-import { getAllProducts, removeProduct } from '../../../functions/product';
+import { getAllProducts, removeProduct } from '../../../services/product';
 import { LoadingOutlined } from '@ant-design/icons';
 import { toast } from 'react-toastify';
 

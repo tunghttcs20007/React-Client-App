@@ -2,11 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import AdminNav from '../../../components/navigation/AdminNav';
-import {
-	createCategory,
-	getAllCategories,
-	deleteCategory,
-} from '../../../functions/category';
+import { createCategory, getAllCategories, deleteCategory } from '../../../services/category';
 import { Link } from 'react-router-dom';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import InputForm from '../../../components/forms/InputForm';
