@@ -7,7 +7,7 @@ import {
 	updateUserAddress,
 	applyCoupon,
 	createOrderWithCOD,
-} from '../../services/user';
+} from '../../services/user-service';
 import { ADD_TO_CART, COUPON_APPLIED, PAY_COD } from '../../reducers/actions/types';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';

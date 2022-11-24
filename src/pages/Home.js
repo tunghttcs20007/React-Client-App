@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { getTotalProductsCount } from '../services/product';
+import { getTotalProductsCount } from '../services/product-service';
 import TypeWriterComp from '../components/type-writer/TypeWriterComp';
 import NewArrivalsComp from '../components/home/NewArrivalsComp';
 import BestSellersComp from '../components/home/BestSellersComp';

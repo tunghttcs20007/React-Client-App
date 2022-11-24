@@ -4,8 +4,8 @@ import { toast } from 'react-toastify';
 import AdminNav from '../../../components/navigation/AdminNav';
 import FileUpload from '../../../components/forms/FileUpload';
 import ProductUpdateForm from '../../../components/forms/ProductUpdateForm';
-import { getProductInfo, updateProduct } from '../../../services/product';
-import { getAllCategories, getSubsByParent } from '../../../services/category';
+import { getProductInfo, updateProduct } from '../../../services/product-service';
+import { getAllCategories, getSubsByParent } from '../../../services/category-service';
 
 const initialValue = {
 	title: '',

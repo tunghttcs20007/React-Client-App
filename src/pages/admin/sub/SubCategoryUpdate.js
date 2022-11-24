@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import AdminNav from '../../../components/navigation/AdminNav';
-import { getSubCategory, updateSubCategory } from '../../../services/sub';
-import { getAllCategories } from '../../../services/category';
+import { getSubCategory, updateSubCategory } from '../../../services/sub-category-service';
+import { getAllCategories } from '../../../services/category-service';
 import InputForm from '../../../components/forms/InputForm';
 import DropdownSelect from '../../../components/select/DropdownSelect';
 

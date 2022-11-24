@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import DatePicker from 'react-datepicker';
-import { getAllCoupons, removeCoupon, createCoupon } from '../../../services/coupon';
+import { getAllCoupons, removeCoupon, createCoupon } from '../../../services/coupon-service';
 import 'react-datepicker/dist/react-datepicker.css';
 import { DeleteOutlined } from '@ant-design/icons';
 import { SET_MODAL_VISIBILITY } from '../../../reducers/actions/types';

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { getSubCategory, getProductsBySub } from '../../services/sub';
+import { getSubCategory, getProductsBySub } from '../../services/sub-category-service';
 import ProductCard from '../../components/cards/ProductCard';
 import TextBanner from '../../components/banner/TextBanner';
 

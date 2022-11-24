@@ -1,8 +1,8 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useSelector, useDispatch } from 'react-redux';
-import { createPaymentIntent } from '../../services/payment';
-import { createOnlinePaymentOrder, emptyUserCart } from '../../services/user';
+import { createPaymentIntent } from '../../services/payment-service';
+import { createOnlinePaymentOrder, emptyUserCart } from '../../services/user-service';
 import { Link } from 'react-router-dom';
 import { Card } from 'antd';
 import { DollarOutlined, CheckOutlined } from '@ant-design/icons';

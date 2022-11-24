@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import AdminNav from '../../../components/navigation/AdminNav';
-import { getCategory, updateCategory } from '../../../services/category';
+import { getCategory, updateCategory } from '../../../services/category-service';
 import InputForm from '../../../components/forms/InputForm';
 
 const CategoryUpdate = ({ history, match }) => {

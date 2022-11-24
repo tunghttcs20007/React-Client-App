@@ -2,8 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import AdminNav from '../../../components/navigation/AdminNav';
-import { createSubCategory, getAllSubCategories, deleteSubCategory } from '../../../services/sub';
-import { getAllCategories } from '../../../services/category';
+import {
+	createSubCategory,
+	getAllSubCategories,
+	deleteSubCategory,
+} from '../../../services/sub-category-service';
+import { getAllCategories } from '../../../services/category-service';
 import { Link } from 'react-router-dom';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import InputForm from '../../../components/forms/InputForm';

@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux';
 import AdminNav from '../../../components/navigation/AdminNav';
 import ProductCreateForm from '../../../components/forms/ProductCreateForm';
 import FileUpload from '../../../components/forms/FileUpload';
-import { createProduct } from '../../../services/product';
-import { getAllCategories, getSubsByParent } from '../../../services/category';
+import { createProduct } from '../../../services/product-service';
+import { getAllCategories, getSubsByParent } from '../../../services/category-service';
 
 const initialValue = {
 	title: 'Laptop',

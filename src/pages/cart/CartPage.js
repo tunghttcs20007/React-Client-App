@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ProductCheckoutItem from '../../components/cards/ProductCheckoutItem';
-import { userCheckout } from '../../services/user';
+import { userCheckout } from '../../services/user-service';
 import { toast } from 'react-toastify';
 import { PAY_COD } from '../../reducers/actions/types';
 

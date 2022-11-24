@@ -6,7 +6,7 @@ import { Card, Tabs, Tooltip } from 'antd';
 import { HeartOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { addProductToWishList } from '../../services/user';
+import { addProductToWishList } from '../../services/user-service';
 import Laptop from '../../images/laptop.png';
 import StarRatings from 'react-star-ratings';
 import ProductDetailsList from './ProductDetailsList';

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getAllSubCategories } from '../../services/sub';
+import { getAllSubCategories } from '../../services/sub-category-service';
 import TextBanner from '../banner/TextBanner';
 import { LoadingOutlined } from '@ant-design/icons';
 
