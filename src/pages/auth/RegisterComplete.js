@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { auth } from '../../firebase';
 import { toast } from 'react-toastify';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { createOrUpdateUser } from '../../services/auth';
 import { LOGIN_USER } from '../../reducers/actions/types';
 
@@ -9,7 +9,6 @@ const RegisterComplete = ({ history }) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
-	const { user } = useSelector((state) => ({ ...state }));
 	const dispatch = useDispatch();
 
 	useEffect(() => {
