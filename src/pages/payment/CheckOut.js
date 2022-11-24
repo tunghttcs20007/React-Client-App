@@ -8,6 +8,7 @@ import {
 	applyCoupon,
 	createOrderWithCOD,
 } from '../../services/user';
+import { ADD_TO_CART, COUPON_APPLIED, PAY_COD } from '../../reducers/actions/types';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
@@ -59,7 +60,7 @@ const CheckOut = ({ history }) => {
 			localStorage.removeItem('cart');
 		}
 		dispatch({
-			type: 'ADD_TO_CART',
+			type: ADD_TO_CART,
 			payload: [],
 		});
 		emptyUserCart(user.token).then((res) => {
@@ -75,7 +76,7 @@ const CheckOut = ({ history }) => {
 				setCartInfo({ ...cartInfo, discountErr: data.error });
 				toast.error(data.error);
 				//TODO: update coupon apply in redux
-				dispatch({ type: 'COUPON_APPLIED', payload: false });
+				dispatch({ type: COUPON_APPLIED, payload: false });
 			}
 			if (data.success) {
 				setCartInfo({
@@ -84,7 +85,7 @@ const CheckOut = ({ history }) => {
 					discount: data.discount,
 				});
 				//TODO: update totalAfterDiscount in redux
-				dispatch({ type: 'COUPON_APPLIED', payload: true });
+				dispatch({ type: COUPON_APPLIED, payload: true });
 			}
 		});
 	};
@@ -96,15 +97,15 @@ const CheckOut = ({ history }) => {
 					//Clear local storage/redux state (cart, coupon, payCod). Send request to clear cart in DB
 					if (typeof window !== 'undefined') localStorage.removeItem('cart');
 					dispatch({
-						type: 'ADD_TO_CART',
+						type: ADD_TO_CART,
 						payload: [],
 					});
 					dispatch({
-						type: 'COUPON_APPLIED',
+						type: COUPON_APPLIED,
 						payload: false,
 					});
 					dispatch({
-						type: 'PAY_COD',
+						type: PAY_COD,
 						payload: false,
 					});
 					emptyUserCart(user.token).then((res) => {

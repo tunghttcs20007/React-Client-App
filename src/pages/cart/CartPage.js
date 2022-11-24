@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import ProductCheckoutItem from '../../components/cards/ProductCheckoutItem';
 import { userCheckout } from '../../services/user';
 import { toast } from 'react-toastify';
+import { PAY_COD } from '../../reducers/actions/types';
 
 const CartPage = ({ history }) => {
 	const { cart, user } = useSelector((state) => ({ ...state }));
@@ -37,7 +38,7 @@ const CartPage = ({ history }) => {
 			.then((res) => {
 				if (res.data.success) {
 					dispatch({
-						type: 'PAY_COD',
+						type: PAY_COD,
 						payload: true,
 					});
 					history.push('/user/checkout');

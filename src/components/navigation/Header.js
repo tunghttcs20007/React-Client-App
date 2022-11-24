@@ -6,6 +6,7 @@ import { Link, useHistory } from 'react-router-dom';
 import firebase from 'firebase/compat/app';
 import { useDispatch, useSelector } from 'react-redux';
 import SearchBar from '../forms/SearchBar';
+import { LOGOUT_USER } from '../../reducers/actions/types';
 
 const { SubMenu, Item } = Menu;
 const iconStyle = { fontSize: '1.1rem', paddingTop: '2px' };
@@ -27,7 +28,7 @@ const Header = () => {
 	const logout = () => {
 		firebase.auth().signOut();
 		dispatch({
-			type: 'LOGOUT',
+			type: LOGOUT_USER,
 			payload: null,
 		});
 		history.push('/login');

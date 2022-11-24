@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Card, Tooltip } from 'antd';
+import { ADD_TO_CART, SET_DRAWER_VISIBILITY } from '../../reducers/actions/types';
 import { EyeOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import laptop from '../../images/laptop.png';
 import _ from 'lodash';
@@ -23,7 +24,7 @@ const ProductCard = ({ product }) => {
 		localStorage.setItem('cart', JSON.stringify(unique));
 		//Add new item to cart state in redux
 		dispatch({
-			type: 'ADD_TO_CART',
+			type: ADD_TO_CART,
 			payload: unique,
 		});
 		//Update drawer state in redux to open side drawer
@@ -31,7 +32,7 @@ const ProductCard = ({ product }) => {
 			return;
 		} else {
 			dispatch({
-				type: 'SET_VISIBILITY',
+				type: SET_DRAWER_VISIBILITY,
 				payload: true,
 			});
 			setTooltip('Added');

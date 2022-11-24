@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { SET_MODAL_VISIBILITY } from '../../reducers/actions/types';
 import Modal from 'react-modal';
 
 const customStyles = {
@@ -20,7 +21,7 @@ const NotificationModal = ({ title, message, handleClickYes }) => {
 	const dispatch = useDispatch();
 
 	const closeModal = () => {
-		dispatch({ type: 'SET_MODAL_VISIBILITY', payload: false });
+		dispatch({ type: SET_MODAL_VISIBILITY, payload: false });
 	};
 
 	return (

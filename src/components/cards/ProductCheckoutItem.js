@@ -5,6 +5,7 @@ import { Image } from 'antd';
 import { toast } from 'react-toastify';
 import Laptop from '../../images/laptop.png';
 import { COLOR as OPTIONS } from '../../static/Data';
+import { ADD_TO_CART } from '../../reducers/actions/types';
 
 const ProductCheckoutItem = ({ product }) => {
 	const [visible, setVisible] = useState(false);
@@ -25,7 +26,7 @@ const ProductCheckoutItem = ({ product }) => {
 			});
 			localStorage.setItem('cart', JSON.stringify(cart));
 			dispatch({
-				type: 'ADD_TO_CART',
+				type: ADD_TO_CART,
 				payload: cart,
 			});
 		}
@@ -55,7 +56,7 @@ const ProductCheckoutItem = ({ product }) => {
 			});
 			localStorage.setItem('cart', JSON.stringify(cart));
 			dispatch({
-				type: 'ADD_TO_CART',
+				type: ADD_TO_CART,
 				payload: cart,
 			});
 		}
@@ -75,7 +76,7 @@ const ProductCheckoutItem = ({ product }) => {
 			});
 			localStorage.setItem('cart', JSON.stringify(cart));
 			dispatch({
-				type: 'ADD_TO_CART',
+				type: ADD_TO_CART,
 				payload: cart,
 			});
 		}

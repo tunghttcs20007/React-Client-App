@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Drawer } from 'antd';
 import { Link } from 'react-router-dom';
+import { SET_DRAWER_VISIBILITY } from '../../reducers/actions/types';
 import Laptop from '../../images/laptop.png';
 
 const imageStyle = {
@@ -18,7 +19,7 @@ const SideDrawer = () => {
 
 	const handleClose = () => {
 		dispatch({
-			type: 'SET_VISIBILITY',
+			type: SET_DRAWER_VISIBILITY,
 			payload: false,
 		});
 	};

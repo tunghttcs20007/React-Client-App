@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getAllProducts, searchProductByFilter } from '../services/product';
 import { getAllCategories } from '../services/category';
 import { getAllSubCategories } from '../services/sub';
+import { PRODUCT_FILTER } from '../reducers/actions/types';
 import ProductCard from '../components/cards/ProductCard';
 import CardLoading from '../components/cards/CardLoading';
 import Ratings from '../components/ratings/Ratings';
@@ -68,7 +69,7 @@ const ShopSearch = () => {
 
 	const handleSliderChange = (value) => {
 		dispatch({
-			type: 'SEARCH_TEXT',
+			type: PRODUCT_FILTER,
 			payload: { text: '' },
 		});
 		setComponentState({ ...initialState, price: value });
@@ -95,7 +96,7 @@ const ShopSearch = () => {
 			return;
 		}
 		dispatch({
-			type: 'SEARCH_TEXT',
+			type: PRODUCT_FILTER,
 			payload: { text: '' },
 		});
 		fetchProductsWithFilter({ category: checkedCategory });
@@ -104,7 +105,7 @@ const ShopSearch = () => {
 	//Fetch products by stars rating
 	const handleStarOptionClick = (stars) => {
 		dispatch({
-			type: 'SEARCH_TEXT',
+			type: PRODUCT_FILTER,
 			payload: { text: '' },
 		});
 		setComponentState({ ...initialState, stars });
@@ -116,7 +117,7 @@ const ShopSearch = () => {
 		setComponentState({ ...initialState, subCategory });
 		fetchProductsWithFilter({ subCategory });
 		dispatch({
-			type: 'SEARCH_TEXT',
+			type: PRODUCT_FILTER,
 			payload: { text: '' },
 		});
 	};
@@ -124,7 +125,7 @@ const ShopSearch = () => {
 	//Fetch products by brand
 	const handleSelectBrandOption = (e) => {
 		dispatch({
-			type: 'SEARCH_TEXT',
+			type: PRODUCT_FILTER,
 			payload: { text: '' },
 		});
 		setComponentState({ ...initialState, brand: e.target.value });
@@ -134,7 +135,7 @@ const ShopSearch = () => {
 	//Fetch products by color
 	const handleSelectColorOption = (e) => {
 		dispatch({
-			type: 'SEARCH_TEXT',
+			type: PRODUCT_FILTER,
 			payload: { text: '' },
 		});
 		setComponentState({ ...initialState, color: e.target.value });
@@ -144,7 +145,7 @@ const ShopSearch = () => {
 	//Fetch products by shipping
 	const handleSelectShippingOption = (e) => {
 		dispatch({
-			type: 'SEARCH_TEXT',
+			type: PRODUCT_FILTER,
 			payload: { text: '' },
 		});
 		setComponentState({ ...initialState, shipping: e.target.value });

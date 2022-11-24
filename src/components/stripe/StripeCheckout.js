@@ -6,6 +6,7 @@ import { createOnlinePaymentOrder, emptyUserCart } from '../../services/user';
 import { Link } from 'react-router-dom';
 import { Card } from 'antd';
 import { DollarOutlined, CheckOutlined } from '@ant-design/icons';
+import { ADD_TO_CART, COUPON_APPLIED } from '../../reducers/actions/types';
 import Checkout from '../../images/checkout.png';
 
 const cardStyle = {
@@ -75,11 +76,11 @@ const StripeCheckout = ({ history }) => {
 				if (res.data.orderCreated) {
 					if (typeof window !== 'undefined') localStorage.removeItem('cart');
 					dispatch({
-						type: 'ADD_TO_CART',
+						type: ADD_TO_CART,
 						payload: [],
 					});
 					dispatch({
-						type: 'COUPON_APPLIED',
+						type: COUPON_APPLIED,
 						payload: false,
 					});
 					emptyUserCart(user.token);

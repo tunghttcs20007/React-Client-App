@@ -2,6 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { SearchOutlined } from '@ant-design/icons';
+import { PRODUCT_FILTER } from '../../reducers/actions/types';
 import Input from '../input/Input';
 
 const SearchBar = () => {
@@ -13,7 +14,7 @@ const SearchBar = () => {
 
 	const handleChange = (e) => {
 		dispatch({
-			type: 'SEARCH_TEXT',
+			type: PRODUCT_FILTER,
 			payload: { text: e.target.value },
 		});
 	};

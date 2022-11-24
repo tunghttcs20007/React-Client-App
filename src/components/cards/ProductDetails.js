@@ -13,6 +13,7 @@ import ProductDetailsList from './ProductDetailsList';
 import RatingModal from '../modal/RatingModal';
 import Ratings from '../../components/ratings/Ratings';
 import _ from 'lodash';
+import { ADD_TO_CART, SET_DRAWER_VISIBILITY } from '../../reducers/actions/types';
 
 const { TabPane } = Tabs;
 
@@ -57,7 +58,7 @@ const ProductDetails = ({ product, userInfo, handleUserRating, star }) => {
 		localStorage.setItem('cart', JSON.stringify(unique));
 		//Add new item to cart state in redux
 		dispatch({
-			type: 'ADD_TO_CART',
+			type: ADD_TO_CART,
 			payload: unique,
 		});
 		//Update drawer state in redux to open side drawer
@@ -65,7 +66,7 @@ const ProductDetails = ({ product, userInfo, handleUserRating, star }) => {
 			return;
 		} else {
 			dispatch({
-				type: 'SET_VISIBILITY',
+				type: SET_DRAWER_VISIBILITY,
 				payload: true,
 			});
 			setTooltip('Added');

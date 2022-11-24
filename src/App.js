@@ -2,6 +2,7 @@ import React, { useEffect, lazy, Suspense } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { LOGIN_USER } from './reducers/actions/types';
 
 import { auth } from './firebase';
 import { useDispatch } from 'react-redux';
@@ -49,7 +50,7 @@ const App = () => {
 				getCurrentUser(idTokenResult.token)
 					.then((res) => {
 						dispatch({
-							type: 'LOGGED_IN_USER',
+							type: LOGIN_USER,
 							payload: {
 								name: res.data.name,
 								email: res.data.email,

@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
-import { userReducer } from './userReducer';
-import { searchReducer } from './searchReducer';
-import { cartReducer } from './cartReducer';
-import { drawerReducer } from './drawerReducer';
-import { couponReducer } from './couponReducer';
-import { payCodReducer } from './payCodReducer';
-import { modalReducer } from './modalReducer';
+import { userReducer } from './splices/userReducer';
+import { searchReducer } from './splices/searchReducer';
+import { cartReducer } from './splices/cartReducer';
+import { drawerReducer } from './splices/drawerReducer';
+import { couponReducer } from './splices/couponReducer';
+import { payCodReducer } from './splices/payCodReducer';
+import { modalReducer } from './splices/modalReducer';
 
 const rootReducer = combineReducers({
 	user: userReducer,

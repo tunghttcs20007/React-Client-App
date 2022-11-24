@@ -7,6 +7,7 @@ import { GoogleLoginButton } from '../../components/login/GoogleLoginButton';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { createOrUpdateUser } from '../../services/auth';
+import { LOGIN_USER } from '../../reducers/actions/types';
 
 const Login = ({ history }) => {
 	const [email, setEmail] = useState('');
@@ -60,7 +61,7 @@ const Login = ({ history }) => {
 			createOrUpdateUser(idTokenResult.token)
 				.then((res) => {
 					dispatch({
-						type: 'LOGGED_IN_USER',
+						type: LOGIN_USER,
 						payload: {
 							name: res.data.name,
 							email: res.data.email,
@@ -88,7 +89,7 @@ const Login = ({ history }) => {
 				createOrUpdateUser(idTokenResult.token)
 					.then((res) => {
 						dispatch({
-							type: 'LOGGED_IN_USER',
+							type: LOGIN_USER,
 							payload: {
 								name: res.data.name,
 								email: res.data.email,

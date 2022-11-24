@@ -3,6 +3,7 @@ import { auth } from '../../firebase';
 import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
 import { createOrUpdateUser } from '../../services/auth';
+import { LOGIN_USER } from '../../reducers/actions/types';
 
 const RegisterComplete = ({ history }) => {
 	const [email, setEmail] = useState('');
@@ -41,7 +42,7 @@ const RegisterComplete = ({ history }) => {
 				createOrUpdateUser(idTokenResult.token)
 					.then((res) => {
 						dispatch({
-							type: 'LOGGED_IN_USER',
+							type: LOGIN_USER,
 							payload: {
 								name: res.data.name,
 								email: res.data.email,

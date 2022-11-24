@@ -5,6 +5,7 @@ import DatePicker from 'react-datepicker';
 import { getAllCoupons, removeCoupon, createCoupon } from '../../../services/coupon';
 import 'react-datepicker/dist/react-datepicker.css';
 import { DeleteOutlined } from '@ant-design/icons';
+import { SET_MODAL_VISIBILITY } from '../../../reducers/actions/types';
 import AdminNav from '../../../components/navigation/AdminNav';
 import NotificationModal from '../../../components/modal/NotificationModal';
 
@@ -45,7 +46,7 @@ const CreateCoupon = () => {
 
 	const handleOpenModalOnDeleteCoupon = (id) => {
 		setRemoveCouponId(id);
-		dispatch({ type: 'SET_MODAL_VISIBILITY', payload: true });
+		dispatch({ type: SET_MODAL_VISIBILITY, payload: true });
 	};
 
 	const handleRemove = (couponId) => {
@@ -142,7 +143,7 @@ const CreateCoupon = () => {
 				message={'Are you sure to delete this coupon?'}
 				handleClickYes={() => {
 					handleRemove(removeCouponId);
-					dispatch({ type: 'SET_MODAL_VISIBILITY', payload: false });
+					dispatch({ type: SET_MODAL_VISIBILITY, payload: false });
 				}}
 			/>
 		</div>
