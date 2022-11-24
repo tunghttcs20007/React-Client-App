@@ -4,7 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { LOGIN_USER } from './reducers/actions/types';
 
-import { auth } from './firebase';
+import { auth } from './services/fire-base/firebase';
 import { useDispatch } from 'react-redux';
 import { getCurrentUser } from './services/auth';
 import { LoadingOutlined } from '@ant-design/icons';
