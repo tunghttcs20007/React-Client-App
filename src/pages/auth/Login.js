@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { auth, googleAuthProvider } from '../../firebase';
+import { auth, googleAuthProvider } from '../../services/fire-base/firebase';
 import { toast } from 'react-toastify';
 import { LoginButton } from '../../components/login/LoginButton';
 import { GoogleLoginButton } from '../../components/login/GoogleLoginButton';

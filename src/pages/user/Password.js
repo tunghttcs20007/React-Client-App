@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import UserNav from '../../components/navigation/UserNav';
 import AdminNav from '../../components/navigation/AdminNav';
-import { auth } from '../../firebase';
+import { auth } from '../../services/fire-base/firebase';
 import { toast } from 'react-toastify';
 
 const Password = () => {
