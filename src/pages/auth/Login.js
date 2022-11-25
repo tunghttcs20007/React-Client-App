@@ -99,7 +99,7 @@ const Login = ({ history }) => {
 							},
 						});
 						roleBasedRedirect(res);
-						successNotify('Login Successfully!');
+						successNotify(`Hi ${res.data.name} 👋 Welcome To TechShop`);
 					})
 					.catch((error) => console.error(error.message));
 			})
