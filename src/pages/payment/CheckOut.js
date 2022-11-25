@@ -72,16 +72,16 @@ const CheckOut = ({ history }) => {
 		applyCoupon(couponName, user.token).then((res) => {
 			const { data } = res;
 			if (data.error) {
-				setCartInfo({ ...cartInfo, discountErr: data.error });
+				setCartInfo((prev) => ({ ...prev, discountErr: data.error }));
 				errorNotify(data.error);
 				dispatch({ type: COUPON_APPLIED, payload: false });
 			}
 			if (data.success) {
-				setCartInfo({
-					...cartInfo,
+				setCartInfo((prev) => ({
+					...prev,
 					totalAfterDiscount: data.discountPrice,
 					discount: data.discount,
-				});
+				}));
 				dispatch({ type: COUPON_APPLIED, payload: true });
 			}
 		});
