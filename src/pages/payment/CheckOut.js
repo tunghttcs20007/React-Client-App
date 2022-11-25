@@ -7,6 +7,7 @@ import {
 	applyCoupon,
 	createOrderWithCOD,
 } from '../../services/user-service';
+import { checkCurrentUser } from '../../services/auth-service';
 import { ADD_TO_CART, COUPON_APPLIED, PAY_COD } from '../../reducers/actions/types';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -31,20 +32,18 @@ const CheckOut = ({ history }) => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
+		checkCurrentUser(user.token).then((res) => {
+			if (res.status === 200) {
+				setPrevSavedAddress(res.data.address.address);
+			}
+		});
+	}, [prevSavedAddress]);
+
+	useEffect(() => {
 		getUserCart(user.token).then((res) => {
 			setCartInfo({ products: res.data.products, total: res.data.cartTotal });
 		});
 	}, []);
-
-	useEffect(() => {
-		if (typeof window !== 'undefined') {
-			let localStorageJson = localStorage.getItem('userInfo');
-			if (localStorageJson['address']) {
-				setPrevSavedAddress(JSON.parse(localStorageJson).address.address);
-				setIsUserAddSave(true);
-			}
-		}
-	}, [prevSavedAddress]);
 
 	const handleClickSave = () => {
 		updateUserAddress(userAddress, user.token).then((res) => {
@@ -117,6 +116,13 @@ const CheckOut = ({ history }) => {
 		} else {
 			history.push('/user/payment');
 		}
+	};
+
+	const handlePlaceOrderBtnDisable = () => {
+		if (prevSavedAddress || isUserAddSave) {
+			return !cartInfo.products.length;
+		}
+		return true;
 	};
 
 	const showOrderedProducts = () => {
@@ -223,7 +229,7 @@ const CheckOut = ({ history }) => {
 				<div className='col'>
 					<div className='row'>
 						<button
-							disabled={!isUserAddSave || !cartInfo.products.length || !prevSavedAddress}
+							disabled={handlePlaceOrderBtnDisable()}
 							className='btn btn-success btn-raised'
 							onClick={handClickPlaceOrder}>
 							Place Order
