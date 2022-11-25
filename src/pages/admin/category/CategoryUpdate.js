@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
+import { successNotify, errorNotify } from '../../../components/modal/ToastNotification';
 import AdminNav from '../../../components/navigation/AdminNav';
 import { getCategory, updateCategory } from '../../../services/category-service';
 import InputForm from '../../../components/forms/InputForm';
@@ -30,16 +30,16 @@ const CategoryUpdate = ({ history, match }) => {
 		updateCategory(slug, categoryName, admin.token)
 			.then((res) => {
 				setCategoryName('');
-				toast.success(`"${res.data.name}" is updated!`);
+				successNotify(`"${res.data.name}" is updated!`);
 				history.push('/admin/category');
 			})
 			.catch((error) => {
 				const status = error.response.status;
 				const message = error.response.data;
 				if (status === 400) {
-					toast.error(`${message}: ${categoryName}`);
+					errorNotify(`${message}: ${categoryName}`);
 				} else if (status === 404) {
-					toast.error(message);
+					errorNotify(message);
 				}
 			});
 		setLoading(false);

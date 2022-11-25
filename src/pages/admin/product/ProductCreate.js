@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { toast } from 'react-toastify';
+import { successNotify, errorNotify } from '../../../components/modal/ToastNotification';
 import { useSelector } from 'react-redux';
 import AdminNav from '../../../components/navigation/AdminNav';
 import ProductCreateForm from '../../../components/forms/ProductCreateForm';
@@ -37,12 +37,12 @@ const ProductCreate = ({ location }) => {
 		createProduct({ ...product }, admin.token)
 			.then((res) => {
 				setProduct(({ ...prev }) => ({ ...initialValue }));
-				toast.success(`"${res.data.title}" is created!`, { position: 'top-center' });
+				successNotify(`"${res.data.title}" is created!`);
 				window.setTimeout(() => {
 					window.location.reload();
 				}, 3000);
 			})
-			.catch((error) => toast.error(error.response.data, { position: 'bottom-left' }));
+			.catch((error) => errorNotify(error.response.data));
 	};
 
 	const handleChange = (e) => {

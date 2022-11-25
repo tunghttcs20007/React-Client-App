@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { toast } from 'react-toastify';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import AdminNav from '../../../components/navigation/AdminNav';
 import {
 	createCategory,
@@ -9,6 +8,13 @@ import {
 } from '../../../services/category-service';
 import { Link } from 'react-router-dom';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import {
+	successNotify,
+	warningNotify,
+	errorNotify,
+} from '../../../components/modal/ToastNotification';
+import NotificationModal from '../../../components/modal/NotificationModal';
+import { SET_MODAL_VISIBILITY } from '../../../reducers/actions/types';
 import InputForm from '../../../components/forms/InputForm';
 import SearchForm from '../../../components/forms/SearchForm';
 
@@ -16,65 +22,67 @@ const CategoryCreate = () => {
 	const [categoryName, setCategoryName] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [categories, setCategories] = useState([]);
+	const [delCategorySlug, setDelCategorySlug] = useState('');
 	const [searchKey, setSearchKey] = useState('');
 
 	const { user: admin } = useSelector((state) => ({ ...state }));
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		fetchAllCategories();
 	}, []);
 
-	const fetchAllCategories = () =>
-		getAllCategories().then((res) => setCategories(res.data));
+	const fetchAllCategories = () => getAllCategories().then((res) => setCategories(res.data));
 
 	/** Handle delete category */
-	const clickDeleteHandler = (slug) => {
-		const isDeleteConfirm = window.confirm('Are you sure to delete item?');
+	const handleClickDelete = (slug) => {
+		setDelCategorySlug(slug);
+		dispatch({ type: SET_MODAL_VISIBILITY, payload: true });
+	};
+
+	const handleClickYes = () => {
 		setLoading(true);
-		if (isDeleteConfirm) {
-			deleteCategory(slug, admin.token)
-				.then((res) => {
-					fetchAllCategories();
-					toast.warning(`${slug.toUpperCase()} is deleted!`);
-				})
-				.catch((error) => {
-					const status = error.response.status;
-					const message = error.response.data;
-					if (status === 400) {
-						toast.error(`${message}: ${categoryName}`);
-					} else if (status === 404) {
-						toast.error(message);
-					}
-				});
-		}
-		setLoading(false);
+		deleteCategory(delCategorySlug, admin.token)
+			.then((res) => {
+				fetchAllCategories();
+				warningNotify(`Category "${delCategorySlug.toUpperCase()}" is deleted!`);
+				dispatch({ type: SET_MODAL_VISIBILITY, payload: false });
+				setLoading(false);
+			})
+			.catch((error) => {
+				const status = error.response.status;
+				const message = error.response.data;
+				if (status === 400) {
+					errorNotify(`${message}: ${categoryName}`);
+				} else if (status === 404) {
+					errorNotify(message);
+				}
+				setLoading(false);
+			});
 	};
 
 	/** Handle search */
-	const searchCategory = (keyword) => (category) =>
-		category.name.toLowerCase().includes(keyword);
+	const searchCategory = (keyword) => (category) => category.name.toLowerCase().includes(keyword);
 
 	const showCategories = () => {
 		if (categories) {
-			return categories
-				.filter(searchCategory(searchKey.toLowerCase()))
-				.map((category) => (
-					<div
-						key={category._id}
-						className='alert alert-secondary mt-1'>
-						{category.name}{' '}
-						<span
-							className='btn btn-sm float-right text-danger'
-							onClick={() => clickDeleteHandler(category.slug)}>
-							<DeleteOutlined />
+			return categories.filter(searchCategory(searchKey.toLowerCase())).map((category) => (
+				<div
+					key={category._id}
+					className='alert alert-secondary mt-1'>
+					{category.name}{' '}
+					<span
+						className='btn btn-sm float-right text-danger'
+						onClick={() => handleClickDelete(category.slug)}>
+						<DeleteOutlined />
+					</span>
+					<Link to={`/admin/category-update/${category.slug}`}>
+						<span className='btn btn-sm float-right text-info'>
+							<EditOutlined />
 						</span>
-						<Link to={`/admin/category-update/${category.slug}`}>
-							<span className='btn btn-sm float-right text-info'>
-								<EditOutlined />
-							</span>
-						</Link>
-					</div>
-				));
+					</Link>
+				</div>
+			));
 		}
 	};
 
@@ -85,10 +93,10 @@ const CategoryCreate = () => {
 		createCategory(categoryName, admin.token)
 			.then((res) => {
 				setCategoryName('');
-				toast.success(`"${res.data.name}" is created!`);
+				successNotify(`"${res.data.name}" is created!`);
 				fetchAllCategories();
 			})
-			.catch((error) => toast.error(error.response.data));
+			.catch((error) => errorNotify(error.response.data));
 		setLoading(false);
 	};
 
@@ -123,6 +131,11 @@ const CategoryCreate = () => {
 					</div>
 				</div>
 			</div>
+			<NotificationModal
+				title={'Remove Category'}
+				message={'Are you sure to delete this category?'}
+				handleClickYes={handleClickYes}
+			/>
 		</div>
 	);
 };

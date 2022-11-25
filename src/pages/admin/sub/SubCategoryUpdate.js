@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import AdminNav from '../../../components/navigation/AdminNav';
 import { getSubCategory, updateSubCategory } from '../../../services/sub-category-service';
 import { getAllCategories } from '../../../services/category-service';
 import InputForm from '../../../components/forms/InputForm';
 import DropdownSelect from '../../../components/select/DropdownSelect';
+import { errorNotify, successNotify } from '../../../components/modal/ToastNotification';
 
 const SubCategoryUpdate = ({ history, match }) => {
 	const [subCategoryName, setSubCategoryName] = useState('');
@@ -38,17 +38,17 @@ const SubCategoryUpdate = ({ history, match }) => {
 		updateSubCategory(slug, subCategoryName, parentCategory, admin.token)
 			.then((res) => {
 				setSubCategoryName('');
-				toast.success(`Sub category "${res.data.name}" is updated!`);
+				successNotify(`Sub category "${res.data.name}" is updated!`);
 				history.push('/admin/sub-category');
 			})
 			.catch((error) => {
 				const status = error.response.status;
 				const message = error.response.data;
 				if (status === 400) {
-					toast.error(message);
+					errorNotify(message);
 				}
 				if (status === 409) {
-					toast.error(message);
+					errorNotify(message);
 				}
 			});
 		setLoading(false);

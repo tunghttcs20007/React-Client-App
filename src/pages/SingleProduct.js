@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
+import { successNotify, infoNotify } from '../components/modal/ToastNotification';
 import { getProductInfo, updateProductRating, getAllRelated } from '../services/product-service';
 import ProductDetails from '../components/cards/ProductDetails';
 import ProductCard from '../components/cards/ProductCard';
@@ -40,13 +40,13 @@ const SingleProduct = ({ match }) => {
 		setUserRating(newRating);
 		updateProductRating(name, newRating, user.token)
 			.then((res) => {
-				toast.success('Thank you for your rating. Please continue visit our shop!!!');
+				successNotify('Thank you for your rating 🙏 Please continue visit our shop!!!');
 				loadProductDetails(); //To show updated rating in real time
 			})
 			.catch((error) => {
 				let { status } = error.response;
 				if (status === 401) {
-					toast.info('Your session is expired. Please re-login to rating this product!');
+					infoNotify('Your session is expired 😥 Please re-login to rating this product!');
 				}
 			});
 	};

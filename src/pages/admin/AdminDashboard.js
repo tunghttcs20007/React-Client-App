@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
+import { successNotify } from '../../components/modal/ToastNotification';
 import { getAllOrders, updateOrderStatus } from '../../services/admin-service';
 import AdminNav from '../../components/navigation/AdminNav';
 import OrderList from '../../components/order/OrderList';
@@ -23,7 +23,7 @@ const AdminDashboard = () => {
 	const handleUpdateOrderStatus = (orderId, orderStatus) => {
 		updateOrderStatus(orderId, orderStatus, user.token).then((res) => {
 			console.log(res.data);
-			toast.success(`Order [${orderId}] by [${res.data.customer}] status updated!`);
+			successNotify(`Order [${orderId}] by [${res.data.customer}] status updated!`);
 			fetchAllOrders();
 		});
 	};

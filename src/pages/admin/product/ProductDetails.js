@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
+import { successNotify, errorNotify } from '../../../components/modal/ToastNotification';
 import AdminNav from '../../../components/navigation/AdminNav';
 import FileUpload from '../../../components/forms/FileUpload';
 import ProductUpdateForm from '../../../components/forms/ProductUpdateForm';
@@ -57,7 +57,7 @@ const ProductDetails = ({ match, history }) => {
 			})
 			.catch((error) => {
 				console.log(error);
-				toast.error('Failed to get product!!!');
+				errorNotify('Failed to get product!!!');
 			});
 	};
 
@@ -66,11 +66,11 @@ const ProductDetails = ({ match, history }) => {
 		product.subCategory = subsIdArray;
 		updateProduct(slug, product, admin.token)
 			.then((res) => {
-				toast.success(`"${res.data.title}" is updated!`, { position: 'top-center' });
+				successNotify(`"${res.data.title}" is updated!`);
 				history.push('/admin/products');
 			})
 			.catch((error) => {
-				toast.error(error.response.data, { position: 'bottom-left' });
+				errorNotify(error.response.data);
 			});
 		setIsSubmitted(true);
 	};

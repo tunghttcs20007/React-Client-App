@@ -1,19 +1,19 @@
 import React, { Fragment, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { Card, Tabs, Tooltip } from 'antd';
 import { HeartOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { addProductToWishList } from '../../services/user-service';
+import { successNotify } from '../modal/ToastNotification';
 import Laptop from '../../images/laptop.png';
 import StarRatings from 'react-star-ratings';
 import ProductDetailsList from './ProductDetailsList';
 import RatingModal from '../modal/RatingModal';
 import Ratings from '../../components/ratings/Ratings';
-import _ from 'lodash';
 import { ADD_TO_CART, SET_DRAWER_VISIBILITY } from '../../reducers/actions/types';
+import _ from 'lodash';
 
 const { TabPane } = Tabs;
 
@@ -77,7 +77,7 @@ const ProductDetails = ({ product, userInfo, handleUserRating, star }) => {
 		e.preventDefault();
 		addProductToWishList(user.token, product._id).then((res) => {
 			if (res.data.success) {
-				toast.success(`${product.title} is added to your wish list!`);
+				successNotify(`${product.title} is added to your wish list 👏`);
 				history.push('/user/wishlist');
 			}
 		});

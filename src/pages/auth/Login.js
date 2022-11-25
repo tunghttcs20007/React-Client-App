@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { auth, googleAuthProvider } from '../../services/fire-base/firebase';
-import { toast } from 'react-toastify';
 import { LoginButton } from '../../components/login/LoginButton';
 import { GoogleLoginButton } from '../../components/login/GoogleLoginButton';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { createOrUpdateUser } from '../../services/auth-service';
 import { LOGIN_USER } from '../../reducers/actions/types';
+import { errorNotify, successNotify } from '../../components/modal/ToastNotification';
 
 const Login = ({ history }) => {
 	const [email, setEmail] = useState('');
@@ -39,13 +39,13 @@ const Login = ({ history }) => {
 
 	const promptErrorMsg = (errorCode) => {
 		if (errorCode === 'auth/invalid-email') {
-			toast.error('Your email format is not right!');
+			errorNotify('Your email format is not right!');
 		}
 		if (errorCode === 'auth/wrong-password') {
-			toast.error('Your credential is incorrect!');
+			errorNotify('Your credential is incorrect!');
 		}
 		if (errorCode === 'auth/user-not-found') {
-			toast.error('You have not registered yet!');
+			errorNotify('You have not registered yet!');
 		}
 	};
 
@@ -71,7 +71,7 @@ const Login = ({ history }) => {
 						},
 					});
 					roleBasedRedirect(res);
-					toast.success('Login Successfully!');
+					successNotify(`Hi ${res.data.name} 👋 Welcome To TechShop`);
 				})
 				.catch((error) => console.error(error.message));
 		} catch (error) {
@@ -99,12 +99,12 @@ const Login = ({ history }) => {
 							},
 						});
 						roleBasedRedirect(res);
-						toast.success('Login Successfully!');
+						successNotify('Login Successfully!');
 					})
 					.catch((error) => console.error(error.message));
 			})
 			.catch((error) => {
-				toast.error(error.code);
+				errorNotify(error.code);
 			});
 	};
 

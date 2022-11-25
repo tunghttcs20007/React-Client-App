@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { toast } from 'react-toastify';
+import {
+	successNotify,
+	errorNotify,
+	infoNotify,
+} from '../../../components/modal/ToastNotification';
 import DatePicker from 'react-datepicker';
 import { getAllCoupons, removeCoupon, createCoupon } from '../../../services/coupon-service';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -34,32 +38,33 @@ const CreateCoupon = () => {
 		setLoading(true);
 		createCoupon({ ...counponState }, user.token).then((res) => {
 			if (res.data.errors) {
-				toast.error(res.data.message);
+				errorNotify(res.data.message);
 				return;
 			}
 			setLoading(false);
 			loadAllCoupons(); // load all coupons
 			setCouponState(initialState);
-			toast.success(`COUPON (${res.data.coupon.name}) is created`);
+			successNotify(`COUPON (${res.data.coupon.name}) is created`);
 		});
 	};
 
-	const handleOpenModalOnDeleteCoupon = (id) => {
+	const handleClickDeleteCoupon = (id) => {
 		setRemoveCouponId(id);
 		dispatch({ type: SET_MODAL_VISIBILITY, payload: true });
 	};
 
-	const handleRemove = (couponId) => {
-		if (removeCoupon) {
-			setLoading(true);
-			removeCoupon(user.token, couponId)
-				.then((res) => {
+	const handleClickYes = () => {
+		setLoading(true);
+		removeCoupon(user.token, removeCouponId)
+			.then((res) => {
+				if (res.data.deleted) {
 					loadAllCoupons(); // load all coupons
 					setLoading(false);
-					toast.info(`Coupon is deleted`);
-				})
-				.catch((error) => console.log(error));
-		}
+					infoNotify(`Coupon is deleted`);
+					dispatch({ type: SET_MODAL_VISIBILITY, payload: false });
+				}
+			})
+			.catch((error) => console.log(error));
 	};
 
 	const showCounponsList = () => {
@@ -71,7 +76,7 @@ const CreateCoupon = () => {
 					<td>{coupon.discount}%</td>
 					<td>
 						<DeleteOutlined
-							onClick={() => handleOpenModalOnDeleteCoupon(coupon._id)}
+							onClick={() => handleClickDeleteCoupon(coupon._id)}
 							className='text-danger pointer'
 						/>
 					</td>
@@ -141,10 +146,7 @@ const CreateCoupon = () => {
 			<NotificationModal
 				title={'Remove Coupon'}
 				message={'Are you sure to delete this coupon?'}
-				handleClickYes={() => {
-					handleRemove(removeCouponId);
-					dispatch({ type: SET_MODAL_VISIBILITY, payload: false });
-				}}
+				handleClickYes={handleClickYes}
 			/>
 		</div>
 	);

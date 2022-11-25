@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ProductCheckoutItem from '../../components/cards/ProductCheckoutItem';
 import { userCheckout } from '../../services/user-service';
-import { toast } from 'react-toastify';
 import { PAY_COD } from '../../reducers/actions/types';
+import { errorNotify } from '../../components/modal/ToastNotification';
 
 const CartPage = ({ history }) => {
 	const { cart, user } = useSelector((state) => ({ ...state }));
@@ -26,9 +26,7 @@ const CartPage = ({ history }) => {
 			.catch((error) => {
 				const response = error.response;
 				if (response.status === 401) {
-					toast.error('Your session is expired. Please re-login to proceed to checkout!', {
-						position: 'top-center',
-					});
+					errorNotify('Your session is expired 😥 Please re-login to proceed to checkout!');
 				}
 			});
 	};
@@ -47,9 +45,7 @@ const CartPage = ({ history }) => {
 			.catch((error) => {
 				const response = error.response;
 				if (response.status === 401) {
-					toast.error('Your session is expired. Please re-login to proceed to checkout!', {
-						position: 'top-center',
-					});
+					errorNotify('Your session is expired 😥 Please re-login to proceed to checkout!');
 				}
 			});
 	};

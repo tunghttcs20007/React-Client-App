@@ -1,12 +1,13 @@
 import React, { useEffect, lazy, Suspense } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { LOGIN_USER } from './reducers/actions/types';
 
 import { auth } from './services/fire-base/firebase';
 import { useDispatch } from 'react-redux';
-import { getCurrentUser } from './services/auth-service';
+import { checkCurrentUser } from './services/auth-service';
+import { errorNotify } from './components/modal/ToastNotification';
 import { LoadingOutlined } from '@ant-design/icons';
 
 const UserRoute = lazy(() => import('./components/routes/UserRoute'));
@@ -47,7 +48,7 @@ const App = () => {
 		const unsubscribe = auth.onAuthStateChanged(async (user) => {
 			if (user) {
 				const idTokenResult = await user.getIdTokenResult();
-				getCurrentUser(idTokenResult.token)
+				checkCurrentUser(idTokenResult.token)
 					.then((res) => {
 						dispatch({
 							type: LOGIN_USER,
@@ -61,7 +62,7 @@ const App = () => {
 							},
 						});
 					})
-					.catch((error) => console.error(error.message));
+					.catch((error) => errorNotify(error.error));
 			}
 		});
 		// cleanup
@@ -83,7 +84,7 @@ const App = () => {
 			}>
 			<Header />
 			<SideDrawer />
-			<ToastContainer />
+			<ToastContainer transition={Zoom} />
 			<Switch>
 				<Route
 					exact

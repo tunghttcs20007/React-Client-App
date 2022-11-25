@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { auth } from '../../services/fire-base/firebase';
-import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { createOrUpdateUser } from '../../services/auth-service';
 import { LOGIN_USER } from '../../reducers/actions/types';
+import { errorNotify, successNotify } from '../../components/modal/ToastNotification';
 
 const RegisterComplete = ({ history }) => {
 	const [email, setEmail] = useState('');
@@ -19,12 +19,12 @@ const RegisterComplete = ({ history }) => {
 		e.preventDefault();
 		/** Validate Email and Password */
 		if (!email || !password) {
-			toast.error('Email and password is required');
+			errorNotify('Email and password is required');
 			return;
 		}
 
 		if (password.length < 6) {
-			toast.error('Password must be at least 6 characters long');
+			errorNotify('Password must be at least 6 characters long');
 			return;
 		}
 
@@ -50,15 +50,15 @@ const RegisterComplete = ({ history }) => {
 								_id: res.data._id,
 							},
 						});
-						toast.success('Login Successfully!');
+						successNotify(`Hi ${res.data.name} 👋 Welcome To TechShop`);
 					})
 					.catch((error) => console.error(error.message));
 				/** Redirect User To Home Page */
 				history.push('/');
-				toast.success('Your registration is completed. Thank you!');
+				successNotify('Your registration is completed 👍 Please login to your account');
 			}
 		} catch (error) {
-			toast.error(error.message);
+			errorNotify(error.message);
 		}
 	};
 

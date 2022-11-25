@@ -3,8 +3,8 @@ import UserNav from '../../components/navigation/UserNav';
 import { getUserWishlist, removeProductToWishList } from '../../services/user-service';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { DeleteOutlined } from '@ant-design/icons';
+import { infoNotify } from '../../components/modal/ToastNotification';
 
 const Wishlist = () => {
 	const [wishlist, setWishlist] = useState([]);
@@ -25,7 +25,7 @@ const Wishlist = () => {
 	const handleRemoveProduct = (productId, title) => {
 		removeProductToWishList(user.token, productId).then((res) => {
 			if (res.data.success) {
-				toast.info(`Remove ${title} from your wishlist!`);
+				infoNotify(`${title} is removed from your wishlist 👍`);
 				fetchUserWishlist();
 			}
 		});
@@ -65,7 +65,6 @@ const Wishlist = () => {
 			))}
 		</div>
 	);
-		
 
 	return (
 		<div className='container-fluid'>

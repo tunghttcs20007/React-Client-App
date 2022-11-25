@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { auth } from '../../services/fire-base/firebase';
-import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { LoadingOutlined } from '@ant-design/icons';
+import { errorNotify, successNotify } from '../../components/modal/ToastNotification';
 
 const promptErrMsg = (error) => {
 	let errMsg = error.message;
 	if (errMsg.includes('(auth/user-not-found)')) {
-		toast.error('Your email was not found');
+		errorNotify('Your email was not found');
 	}
 	if (errMsg.includes('(auth/invalid-email)')) {
-		toast.error('Your email is not valid');
+		errorNotify('Your email is not valid');
 	}
 };
 
@@ -38,7 +38,7 @@ const ForgotPassword = ({ history }) => {
 			.then(() => {
 				setEmail('');
 				setLoading(false);
-				toast.success('Please check your email to reset password');
+				successNotify('Please check your email to reset password');
 			})
 			.catch((error) => {
 				setLoading(false);

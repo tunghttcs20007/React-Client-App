@@ -6,7 +6,7 @@ import { EditTwoTone, DeleteOutlined } from '@ant-design/icons';
 
 const { Meta } = Card;
 
-const AdminProductCard = ({ product, handleRemoveProduct }) => {
+const AdminProductCard = ({ product, handleRemoveProduct, onClickDelete }) => {
 	const { title, description, images, slug } = product;
 
 	return (
@@ -30,7 +30,8 @@ const AdminProductCard = ({ product, handleRemoveProduct }) => {
 					</Link>,
 					<DeleteOutlined
 						className='text-danger'
-						onClick={() => handleRemoveProduct(slug)}
+						// onClick={() => handleRemoveProduct(slug)}
+						onClick={() => onClickDelete(slug)}
 					/>,
 				]}>
 				<Meta

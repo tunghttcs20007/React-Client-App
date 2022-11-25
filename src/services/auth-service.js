@@ -13,7 +13,7 @@ export const createOrUpdateUser = async (accessToken) => {
 	);
 };
 
-export const getCurrentUser = async (accessToken) => {
+export const checkCurrentUser = async (accessToken) => {
 	return axios.post(
 		getIamBaseUrl('/check-user'),
 		{},
@@ -25,7 +25,7 @@ export const getCurrentUser = async (accessToken) => {
 	);
 };
 
-export const getCurrentAdmin = async (accessToken) => {
+export const checkCurrentAdmin = async (accessToken) => {
 	return axios.post(
 		getIamBaseUrl('/check-admin'),
 		{},

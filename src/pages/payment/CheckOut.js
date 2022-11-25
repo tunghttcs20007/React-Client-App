@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect, useState, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { toast } from 'react-toastify';
 import {
 	getUserCart,
 	emptyUserCart,
@@ -11,6 +10,7 @@ import {
 import { ADD_TO_CART, COUPON_APPLIED, PAY_COD } from '../../reducers/actions/types';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { errorNotify, infoNotify, successNotify } from '../../components/modal/ToastNotification';
 
 const initialState = {
 	products: [],
@@ -49,7 +49,7 @@ const CheckOut = ({ history }) => {
 	const handleClickSave = () => {
 		updateUserAddress(userAddress, user.token).then((res) => {
 			if (res.data.success) {
-				toast.success('Your address is saved!');
+				successNotify('Your address is saved!');
 				setIsUserAddSave(true);
 			}
 		});
@@ -65,7 +65,7 @@ const CheckOut = ({ history }) => {
 		});
 		emptyUserCart(user.token).then((res) => {
 			setCartInfo(initialState);
-			toast.info('Cart is cleared. Please continue your shopping!');
+			infoNotify('Your cart is cleared 👍 Please continue your shopping!');
 		});
 	};
 
@@ -74,8 +74,7 @@ const CheckOut = ({ history }) => {
 			const { data } = res;
 			if (data.error) {
 				setCartInfo({ ...cartInfo, discountErr: data.error });
-				toast.error(data.error);
-				//TODO: update coupon apply in redux
+				errorNotify(data.error);
 				dispatch({ type: COUPON_APPLIED, payload: false });
 			}
 			if (data.success) {
@@ -84,7 +83,6 @@ const CheckOut = ({ history }) => {
 					totalAfterDiscount: data.discountPrice,
 					discount: data.discount,
 				});
-				//TODO: update totalAfterDiscount in redux
 				dispatch({ type: COUPON_APPLIED, payload: true });
 			}
 		});

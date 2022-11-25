@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { toast } from 'react-toastify';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import AdminNav from '../../../components/navigation/AdminNav';
 import {
 	createSubCategory,
@@ -10,9 +9,16 @@ import {
 import { getAllCategories } from '../../../services/category-service';
 import { Link } from 'react-router-dom';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import NotificationModal from '../../../components/modal/NotificationModal';
+import { SET_MODAL_VISIBILITY } from '../../../reducers/actions/types';
 import InputForm from '../../../components/forms/InputForm';
 import SearchForm from '../../../components/forms/SearchForm';
 import DropdownSelect from '../../../components/select/DropdownSelect';
+import {
+	errorNotify,
+	successNotify,
+	warningNotify,
+} from '../../../components/modal/ToastNotification';
 
 const SubCategoryCreate = () => {
 	const [subCategoryName, setSubCategoryName] = useState('');
@@ -20,47 +26,51 @@ const SubCategoryCreate = () => {
 	const [loading, setLoading] = useState(false);
 	const [categories, setCategories] = useState([]);
 	const [subCategories, setSubCategories] = useState([]);
+	const [delSubSlug, setDelSubSlug] = useState('');
 	const [searchKey, setSearchKey] = useState('');
 
 	const { user: admin } = useSelector((state) => ({ ...state }));
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		fetchAllCategories();
 		fetchAllSubCategories();
 	}, []);
 
-	const fetchAllCategories = () =>
-		getAllCategories().then((res) => setCategories(res.data));
+	const fetchAllCategories = () => getAllCategories().then((res) => setCategories(res.data));
 
 	const fetchAllSubCategories = () =>
 		getAllSubCategories().then((res) => setSubCategories(res.data));
 
 	/** Handle delete category */
-	const clickDeleteHandler = (slug) => {
-		const isDeleteConfirm = window.confirm('Are you sure to delete item?');
+	const handleClickDelete = (slug) => {
+		setDelSubSlug(slug);
+		dispatch({ type: SET_MODAL_VISIBILITY, payload: true });
+	};
+
+	const handleClickYes = () => {
 		setLoading(true);
-		if (isDeleteConfirm) {
-			deleteSubCategory(slug, admin.token)
-				.then((res) => {
-					toast.warning(`Sub category ${slug.toUpperCase()} is deleted!`);
-					fetchAllSubCategories();
-				})
-				.catch((error) => {
-					const status = error.response.status;
-					const message = error.response.data;
-					if (status === 400) {
-						toast.error(`${message}: ${subCategoryName}`);
-					} else if (status === 404) {
-						toast.error(message);
-					}
-				});
-		}
-		setLoading(false);
+		deleteSubCategory(delSubSlug, admin.token)
+			.then((res) => {
+				warningNotify(`Sub category "${delSubSlug.toUpperCase()}" is deleted!`);
+				fetchAllSubCategories();
+				dispatch({ type: SET_MODAL_VISIBILITY, payload: false });
+				setLoading(false);
+			})
+			.catch((error) => {
+				const status = error.response.status;
+				const message = error.response.data;
+				if (status === 400) {
+					errorNotify(`${message}: ${subCategoryName}`);
+				} else if (status === 404) {
+					errorNotify(message);
+				}
+				setLoading(false);
+			});
 	};
 
 	/** Handle search */
-	const searchCategory = (keyword) => (category) =>
-		category.name.toLowerCase().includes(keyword);
+	const searchCategory = (keyword) => (category) => category.name.toLowerCase().includes(keyword);
 
 	const showSubCategories = () => {
 		if (subCategories) {
@@ -71,7 +81,7 @@ const SubCategoryCreate = () => {
 					{sub.name}{' '}
 					<span
 						className='btn btn-sm float-right text-danger'
-						onClick={() => clickDeleteHandler(sub.slug)}>
+						onClick={() => handleClickDelete(sub.slug)}>
 						<DeleteOutlined />
 					</span>
 					<Link to={`/admin/sub-category-update/${sub.slug}`}>
@@ -91,10 +101,10 @@ const SubCategoryCreate = () => {
 		createSubCategory(subCategoryName, categoryId, admin.token)
 			.then((res) => {
 				setSubCategoryName('');
-				toast.success(`"${res.data.name}" is created!`);
+				successNotify(`"${res.data.name}" is created!`);
 				fetchAllSubCategories();
 			})
-			.catch((error) => toast.error(error.response.data));
+			.catch((error) => errorNotify(error.response.data));
 		setLoading(false);
 	};
 
@@ -132,6 +142,11 @@ const SubCategoryCreate = () => {
 					{showSubCategories()}
 				</div>
 			</div>
+			<NotificationModal
+				title={'Remove Sub Category'}
+				message={'Are you sure to delete this sub category?'}
+				handleClickYes={handleClickYes}
+			/>
 		</div>
 	);
 };

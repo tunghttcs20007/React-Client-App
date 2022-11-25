@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { auth } from '../../services/fire-base/firebase';
-import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
+import { successNotify } from '../../components/modal/ToastNotification';
 
 const Register = ({ history }) => {
 	const [email, setEmail] = useState('');
@@ -20,9 +20,7 @@ const Register = ({ history }) => {
 		};
 		/** Send confirmation email once the user submit registration form */
 		await auth.sendSignInLinkToEmail(email, config);
-		toast.success(
-			`Email is sent to ${email}. Click the link to complete your registration.`
-		);
+		successNotify(`Email is sent to ${email}. Click the link to complete your registration.`);
 		/** Store user email in local storage */
 		window.localStorage.setItem('emailForRegistration', email);
 		/** Reset Email Input Field */
@@ -41,7 +39,9 @@ const Register = ({ history }) => {
 			/>
 
 			<br />
-			<button type='submit' className='btn btn-raised'>
+			<button
+				type='submit'
+				className='btn btn-raised'>
 				Register
 			</button>
 		</form>

@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import AdminNav from '../../../components/navigation/AdminNav';
-import HomeProductCards from '../../../components/cards/AdminProductCard';
+import { useSelector, useDispatch } from 'react-redux';
 import { getAllProducts, removeProduct } from '../../../services/product-service';
 import { LoadingOutlined } from '@ant-design/icons';
-import { toast } from 'react-toastify';
+import { errorNotify, successNotify } from '../../../components/modal/ToastNotification';
+import { SET_MODAL_VISIBILITY } from '../../../reducers/actions/types';
+import NotificationModal from '../../../components/modal/NotificationModal';
+import AdminNav from '../../../components/navigation/AdminNav';
+import AdminProductCard from '../../../components/cards/AdminProductCard';
 
 const Products = () => {
 	const [products, setProducts] = useState([]);
 	const [loading, setLoading] = useState(false);
+	const [productSlug, setProductSlug] = useState('');
+
+	const dispatch = useDispatch();
 
 	const { user: admin } = useSelector((state) => ({ ...state }));
 
@@ -29,18 +34,21 @@ const Products = () => {
 			});
 	};
 
-	const handleRemoveProduct = (slug) => {
-		if (window.confirm('Are you sure to delete the selected product?')) {
-			removeProduct(slug, admin.token)
-				.then((res) => {
-					console.log(res);
-					fetchProducts();
-					toast.success(`"${res.data.title}" is deleted!`, {
-						position: 'top-center',
-					});
-				})
-				.catch((error) => toast.error(error.response.data, { position: 'bottom-left' }));
-		}
+	const handleClickDeleteProduct = (slug) => {
+		setProductSlug(slug);
+		dispatch({ type: SET_MODAL_VISIBILITY, payload: true });
+	};
+
+	const handleClickYes = () => {
+		removeProduct(productSlug, admin.token)
+			.then((res) => {
+				dispatch({ type: SET_MODAL_VISIBILITY, payload: false });
+				fetchProducts();
+				successNotify(`"${res.data.title}" is deleted!`, {
+					position: 'top-center',
+				});
+			})
+			.catch((error) => errorNotify(error.response.data));
 	};
 
 	const ProductLists = () =>
@@ -48,9 +56,9 @@ const Products = () => {
 			<div
 				key={product._id}
 				className='col-md-4 pb-2'>
-				<HomeProductCards
+				<AdminProductCard
 					product={product}
-					handleRemoveProduct={handleRemoveProduct}
+					onClickDelete={handleClickDeleteProduct}
 				/>
 			</div>
 		));
@@ -74,6 +82,11 @@ const Products = () => {
 					</div>
 				</div>
 			</div>
+			<NotificationModal
+				title={'Remove Product'}
+				message={'Are you sure to delete this product?'}
+				handleClickYes={handleClickYes}
+			/>
 		</div>
 	);
 };

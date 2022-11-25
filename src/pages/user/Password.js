@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import UserNav from '../../components/navigation/UserNav';
 import AdminNav from '../../components/navigation/AdminNav';
 import { auth } from '../../services/fire-base/firebase';
-import { toast } from 'react-toastify';
+import { errorNotify, successNotify } from '../../components/modal/ToastNotification';
 
 const Password = () => {
 	const [password, setPassword] = useState('');
@@ -13,7 +13,7 @@ const Password = () => {
 
 	const promptErrorMsg = (errorCode) => {
 		if (errorCode === 'auth/weak-password') {
-			toast.error('Password should be at least 6 characters');
+			errorNotify('Password should be at least 6 characters');
 		}
 	};
 
@@ -25,7 +25,7 @@ const Password = () => {
 			.then(() => {
 				setLoading(false);
 				setPassword('');
-				toast.success('Your password has successfully updated!');
+				successNotify('Your password has successfully updated!');
 			})
 			.catch((error) => {
 				setLoading(false);

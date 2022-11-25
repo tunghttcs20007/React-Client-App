@@ -2,7 +2,7 @@ import React, { useState, Fragment } from 'react';
 import { useDispatch } from 'react-redux';
 import { CheckCircleFilled, CloseCircleFilled, DeleteOutlined } from '@ant-design/icons';
 import { Image } from 'antd';
-import { toast } from 'react-toastify';
+import { warningNotify } from '../modal/ToastNotification';
 import Laptop from '../../images/laptop.png';
 import { COLOR as OPTIONS } from '../../static/Data';
 import { ADD_TO_CART } from '../../reducers/actions/types';
@@ -37,11 +37,7 @@ const ProductCheckoutItem = ({ product }) => {
 		let currentQuantity = e.target.value < 1 ? 1 : e.target.value;
 
 		if (currentQuantity > quantity) {
-			toast.warning(`Only in-stock ${quantity} ${title.toUpperCase()} product(s)`, {
-				pauseOnFocusLoss: false,
-				position: 'top-center',
-				style: {},
-			});
+			warningNotify(`Only ${quantity} ${title.toUpperCase()} product(s) left`);
 			return;
 		}
 
@@ -161,7 +157,7 @@ const ProductCheckoutItem = ({ product }) => {
 						onChange={handleQuantityChange}
 					/>
 				</td>
-				<td className='text-warning'>
+				<td className='text-warningNotify'>
 					<DeleteOutlined
 						className='pointer'
 						onClick={handleRemoveItem}
