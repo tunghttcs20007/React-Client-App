@@ -12,12 +12,20 @@ import StarRatings from 'react-star-ratings';
 import ProductDetailsList from './ProductDetailsList';
 import RatingModal from '../modal/RatingModal';
 import Ratings from '../../components/ratings/Ratings';
+import Comments from '../../components/comment/Comments';
 import { ADD_TO_CART, SET_DRAWER_VISIBILITY } from '../../reducers/actions/types';
 import _ from 'lodash';
 
 const { TabPane } = Tabs;
 
-const ProductDetails = ({ product, userInfo, handleUserRating, star }) => {
+const ProductDetails = ({
+	product,
+	userInfo,
+	handleUserRating,
+	star,
+	comments,
+	refreshComment,
+}) => {
 	const [tooltip, setTooltip] = useState('Click to add');
 	const { title, images, description, _id } = product;
 	const { user } = useSelector((state) => ({ ...state }));
@@ -96,14 +104,18 @@ const ProductDetails = ({ product, userInfo, handleUserRating, star }) => {
 						{description}
 					</TabPane>
 					<TabPane
-						tab='Specifications'
-						key='specifications'>
-						...
+						tab='Reviews & Questions'
+						key='Reviews'>
+						<Comments
+							productId={_id}
+							refreshComment={refreshComment}
+							comments={comments}
+						/>
 					</TabPane>
 					<TabPane
 						tab='More'
 						key='more'>
-						...
+						future update...
 					</TabPane>
 				</Tabs>
 			</div>

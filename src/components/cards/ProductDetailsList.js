@@ -29,9 +29,9 @@ const ProductDetailsList = ({ product }) => {
 					className='list-group-item'
 					key='sub-category'>
 					Sub Categories
-					{subCategory.map((sub) => (
+					{subCategory.map((sub, index) => (
 						<Link
-							key={subCategory._id}
+							key={index}
 							to={`/sub-category/${sub.slug}`}
 							className='label label-default label-pill pull-xs-right'>
 							{sub.name}

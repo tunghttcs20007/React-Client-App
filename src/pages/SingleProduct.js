@@ -1,13 +1,16 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { successNotify, infoNotify } from '../components/modal/ToastNotification';
+import { successNotify, infoNotify, errorNotify } from '../components/modal/ToastNotification';
 import { getProductInfo, updateProductRating, getAllRelated } from '../services/product-service';
+import { getAllProductComments } from '../services/comment-service';
 import ProductDetails from '../components/cards/ProductDetails';
 import ProductCard from '../components/cards/ProductCard';
 
 const SingleProduct = ({ match }) => {
 	const [product, setProduct] = useState({});
 	const [userRating, setUserRating] = useState(0);
+	const [comments, setComments] = useState([]);
+	const [loadComments, setLoadComments] = useState(true);
 	const [relatedProduct, setRelatedProducts] = useState([]);
 
 	const { user } = useSelector((state) => ({ ...state }));
@@ -15,8 +18,9 @@ const SingleProduct = ({ match }) => {
 	const { slug } = match.params;
 
 	useEffect(() => {
-		loadProductDetails();
-	}, [slug]);
+		if (loadComments) loadProductDetails();
+		setLoadComments(false);
+	}, [loadComments]);
 
 	useEffect(() => {
 		if (product.ratings && product.ratings.star && user) {
@@ -30,6 +34,13 @@ const SingleProduct = ({ match }) => {
 	const loadProductDetails = () => {
 		getProductInfo(slug).then((res) => {
 			setProduct(res.data);
+			getAllProductComments(res.data._id).then((res) => {
+				if (res.data.success) {
+					setComments(res.data.comments);
+				} else {
+					errorNotify(res.data.error);
+				}
+			});
 			getAllRelated(res.data._id, 3).then((res) => {
 				setRelatedProducts(res.data);
 			});
@@ -49,6 +60,10 @@ const SingleProduct = ({ match }) => {
 					infoNotify('Your session is expired 😥 Please re-login to rating this product!');
 				}
 			});
+	};
+
+	const updateCommentComp = () => {
+		setLoadComments(true);
 	};
 
 	const ShowRelatedProduct = () => (
@@ -75,6 +90,8 @@ const SingleProduct = ({ match }) => {
 					userInfo={user}
 					handleUserRating={handleUserRating}
 					star={userRating}
+					comments={comments}
+					refreshComment={updateCommentComp}
 				/>
 			</div>
 			<div className='row p-5'>
