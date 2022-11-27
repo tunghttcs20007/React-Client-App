@@ -1,8 +1,8 @@
 import { getCouponBaseUrl } from './helper/getBaseUrl';
 import axios from 'axios';
 
-export const getAllCoupons = async () => {
-	return await axios.get(getCouponBaseUrl('/list'));
+export const getAllCoupons = async (accessToken) => {
+	return await axios.get(getCouponBaseUrl('/list'), { headers: { accessToken } });
 };
 
 export const createCoupon = async (coupon, accessToken) =>

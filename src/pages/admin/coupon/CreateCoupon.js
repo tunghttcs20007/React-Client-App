@@ -31,7 +31,7 @@ const CreateCoupon = () => {
 		loadAllCoupons();
 	}, []);
 
-	const loadAllCoupons = () => getAllCoupons().then((res) => setCoupons(res.data));
+	const loadAllCoupons = () => getAllCoupons(user.token).then((res) => setCoupons(res.data));
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
