@@ -9,6 +9,7 @@ import {
 } from '../../services/comment-service';
 import { warningNotify, errorNotify, successNotify } from '../modal/ToastNotification';
 import { getTimeDuration } from '../../services/helper/utils';
+import LikeDislikeComment from './LikeDislikeComment';
 import UserAvatar from '../../images/user_avatar.png';
 
 const { TextArea } = Input;
@@ -22,8 +23,9 @@ const SingleComment = ({ comment, productId, refreshComment }) => {
 
 	const date = new Date(comment.createdAt);
 	const tooltipTitle = `${date.toDateString()} ${date.toTimeString()}`;
-	const { hours, minutes, seconds } = getTimeDuration(new Date(), date);
-	const commentTime = hours > 0 ? `${hours}h` : `${minutes}m${seconds}s`;
+	const { hours, minutes, seconds, days } = getTimeDuration(new Date(), date);
+	const commentTime =
+		hours > 0 ? `${hours > 24 ? days + 'd' : hours + 'h'}` : `${minutes}m${seconds}s`;
 	const isUser = user === null ? true : comment.writtenBy._id !== user._id;
 
 	const handleChange = (e) => {
@@ -92,17 +94,22 @@ const SingleComment = ({ comment, productId, refreshComment }) => {
 			Reply to
 		</span>,
 		<span
-			hidden={hours >= 1 || isUser}
+			hidden={days >= 1 || isUser}
 			onClick={handleOpenEdit}
 			key='comment-basic-edit'>
 			Edit
 		</span>,
 		<span
-			hidden={(hours === 0 && minutes > 30) || hours >= 1 || isUser}
+			hidden={hours >= 1 || isUser}
 			onClick={handleRemoveComment}
 			key='comment-basic-remove'>
 			Remove
 		</span>,
+		<LikeDislikeComment
+			userId={user._id}
+			commentId={_id}
+			productId={productId}
+		/>,
 	];
 
 	return (
