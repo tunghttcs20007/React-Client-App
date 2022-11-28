@@ -1,6 +1,6 @@
 const BASE_URL = process.env.REACT_APP_BE_BASE_URL;
 
-const getBaseUrl = (path) => `${BASE_URL}/${path}`;
+const getBaseUrl = (path) => `${BASE_URL}${path}`;
 
 console.log(BASE_URL);
 
