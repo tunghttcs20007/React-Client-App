@@ -1,5 +1,9 @@
 import { getPaymentBaseUrl } from './helper/getBaseUrl';
 import axios from 'axios';
 
-export const createPaymentIntent = (accessToken, coupon) =>
-	axios.post(getPaymentBaseUrl(''), { isApplyCounpon: coupon }, { headers: { accessToken } });
+export const createStripePaymentIntent = (accessToken, coupon) =>
+	axios.post(
+		getPaymentBaseUrl('/stripe'),
+		{ isApplyCounpon: coupon },
+		{ headers: { accessToken } }
+	);

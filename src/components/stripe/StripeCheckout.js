@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useSelector, useDispatch } from 'react-redux';
-import { createPaymentIntent } from '../../services/payment-service';
+import { createStripePaymentIntent } from '../../services/payment-service';
 import { createOnlinePaymentOrder, emptyUserCart } from '../../services/user-service';
 import { Link } from 'react-router-dom';
 import { Card } from 'antd';
@@ -48,7 +48,7 @@ const StripeCheckout = ({ history }) => {
 	const elements = useElements();
 
 	useEffect(() => {
-		createPaymentIntent(user.token, coupon).then((res) => {
+		createStripePaymentIntent(user.token, coupon).then((res) => {
 			const { clientSecret, cartTotal, totalAfterDiscount, payable } = res.data;
 			setClientSecret(clientSecret);
 			setPaymentInfo({ cartTotal, totalAfterDiscount, payable });
@@ -86,7 +86,6 @@ const StripeCheckout = ({ history }) => {
 					emptyUserCart(user.token);
 				}
 			});
-			console.log(JSON.stringify(paymentData, null, 4));
 			setError(null);
 			setProcessing(false);
 			setSucceeded(true);
