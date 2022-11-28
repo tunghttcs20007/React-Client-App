@@ -188,7 +188,7 @@ const FilterMenu = ({
 						</span>
 					}>
 					<div style={{ marginTop: '10px' }}>
-						<div className='pr-4 pl-4'>
+						<div className='pl-4'>
 							<BrandOptions />
 						</div>
 					</div>
@@ -218,7 +218,7 @@ const FilterMenu = ({
 						</span>
 					}>
 					<div style={{ marginTop: '10px' }}>
-						<div className='pr-4 pl-4'>
+						<div className='pr-2 pl-4'>
 							<ShippingOptions />
 						</div>
 					</div>
