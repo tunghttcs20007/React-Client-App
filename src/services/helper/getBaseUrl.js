@@ -1,6 +1,8 @@
-const API_BASE_URL = process.env.REACT_APP_API_LOCAL_BASE_URL;
+const BASE_URL = process.env.REACT_APP_BE_BASE_URL;
 
-const getBaseUrl = (path) => `${API_BASE_URL}${path}`;
+const getBaseUrl = (path) => `${BASE_URL}/${path}`;
+
+console.log(BASE_URL);
 
 export const getAdminBaseUrl = (path) => getBaseUrl(`/admin${path}`);
 export const getIamBaseUrl = (path) => getBaseUrl(`/iam${path}`);
