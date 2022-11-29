@@ -84,7 +84,7 @@ const Products = () => {
 			</div>
 			<NotificationModal
 				title={'Remove Product'}
-				message={'Are you sure to delete this product?'}
+				message={'Are you sure to delete the selected product?'}
 				handleClickYes={handleClickYes}
 			/>
 		</div>
